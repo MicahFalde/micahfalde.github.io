@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>LandLine — who owns this land?</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+ :root{--ink:#13322b}
+ html,body{margin:0;height:100%;font-family:-apple-system,Segoe UI,Roboto,sans-serif}
+ #map{position:absolute;inset:0}
+ .brand{position:absolute;z-index:1000;top:10px;left:54px;background:#fff;padding:7px 12px;border-radius:7px;box-shadow:0 1px 6px rgba(0,0,0,.35);font-weight:800;letter-spacing:.3px;color:var(--ink)}
+ .brand small{font-weight:500;color:#678}
+ .hint{position:absolute;z-index:1000;top:12px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.72);color:#fff;padding:5px 12px;border-radius:14px;font-size:12.5px}
+ #panel{position:absolute;z-index:1001;top:0;right:0;height:100%;width:320px;max-width:86%;background:#fff;box-shadow:-2px 0 10px rgba(0,0,0,.2);transform:translateX(100%);transition:transform .18s;overflow:auto}
+ #panel.open{transform:none}
+ #panel .hd{background:var(--ink);color:#fff;padding:13px 16px;font-weight:700}
+ #panel .bd{padding:14px 16px;font-size:13.5px;line-height:1.5}
+ #panel .owner{font-size:18px;font-weight:800;color:var(--ink);margin:0 0 4px}
+ #panel .muted{color:#789;font-weight:600;font-size:14px}
+ #panel table{border-collapse:collapse;margin-top:6px;width:100%}
+ #panel td{padding:2px 0;vertical-align:top}#panel td.k{color:#789;width:92px}
+ #panel .x{float:right;cursor:pointer;opacity:.85}
+ #panel .src{margin-top:12px;font-size:11px;color:#9ab}
+ .legend{background:#fff;padding:8px 10px;line-height:1.5;font-size:12px;box-shadow:0 1px 5px rgba(0,0,0,.35);border-radius:5px}
+ .legend i{display:inline-block;width:12px;height:12px;vertical-align:-2px;margin-right:6px;border:1px solid #555}
+ .plabel{background:none!important;border:0!important;box-shadow:none!important}
+ .plabel span{position:absolute;left:0;top:0;transform:translate(-50%,-50%);display:inline-block;text-align:center;white-space:normal;line-height:1.04;background:rgba(255,255,255,.74);border-radius:2px;font:600 10px/1.04 -apple-system,Segoe UI,sans-serif;color:var(--ink);padding:1px 3px;text-shadow:0 0 2px #fff;pointer-events:none}
+ .btn{background:#fff;border:0;padding:7px 9px;font:600 13px inherit;box-shadow:0 1px 5px rgba(0,0,0,.35);border-radius:5px;cursor:pointer}
+</style></head>
+<body>
+<div id="map"></div>
+<div class="brand">LandLine <small>· who owns this land?</small></div>
+<div class="hint" id="hint">Zoom in & tap a parcel</div>
+<div id="panel"><div class="hd"><span class="x" onclick="document.getElementById('panel').classList.remove('open')">✕</span><span id="phd">Parcel</span></div><div class="bd" id="pbd"></div></div>
+<script>
+// ===== county Auditor connectors (owner names). Add a neighbor by dropping in another entry. =====
+var CONNECTORS={
+ "Stark":{url:"https://scgisa.starkcountyohio.gov/arcgis/rest/services/Auditor/StarkCountyParcels/MapServer/0/query",
+   owner:"OWNER",id:"PIN",acres:"ACRES",addr:"SITE_ADDRESS",sale:"MOST_RECENT_SALE_PRICE",saleDate:"MOST_RECENT_SALE_DATE",prev:"PREVIOUS_OWNER",
+   bbox:[-81.58,40.59,-80.98,40.97]}
+ // TODO neighbors: Summit, Portage, Mahoning, Columbiana, Carroll, Tuscarawas, Wayne — add {url,field map,bbox}
+};
+// statewide coverage (boundaries + mailing addr, NO owner) — best-effort beta
+var STATEWIDE="https://services2.arcgis.com/MlJ0G8iWUyC7jAmu/arcgis/rest/services/OhioStatewidePacels_full_view/FeatureServer/0/query";
+var DOW="https://gis.ohiodnr.gov/arcgis/rest/services/DOW_Services/HuntingRegulations_AGOL_3/MapServer";
+var CH="https://gis.ohiodnr.gov/arcgis/rest/services/DOW_Services/ControlledHunt_Pub/MapServer";
+
+var map=L.map('map',{preferCanvas:true}).setView([40.79,-81.30],12);
+var canvas=L.canvas();
+var street=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap | parcels: County Auditors & OGRIP | hunting: ODNR Div. of Wildlife'}).addTo(map);
+var sat=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Imagery © Esri'});
+function setHint(s){document.getElementById('hint').textContent=s;}
+function qs(o){return new URLSearchParams(o).toString();}
+function bbox(){var b=map.getBounds();return {geometry:[b.getWest(),b.getSouth(),b.getEast(),b.getNorth()].join(','),geometryType:'esriGeometryEnvelope',inSR:'4326',spatialRel:'esriSpatialRelIntersects'};}
+
+// ===== parcels w/ owner (from county connectors) =====
+var parcelGroup=L.layerGroup().addTo(map);
+var labelLayer=L.layerGroup().addTo(map);
+var ownerFeats=[];
+var pAbort;
+function intersectsView(bb){var b=map.getBounds();return !(bb[2]<b.getWest()||bb[0]>b.getEast()||bb[3]<b.getSouth()||bb[1]>b.getNorth());}
+function styleParcel(){return {color:'#1565c0',weight:1,fillColor:'#42a5f5',fillOpacity:0.05,opacity:0.65};}
+function loadParcels(){
+ if(map.getZoom()<15){parcelGroup.clearLayers();labelLayer.clearLayers();ownerFeats=[];setHint('Zoom in to load parcels');return;}
+ var conns=Object.keys(CONNECTORS).filter(function(c){return intersectsView(CONNECTORS[c].bbox);});
+ if(!conns.length){parcelGroup.clearLayers();labelLayer.clearLayers();ownerFeats=[];setHint('No owner data here yet — try Stark Co. (toggle All-Ohio beta for boundaries)');return;}
+ setHint('Loading owners…');
+ if(pAbort)pAbort.abort();pAbort=new AbortController();
+ Promise.all(conns.map(function(c){var cc=CONNECTORS[c];
+   var of=[cc.id,cc.owner,cc.acres,cc.addr,cc.sale,cc.saleDate,cc.prev].filter(Boolean).join(',');
+   var p=Object.assign({where:'1=1',outFields:of,returnGeometry:'true',f:'geojson',outSR:'4326',resultRecordCount:'3000'},bbox());
+   return fetch(cc.url+'?'+qs(p),{signal:pAbort.signal}).then(function(r){return r.json();}).then(function(g){return {cc:cc,county:c,g:g};});
+ })).then(function(results){
+   parcelGroup.clearLayers();ownerFeats=[];var n=0;
+   results.forEach(function(res){
+     L.geoJSON(res.g,{renderer:canvas,style:styleParcel,onEachFeature:function(f,l){
+       f.properties._cc=res.cc;f.properties._county=res.county;ownerFeats.push(f);n++;
+       l.on('click',function(){identify(f.properties,res.cc,res.county);l.setStyle({weight:3,color:'#ff6f00',fillOpacity:.18});});
+     }}).addTo(parcelGroup);
+   });
+   setHint(n+' parcels — tap for owner');refreshLabels();
+ }).catch(function(e){if(e.name!=='AbortError')setHint('parcel load error');});
+}
+
+// ===== owner labels: pole-of-inaccessibility (widest open spot) + width-aware stacking =====
+function ringOf(f){var g=f.geometry;if(!g)return null;if(g.type==='Polygon')return g.coordinates[0];
+ if(g.type==='MultiPolygon'){var b=null,ba=-1;g.coordinates.forEach(function(p){var a=Math.abs(area(p[0]));if(a>ba){ba=a;b=p[0];}});return b;}return null;}
+function area(r){var a=0;for(var i=0,j=r.length-1;i<r.length;j=i++)a+=(r[j][0]+r[i][0])*(r[j][1]-r[i][1]);return a/2;}
+function inRing(x,y,r){var s=false;for(var i=0,j=r.length-1;i<r.length;j=i++){var xi=r[i][0],yi=r[i][1],xj=r[j][0],yj=r[j][1];if(((yi>y)!=(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))s=!s;}return s;}
+function segD(px,py,ax,ay,bx,by){var dx=bx-ax,dy=by-ay,l2=dx*dx+dy*dy,t=l2?((px-ax)*dx+(py-ay)*dy)/l2:0;t=Math.max(0,Math.min(1,t));return Math.hypot(px-(ax+t*dx),py-(ay+t*dy));}
+function edgeDist(x,y,r){var m=Infinity;for(var i=0,j=r.length-1;i<r.length;j=i++)m=Math.min(m,segD(x,y,r[j][0],r[j][1],r[i][0],r[i][1]));return m;}
+function pole(ring){var xs=ring.map(function(p){return p[0];}),ys=ring.map(function(p){return p[1];});
+ var x0=Math.min.apply(null,xs),x1=Math.max.apply(null,xs),y0=Math.min.apply(null,ys),y1=Math.max.apply(null,ys),best=null,bd=-1,N=16;
+ for(var i=1;i<N;i++)for(var k=1;k<N;k++){var x=x0+(x1-x0)*i/N,y=y0+(y1-y0)*k/N;if(!inRing(x,y,ring))continue;var d=edgeDist(x,y,ring);if(d>bd){bd=d;best=[x,y];}}
+ if(!best)return null;var step=Math.max(x1-x0,y1-y0)/N/2;
+ for(var it=0;it<5;it++){for(var dx=-1;dx<=1;dx++)for(var dy=-1;dy<=1;dy++){if(!dx&&!dy)continue;var x=best[0]+dx*step,y=best[1]+dy*step;if(!inRing(x,y,ring))continue;var d=edgeDist(x,y,ring);if(d>bd){bd=d;best=[x,y];}}step/=1.8;}
+ return {x:best[0],y:best[1],r:bd};}
+function refreshLabels(){labelLayer.clearLayers();if(map.getZoom()<16)return;var b=map.getBounds();
+ ownerFeats.forEach(function(f){var o=(f.properties[f.properties._cc.owner]||'').trim();if(!o)return;
+   var r=ringOf(f);if(!r||r.length<4)return;
+   var px=r.map(function(p){var q=map.latLngToLayerPoint([p[1],p[0]]);return [q.x,q.y];});
+   var pi=pole(px);if(!pi||pi.r<13)return;var ll=map.layerPointToLatLng(L.point(pi.x,pi.y));if(!b.contains(ll))return;
+   var mw=Math.max(26,Math.min(230,Math.round(pi.r*2-6)));
+   L.marker(ll,{interactive:false,keyboard:false,icon:L.divIcon({className:'plabel',html:'<span style="max-width:'+mw+'px">'+o+'</span>',iconSize:[0,0]})}).addTo(labelLayer);});}
+
+function row(k,v){return v?('<tr><td class=k>'+k+'</td><td>'+v+'</td></tr>'):'';}
+function identify(p,cc,county){
+ document.getElementById('phd').textContent=county+' County';
+ var yr=p[cc.saleDate]?new Date(p[cc.saleDate]).getUTCFullYear():'';
+ document.getElementById('pbd').innerHTML='<div class="owner">'+(p[cc.owner]||'—')+'</div>'+
+  '<table>'+row('Parcel ID',p[cc.id])+row('Acres',p[cc.acres])+row('Address',(p[cc.addr]||'').trim())+
+  (p[cc.sale]?row('Last sale','$'+(+p[cc.sale]).toLocaleString()+(yr?' ('+yr+')':'')):'')+
+  (p[cc.prev]?row('Prev owner',p[cc.prev]):'')+'</table>'+
+  '<div class=src>Owner: '+county+' County Auditor (live).</div>';
+ document.getElementById('panel').classList.add('open');
+}
+
+// ===== statewide coverage (beta) — boundaries + mailing only =====
+var swLayer=L.geoJSON(null,{renderer:canvas,style:{color:'#8d6e63',weight:1,fill:false,opacity:.5},
+  onEachFeature:function(f,l){l.on('click',function(){var p=f.properties;
+    document.getElementById('phd').textContent=(p.County||'')+' County';
+    document.getElementById('pbd').innerHTML='<div class="owner muted">Owner: see county auditor</div><table>'+
+      row('Parcel ID',p.LocalParcelID)+row('Situs',(p.SitusAddressAll||'').trim())+row('Mailing',(p.MailAddressAll||'').trim())+
+      row('Acres',p.LandArea?(+p.LandArea).toFixed(2):'')+'</table><div class=src>Ohio Statewide Parcels (OGRIP). Owner name not in public statewide view.</div>';
+    document.getElementById('panel').classList.add('open');});}});
+var swOn=false,swAbort;
+function loadSW(){if(!swOn||map.getZoom()<15)return;if(swAbort)swAbort.abort();swAbort=new AbortController();
+ var to=setTimeout(function(){swAbort.abort();},9000);
+ var p=Object.assign({where:'1=1',outFields:'County,LocalParcelID,SitusAddressAll,MailAddressAll,LandArea',returnGeometry:'true',f:'geojson',outSR:'4326',resultRecordCount:'2000'},bbox());
+ fetch(STATEWIDE+'?'+qs(p),{signal:swAbort.signal}).then(function(r){return r.json();}).then(function(g){clearTimeout(to);swLayer.clearLayers();swLayer.addData(g);}).catch(function(){});}
+
+// ===== ODNR hunting overlays =====
+function odnr(url,style,bboxOnly){var lyr=L.geoJSON(null,{style:style,onEachFeature:function(f,l){
+   l.bindPopup(Object.keys(f.properties).slice(0,10).map(function(k){return '<b>'+k+':</b> '+f.properties[k];}).join('<br>'));}});
+ function load(){var p={where:'1=1',outFields:'*',returnGeometry:'true',f:'geojson',outSR:'4326'};if(bboxOnly)Object.assign(p,bbox());
+   fetch(url+'?'+qs(p)).then(function(r){return r.json();}).then(function(g){lyr.clearLayers();lyr.addData(g);}).catch(function(){});}
+ lyr._load=load;lyr._bbox=bboxOnly;return lyr;}
+var publicLand=odnr(DOW+'/18/query',{color:'#2e7d32',weight:1,fillColor:'#66bb6a',fillOpacity:.35},true);
+var deerZones=odnr(DOW+'/7/query',{color:'#6a1b9a',weight:2,fillColor:'#9c27b0',fillOpacity:.06});
+var waterfowl=odnr(DOW+'/2/query',{color:'#0277bd',weight:2,dashArray:'5 4',fill:false});
+var turkey=odnr(DOW+'/4/query',{color:'#e65100',weight:2,dashArray:'4 4',fill:false});
+var controlled=odnr(CH+'/1/query',{color:'#c62828',weight:1,fillColor:'#ef5350',fillOpacity:.3},true);
+
+map.on('overlayadd',function(e){if(e.layer===swLayer){swOn=true;loadSW();}if(e.layer._load)e.layer._load();});
+map.on('overlayremove',function(e){if(e.layer===swLayer)swOn=false;});
+var t;map.on('moveend',function(){clearTimeout(t);t=setTimeout(function(){loadParcels();loadSW();
+  [publicLand,controlled].forEach(function(l){if(l._bbox&&map.hasLayer(l))l._load();});},350);});
+
+L.control.layers({'Street':street,'Satellite':sat},{
+  'Parcels + owners (Stark)':parcelGroup,
+  'All-Ohio parcels (beta)':swLayer,
+  'ODNR public hunting land':publicLand,
+  'Deer zones (bag limits)':deerZones,
+  'Waterfowl zones':waterfowl,
+  'Spring turkey zones':turkey,
+  'Controlled hunt units':controlled
+},{collapsed:false}).addTo(map);
+parcelGroup.addTo(map);
+
+var geo=L.control({position:'topleft'});geo.onAdd=function(){var b=L.DomUtil.create('button','btn');b.innerHTML='◎ My location';
+ L.DomEvent.on(b,'click',function(e){L.DomEvent.stop(e);map.locate({setView:true,maxZoom:16});});return b;};geo.addTo(map);
+var lg=L.control({position:'bottomright'});lg.onAdd=function(){var d=L.DomUtil.create('div','legend');
+ d.innerHTML='<b>LandLine</b><br><i style="background:#42a5f5"></i>Parcel (tap → owner)<br><i style="background:#66bb6a"></i>Public hunting land<br><i style="background:#9c27b0"></i>Deer zone<br><span style="color:#789">Owners live: <b>Stark</b> · neighbors next</span>';return d;};lg.addTo(map);
+
+loadParcels();
+</script></body></html>
