@@ -160,7 +160,12 @@
   .copyright{padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.8rem;opacity:.6}
 
   @media(max-width:860px){
-    nav.main,.times-chip{display:none}
+    nav.main{display:none;position:absolute;top:74px;left:0;right:0;flex-direction:column;gap:0;
+      background:var(--primary);padding:6px 0;box-shadow:0 14px 28px rgba(0,0,0,.22);border-top:1px solid rgba(255,255,255,.08)}
+    nav.main.open{display:flex}
+    nav.main a{padding:13px 22px;width:100%;font-size:.95rem}
+    nav.main a:hover::after{display:none}
+    .times-chip{display:none}
     .menu-btn{display:block}
     .hero-grid,.welcome-grid,.visit-grid,.sermon-card,.foot-grid{grid-template-columns:1fr;gap:34px}
     .steps,.expect,.creed{grid-template-columns:1fr}
@@ -203,7 +208,7 @@
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <span class="kicker" id="heroKicker">Grace &amp; Truth · Massillon, Ohio</span>
+      <span class="kicker" id="heroKicker">Grace &amp; Truth · Dalton, Ohio</span>
       <h1>A gospel-centered church on the Lincoln Highway.</h1>
       <p class="lead">We're a Baptist church gathering each Sunday to worship Christ, sit under His Word,
         and grow together as a family of faith. Whoever you are, there's a seat for you here.</p>
@@ -249,7 +254,7 @@
       <h2 style="font-size:clamp(1.8rem,3.2vw,2.5rem);margin:12px 0 8px">What to expect on Sunday</h2>
       <div class="visit-facts">
         <div class="fact"><div class="ic">🕙</div><div><b>Sundays at 10:30 AM</b><span>Coffee &amp; fellowship from 10:00 AM</span></div></div>
-        <div class="fact"><div class="ic">📍</div><div><b>Lincoln Highway · Massillon, Ohio</b><span>Free parking · enter through the main doors · address finalizing [placeholder]</span></div></div>
+        <div class="fact"><div class="ic">📍</div><div><b>Lincoln Highway · Dalton, Ohio</b><span>Free parking · enter through the main doors · address finalizing [placeholder]</span></div></div>
         <div class="fact"><div class="ic">⏱️</div><div><b>About 75 minutes</b><span>Singing, prayer, and a sermon from the Bible</span></div></div>
         <div class="fact"><div class="ic">👶</div><div><b>Safe, staffed nursery &amp; kids' classes</b><span>Secure check-in for infants through elementary</span></div></div>
       </div>
@@ -368,7 +373,7 @@
         <h4>Give</h4>
         <p>Support the ministry of LHBC.</p>
         <a class="btn btn-primary" href="#" style="margin-top:4px">Give Online</a>
-        <p style="margin-top:16px">Lincoln Highway<br>Massillon, OH · [placeholder]<br>(330) 000-0000</p>
+        <p style="margin-top:16px">Lincoln Highway<br>Dalton, OH · [placeholder]<br>(330) 000-0000</p>
       </div>
     </div>
     <div class="copyright">
@@ -377,6 +382,13 @@
     </div>
   </div>
 </footer>
+
+<script>
+  /* Mobile nav toggle */
+  (function(){var b=document.querySelector('.menu-btn'),n=document.querySelector('nav.main');
+    if(b&&n){b.onclick=function(){n.classList.toggle('open');};
+      n.querySelectorAll('a').forEach(function(a){a.onclick=function(){n.classList.remove('open');};});}})();
+</script>
 
 <script>
   /* Soft private-preview gate. GitHub Pages is static — this is obscurity, not real

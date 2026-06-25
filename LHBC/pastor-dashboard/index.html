@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LHBC · Pastor's Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Inter:wght@400;500;600;700&display=swap');
+  :root{
+    --navy:#122a52; --navy-deep:#0d1f3d; --ink:#0f1b2d; --ink-soft:#5a6781;
+    --line:#e4e9f1; --bg:#eef1f6; --surface:#ffffff; --red:#c8102e; --red-soft:#f8dde0;
+    --up:#2f7d52; --up-bg:#e4f1ea; --down:#c8102e; --down-bg:#f8dde0;
+    --teal:#2f7d8a; --gold:#b3892f; --slate:#7b8aa3;
+    --radius:10px; --head:'Merriweather',Georgia,serif; --body:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);color:var(--ink);background:var(--bg);min-height:100vh;-webkit-font-smoothing:antialiased}
+  .num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+  h1,h2,h3{font-family:var(--head);font-weight:700;letter-spacing:-.01em}
+  .wrap{max-width:1280px;margin:0 auto;padding:16px 20px 70px}
+  a{color:inherit;text-decoration:none}
+
+  /* header */
+  header.app{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;
+    background:var(--navy);color:#fff;padding:14px 22px;border-radius:0 0 14px 14px;box-shadow:0 8px 24px rgba(18,42,82,.18)}
+  .brand{display:flex;align-items:center;gap:13px}
+  .crest{width:38px;height:38px}
+  .brand .t b{font-family:var(--head);font-size:1.1rem;display:block;line-height:1.1}
+  .brand .t span{font-size:.74rem;opacity:.8}
+  .controls{display:flex;align-items:center;gap:16px}
+  .seg{display:flex;background:rgba(255,255,255,.1);border-radius:999px;padding:3px}
+  .seg button{border:none;background:transparent;color:#cdd8ea;font:600 .82rem var(--body);padding:8px 16px;border-radius:999px;cursor:pointer;transition:.15s}
+  .seg button.on{background:#fff;color:var(--navy)}
+  .cmp{font-size:.72rem;opacity:.8;text-align:right;line-height:1.3}
+
+  .backlink{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;color:var(--ink-soft);margin:14px 0 2px}
+  .backlink:hover{color:var(--navy)}
+  .vision{display:flex;align-items:center;gap:10px;background:linear-gradient(90deg,#fbeef0,#fff);border:1px solid var(--red-soft);
+    border-left:4px solid var(--red);border-radius:8px;padding:11px 16px;margin:12px 0 18px;font-size:.88rem}
+  .vision b{font-family:var(--head)}
+  .vision .yr{margin-left:auto;font-size:.72rem;color:var(--ink-soft);letter-spacing:.1em;text-transform:uppercase}
+
+  .zone-label{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin:6px 2px 12px}
+
+  /* KPI hero row */
+  .hero{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:8px}
+  @media(max-width:1080px){.hero{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.hero{grid-template-columns:1fr}}
+  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;cursor:grab;
+    box-shadow:0 2px 12px rgba(15,27,45,.04);transition:box-shadow .15s,transform .1s;position:relative}
+  .kpi:hover{box-shadow:0 8px 22px rgba(15,27,45,.09)}
+  .kpi.drag{opacity:.45} .kpi.over{outline:2px dashed var(--navy);outline-offset:2px}
+  .kpi .lab{font-size:.78rem;font-weight:600;color:var(--ink-soft);display:flex;align-items:center;gap:6px}
+  .kpi .lab .gi{margin-left:auto;color:#c2cbd9;font-size:.8rem}
+  .kpi .val{font-size:2.1rem;font-weight:700;line-height:1.05;margin:8px 0 2px}
+  .kpi .val small{font-size:1rem;color:var(--ink-soft);font-weight:600}
+  .kpi .delta{font-size:.8rem;font-weight:600;display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px}
+  .kpi .delta.up{color:var(--up);background:var(--up-bg)} .kpi .delta.down{color:var(--down);background:var(--down-bg)}
+  .kpi .delta.flat{color:var(--ink-soft);background:#eef1f6}
+  .kpi .sub{font-size:.74rem;color:var(--ink-soft);margin-top:8px}
+  .kpi .spark{margin-top:10px;height:34px;width:100%}
+  .kpi.attn{border-color:var(--red-soft);background:linear-gradient(180deg,#fff,#fff8f9)}
+  .kpi.attn .val{color:var(--red)}
+  .draghint{font-size:.72rem;color:var(--ink-soft);margin:4px 2px 16px;display:flex;align-items:center;gap:6px}
+
+  /* trends */
+  .trends{display:grid;grid-template-columns:1.5fr 1.5fr;gap:14px;margin-bottom:8px}
+  @media(max-width:900px){.trends{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;box-shadow:0 2px 12px rgba(15,27,45,.04)}
+  .card h3{font-size:1.04rem;margin-bottom:2px}
+  .card .csub{font-size:.78rem;color:var(--ink-soft);margin-bottom:14px}
+  .chartbox{position:relative;height:230px}
+  .trends2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:8px}
+  @media(max-width:1000px){.trends2{grid-template-columns:1fr}}
+
+  /* funnel */
+  .funnel{display:flex;flex-direction:column;gap:7px;margin-top:6px}
+  .fstage{position:relative;margin:0 auto;background:var(--navy);color:#fff;border-radius:5px;padding:9px 12px;display:flex;justify-content:space-between;align-items:center;transition:.2s}
+  .fstage small{opacity:.8;font-size:.72rem;font-weight:500}
+  .fstage b{font-size:.98rem}
+  .fstage .pct{position:absolute;right:-52px;top:50%;transform:translateY(-50%);font-size:.72rem;color:var(--ink-soft);width:46px}
+  .funnel-wrap{padding-right:50px}
+
+  /* composition bars */
+  .comp{display:flex;flex-direction:column;gap:12px;margin-top:4px}
+  .comp .row .top{display:flex;justify-content:space-between;font-size:.85rem;margin-bottom:5px}
+  .comp .row .top b{font-weight:600}
+  .comp .bar{height:12px;background:#eef1f6;border-radius:6px;overflow:hidden}
+  .comp .bar i{display:block;height:100%;border-radius:6px}
+
+  /* bullet */
+  .bullet{margin-top:6px}
+  .bullet .bl-top{display:flex;justify-content:space-between;align-items:baseline;font-size:.85rem;margin-bottom:7px}
+  .bullet .bl-top b{font-size:1.15rem}
+  .bl-track{position:relative;height:20px;background:#eef1f6;border-radius:5px;overflow:hidden}
+  .bl-band{position:absolute;top:0;bottom:0;background:#e3e8f1}
+  .bl-val{position:absolute;top:4px;bottom:4px;left:0;background:var(--navy);border-radius:4px}
+  .bl-target{position:absolute;top:-3px;bottom:-3px;width:3px;background:var(--red)}
+  .bl-cap{display:flex;justify-content:space-between;font-size:.72rem;color:var(--ink-soft);margin-top:6px}
+
+  .ministats{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin-top:4px}
+  .ministats .ms{display:flex;justify-content:space-between;font-size:.84rem;padding:7px 0;border-bottom:1px solid var(--line)}
+  .ministats .ms span{color:var(--ink-soft)} .ministats .ms b{font-weight:600}
+  .ms b.warn{color:var(--red)}
+
+  /* action zone */
+  .actions{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:14px}
+  @media(max-width:1000px){.actions{grid-template-columns:1fr}}
+  .alist{display:flex;flex-direction:column}
+  .arow{display:flex;gap:11px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line)}
+  .arow:last-child{border-bottom:none}
+  .arow .ic{width:30px;height:30px;border-radius:7px;display:grid;place-items:center;flex-shrink:0;font-size:.8rem;font-weight:700}
+  .ic.due{background:var(--red-soft);color:var(--red)} .ic.soon{background:#fff3e0;color:#9a6a16} .ic.ok{background:var(--up-bg);color:var(--up)} .ic.care{background:#e8eefb;color:var(--navy)}
+  .arow .ab{flex:1;min-width:0}
+  .arow .ab b{font-size:.9rem} .arow .ab small{display:block;color:var(--ink-soft);font-size:.76rem;margin-top:1px}
+  .arow .when{font-size:.72rem;font-weight:600;color:var(--red);white-space:nowrap}
+  .arow .when.soft{color:var(--ink-soft)}
+  .pill{display:inline-block;font-size:.66rem;font-weight:700;padding:2px 7px;border-radius:999px;background:#eef1f6;color:var(--ink-soft);margin-top:3px}
+
+  .draftbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:26px;font-size:.78rem;color:var(--ink-soft)}
+  .tag{background:var(--gold);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:5px}
+  .legend-note{font-size:.72rem;color:var(--ink-soft)}
+  @media(max-width:560px){.controls{flex-direction:column;align-items:flex-end;gap:6px}.cmp{display:none}}
+  @media(max-width:700px){.draghint{display:none}.wrap{padding:14px 14px 64px}.zone-label{margin-top:10px}}
+  @media(max-width:560px){.seg button{padding:7px 11px;font-size:.77rem}.kpi .val{font-size:1.9rem}
+    header.app{padding:12px 16px;border-radius:0 0 12px 12px}.brand .t span{display:none}}
+</style>
+</head>
+<body>
+<header class="app">
+  <div class="brand">
+    <svg class="crest" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+      <rect x="2" y="2" width="44" height="44" rx="3" stroke="#b3892f" stroke-width="1.5" opacity=".6"/>
+      <path d="M24 9v9M19.5 13.5h9" stroke="#b3892f" stroke-width="2" stroke-linecap="round"/>
+      <path d="M14 39V25l10-8 10 8v14" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M21 39v-7h6v7" stroke="#fff" stroke-width="1.6"/>
+    </svg>
+    <div class="t"><b>Pastor's Dashboard</b><span id="greeting">Good morning, Pastor</span></div>
+  </div>
+  <div class="controls">
+    <div class="seg" id="periodSeg">
+      <button data-p="today" class="on">Today</button>
+      <button data-p="week">Weekly</button>
+      <button data-p="month">Monthly</button>
+      <button data-p="year">Annual</button>
+    </div>
+    <div class="cmp" id="cmpNote">Comparing to<br><b>same week last year</b></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <a class="backlink" href="/LHBC/">← All LHBC mockups</a>
+  <div class="vision">
+    🔥 <span><b>2026 Vision · "Increase Your Faith"</b> — Luke 17:5</span>
+    <span class="yr">Lincoln Highway Baptist · Dalton, OH</span>
+  </div>
+
+  <!-- ZONE 1 -->
+  <div class="zone-label">Last Sunday at a glance — <span id="snapDate">Sun, June 21</span></div>
+  <div class="hero" id="heroRow"></div>
+  <div class="draghint">⠿ Tip: drag any tile to rearrange your morning view.</div>
+
+  <!-- ZONE 2 -->
+  <div class="zone-label">Trends</div>
+  <div class="trends">
+    <div class="card">
+      <h3>Attendance by service</h3>
+      <p class="csub" id="attSub">Last 12 weeks · click a series in the legend to toggle it</p>
+      <div class="chartbox"><canvas id="attChart"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>Giving vs. budget</h3>
+      <p class="csub" id="giveSub">Last 12 weeks · bars = received, red line = budget need</p>
+      <div class="chartbox"><canvas id="giveChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="trends2">
+    <div class="card">
+      <h3>Assimilation funnel</h3>
+      <p class="csub">New people, last 90 days</p>
+      <div class="funnel-wrap"><div class="funnel" id="funnel"></div></div>
+    </div>
+    <div class="card">
+      <h3>Giving composition</h3>
+      <p class="csub">This month, by fund</p>
+      <div class="comp" id="comp"></div>
+      <div class="bullet" style="margin-top:18px">
+        <div class="bl-top"><span>Building fund progress</span><b class="num">$58,400</b></div>
+        <div class="bl-track"><div class="bl-band" style="left:0;width:100%"></div><div class="bl-val" style="width:38.9%"></div><div class="bl-target" style="left:100%"></div></div>
+        <div class="bl-cap"><span>39% of goal</span><span>Goal $150,000</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Giving health</h3>
+      <p class="csub">Stewardship signals</p>
+      <div class="ministats">
+        <div class="ms"><span>Giving units</span><b class="num">38</b></div>
+        <div class="ms"><span>Avg / unit / wk</span><b class="num">$134</b></div>
+        <div class="ms"><span>Online / in-person</span><b class="num">44 / 56%</b></div>
+        <div class="ms"><span>On recurring</span><b class="num">41%</b></div>
+        <div class="ms"><span>At-risk givers (45d)</span><b class="num warn">4</b></div>
+        <div class="ms"><span>Lapsed givers (90d)</span><b class="num warn">2</b></div>
+      </div>
+      <div class="bullet" style="margin-top:14px">
+        <div class="bl-top"><span>Faith-promise missions (2026)</span><b class="num">$31,500</b></div>
+        <div class="bl-track"><div class="bl-val" style="width:52.5%;background:#2f7d8a"></div><div class="bl-target" style="left:100%"></div></div>
+        <div class="bl-cap"><span>53% of pledge total</span><span>Goal $60,000</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ZONE 3 -->
+  <div class="zone-label">Act now — today's pastoral work</div>
+  <div class="actions">
+    <div class="card">
+      <h3>Guest follow-up queue</h3>
+      <p class="csub">36-hr email → 96-hr note → 1-month letter</p>
+      <div class="alist" id="followups"></div>
+    </div>
+    <div class="card">
+      <h3>Missing in action</h3>
+      <p class="csub">Regulars absent 3+ weeks</p>
+      <div class="alist" id="missing"></div>
+    </div>
+    <div class="card">
+      <h3>Care &amp; this week</h3>
+      <p class="csub">Visits, prayer, and what's ahead</p>
+      <div class="alist" id="care"></div>
+    </div>
+  </div>
+
+  <div class="draftbar">
+    <span class="tag">Draft</span>
+    <span>Synthetic data for a ~100-person plant — not yet connected to a live church database.</span>
+    <span class="legend-note">· ▲ green = good direction · ▼ red = needs attention</span>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+// ================= DATA (synthetic, ~100-person Dalton plant) =================
+const wk = {labels:['Apr 5','Apr 12','Apr 19','Apr 26','May 3','May 10','May 17','May 24','May 31','Jun 7','Jun 14','Jun 21'],
+  am:[88,92,95,91,97,99,96,101,98,103,100,104], ss:[58,61,63,60,65,67,64,68,66,70,69,71],
+  wed:[36,38,40,37,41,43,39,42,44,41,43,44], online:[33,30,29,31,28,30,27,29,31,28,30,31],
+  give:[4380,5210,4720,6150,4890,5320,4610,5870,5040,5610,4980,5840], budget:5000};
+const mo = {labels:['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun'],
+  am:[78,80,83,85,84,88,90,92,95,97,99,101], ss:[52,54,56,57,58,60,62,63,66,67,69,70],
+  wed:[30,31,33,34,35,37,38,39,41,42,43,44], online:[35,34,33,32,31,30,30,29,30,29,30,31],
+  give:[19200,20400,18900,22600,21100,23400,20800,24100,22300,24800,22900,24650], budget:21650};
+const yr = {labels:['2024','2025','2026 YTD'], am:[52,76,96], ss:[34,54,68], wed:[20,38,44], online:[24,30,31],
+  give:[148000,232000,138000], budget:260000};
+
+const KPI = {
+  today:{ snap:'Sun, June 21', cmp:'same week last year',
+    cards:[
+      {key:'att',lab:'Sunday AM attendance',val:'104',delta:'+22 (+27%)',dir:'up',sub:'Sun School 71 · Wed 44 · Online 31',spark:wk.am},
+      {key:'give',lab:'Giving — last Sunday',val:'$5,840',delta:'+$840 (117%)',dir:'up',sub:'vs $5,000 weekly need',spark:wk.give},
+      {key:'guest',lab:'First-time guests',val:'5',delta:'5 per 100 = growing',dir:'up',sub:'2 of last week’s 4 returned (50%)',spark:[3,5,2,6,4,5,3,7,4,5,4,5]},
+      {key:'souls',lab:'Professions / baptisms',val:'2 <small>/ 1</small>',delta:'1 baptism Sun Jul 5',dir:'up',sub:'9 baptized YTD',spark:[1,0,2,1,0,3,1,2,0,1,1,2]},
+      {key:'act',lab:'Needs you today',val:'3 <small>+ 5</small>',delta:'follow-ups + absent',dir:'attn',sub:'3 guest follow-ups · 5 missing-in-action',spark:null},
+    ]},
+  week:{ snap:'Week of June 15', cmp:'same week last year',
+    cards:[
+      {key:'att',lab:'Avg weekly attendance',val:'104',delta:'+22 (+27%)',dir:'up',sub:'AM worship, this week',spark:wk.am},
+      {key:'give',lab:'Giving this week',val:'$5,840',delta:'+$840 (117%)',dir:'up',sub:'vs $5,000 weekly need',spark:wk.give},
+      {key:'guest',lab:'Guests this week',val:'5',delta:'+1 vs last week',dir:'up',sub:'2nd-time returners: 2',spark:[3,5,2,6,4,5,3,7,4,5,4,5]},
+      {key:'souls',lab:'Professions / baptisms',val:'2 <small>/ 1</small>',delta:'this week',dir:'up',sub:'YTD 18 / 9',spark:[1,0,2,1,0,3,1,2,0,1,1,2]},
+      {key:'act',lab:'Open follow-ups',val:'3 <small>+ 5</small>',delta:'follow-ups + absent',dir:'attn',sub:'Act before Sunday',spark:null},
+    ]},
+  month:{ snap:'June 2026', cmp:'last month',
+    cards:[
+      {key:'att',lab:'Avg attendance — June',val:'101',delta:'+2 (+2%)',dir:'up',sub:'12-month high',spark:mo.am},
+      {key:'give',lab:'Giving — June',val:'$24,650',delta:'+$1,750 (114%)',dir:'up',sub:'vs $21,650 monthly budget',spark:mo.give},
+      {key:'guest',lab:'Guests — June',val:'20',delta:'+4 vs May',dir:'up',sub:'Best month this year',spark:[12,15,11,18,14,17,13,19,15,18,16,20]},
+      {key:'souls',lab:'Professions / baptisms',val:'5 <small>/ 2</small>',delta:'June total',dir:'up',sub:'YTD 18 / 9',spark:[3,2,4,3,2,5,3,4,2,4,3,5]},
+      {key:'act',lab:'New members — June',val:'2',delta:'+2 households',dir:'up',sub:'85 members total',spark:null},
+    ]},
+  year:{ snap:'2026 year-to-date', cmp:'full-year 2025',
+    cards:[
+      {key:'att',lab:'Avg weekly attendance',val:'96',delta:'+20 (+26%)',dir:'up',sub:'2024: 52 → 2025: 76 → 2026',spark:yr.am},
+      {key:'give',lab:'Giving YTD',val:'$138K',delta:'53% of $260K budget',dir:'up',sub:'2025 total: $232K',spark:yr.give},
+      {key:'guest',lab:'First-time guests YTD',val:'118',delta:'≥ avg attendance ✓',dir:'up',sub:'Nieuwhof vitality test passed',spark:[120,210,118]},
+      {key:'souls',lab:'Baptisms / professions',val:'9 <small>/ 18</small>',delta:'YTD',dir:'up',sub:'2025: 19 / 31',spark:[8,19,9]},
+      {key:'act',lab:'Members',val:'85',delta:'+21 vs 2025',dir:'up',sub:'Back-door rate held at 11%',spark:null},
+    ]},
+};
+
+const funnelData=[{n:'First-time guests',v:48,p:''},{n:'Came a 2nd time',v:19,p:'40%'},{n:'Became regular',v:12,p:'63%'},{n:'Membership class',v:8,p:'67%'},{n:'New member',v:6,p:'75%'}];
+const compData=[{n:'General Fund (tithes & offerings)',v:21800,c:'#122a52'},{n:'Faith-promise missions',v:4200,c:'#2f7d8a'},{n:'Building fund',v:3100,c:'#b3892f'},{n:'Benevolence',v:640,c:'#7b8aa3'}];
+const followData=[
+  {ic:'due',name:'The Anderson family',note:'Visited Jun 21 · handwritten note due (96-hr window)',when:'Due today'},
+  {ic:'due',name:'Sarah Whitcomb',note:'Visited Jun 21 · email sent ✓ · note next',when:'Due today'},
+  {ic:'soon',name:'The Okafor family',note:'Visited Jun 21 · welcome email',when:'By tmrw'},
+  {ic:'soon',name:'Tom & Lisa Becker',note:'Visited May 24 · one-month letter',when:'Jun 24'},
+];
+const missingData=[
+  {name:'Daniel Reyes',note:'Last seen May 17 · 5 weeks',when:'5 wks'},
+  {name:'The Pruitt family',note:'Last seen May 24 · usually every week',when:'4 wks'},
+  {name:'Gary Holloway',note:'Last seen May 24 · Sun School teacher',when:'4 wks'},
+  {name:'Edith Vance',note:'Last seen May 31 · widow, lives alone',when:'3 wks'},
+  {name:'The Schmidt family',note:'Last seen May 31',when:'3 wks'},
+];
+const careData=[
+  {ic:'care',name:'Hospital visit — Margaret Klein',note:'Aultman Hospital · hip surgery Tue',when:'Today'},
+  {ic:'care',name:'Shut-in — Harold Diller',note:'Visit overdue (3 wks)',when:'Today'},
+  {ic:'care',name:'Prayer follow-up — Webb family',note:'Job loss · check in',when:'This wk'},
+  {ic:'ok',name:'Sermon prep — "Increase Your Faith"',note:'Luke 17:5 · Sun Jun 28',when:'60%'},
+  {ic:'ok',name:'2 birthdays this week',note:'E. Vance (Thu), J. Okafor (Sat)',when:''},
+];
+
+// ================= RENDER =================
+let order=['att','give','guest','souls','act'];
+const $=s=>document.querySelector(s);
+
+function spark(arr,w=170,h=34){
+  if(!arr||!arr.length) return '';
+  const mn=Math.min(...arr),mx=Math.max(...arr),rng=(mx-mn)||1,pad=3;
+  const pts=arr.map((v,i)=>[pad+i*(w-2*pad)/(arr.length-1), h-pad-(v-mn)/rng*(h-2*pad)]);
+  const d=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  const last=pts[pts.length-1];
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    <path d="${d}" fill="none" stroke="#122a52" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="3" fill="#c8102e"/></svg>`;
+}
+
+function renderHero(p){
+  const conf=KPI[p]; const byKey={}; conf.cards.forEach(c=>byKey[c.key]=c);
+  const row=$('#heroRow'); row.innerHTML='';
+  $('#snapDate').textContent=conf.snap; $('#cmpNote').innerHTML='Comparing to<br><b>'+conf.cmp+'</b>';
+  order.forEach(k=>{
+    const c=byKey[k]; if(!c) return;
+    const attn=c.dir==='attn';
+    const dcl=attn?'down':(c.dir==='up'?'up':(c.dir==='down'?'down':'flat'));
+    const arrow=attn?'!':(c.dir==='up'?'▲':(c.dir==='down'?'▼':'•'));
+    const el=document.createElement('div');
+    el.className='kpi'+(attn?' attn':''); el.draggable=true; el.dataset.key=k;
+    el.innerHTML=`<div class="lab">${c.lab}<span class="gi">⠿</span></div>
+      <div class="val num">${c.val}</div>
+      <span class="delta ${dcl}">${arrow} ${c.delta}</span>
+      <div class="sub">${c.sub}</div>${spark(c.spark)}`;
+    row.appendChild(el);
+  });
+  wireDrag();
+}
+
+// drag-to-rearrange hero tiles
+let dragKey=null;
+function wireDrag(){
+  document.querySelectorAll('.kpi').forEach(el=>{
+    el.ondragstart=e=>{dragKey=el.dataset.key;el.classList.add('drag');};
+    el.ondragend=e=>{el.classList.remove('drag');document.querySelectorAll('.kpi').forEach(x=>x.classList.remove('over'));};
+    el.ondragover=e=>{e.preventDefault();el.classList.add('over');};
+    el.ondragleave=e=>el.classList.remove('over');
+    el.ondrop=e=>{e.preventDefault();const t=el.dataset.key;
+      if(dragKey&&dragKey!==t){const a=order.indexOf(dragKey),b=order.indexOf(t);order.splice(a,1);order.splice(b,0,dragKey);renderHero(curP);}
+    };
+  });
+}
+
+function renderFunnel(){
+  const max=funnelData[0].v;
+  $('#funnel').innerHTML=funnelData.map(s=>{
+    const w=40+(s.v/max)*60;
+    return `<div class="fstage" style="width:${w}%"><span><b class="num">${s.v}</b> <small>${s.n}</small></span>${s.p?`<span class="pct">${s.p}</span>`:''}</div>`;
+  }).join('');
+}
+function renderComp(){
+  const max=Math.max(...compData.map(d=>d.v));
+  $('#comp').innerHTML=compData.map(d=>`<div class="row">
+    <div class="top"><b>${d.n}</b><span class="num">$${d.v.toLocaleString()}</span></div>
+    <div class="bar"><i style="width:${(d.v/max*100).toFixed(0)}%;background:${d.c}"></i></div></div>`).join('');
+}
+function renderActions(){
+  $('#followups').innerHTML=followData.map(r=>`<div class="arow"><div class="ic ${r.ic}">${r.ic==='due'?'!':'→'}</div>
+    <div class="ab"><b>${r.name}</b><small>${r.note}</small></div><div class="when ${r.ic==='due'?'':'soft'}">${r.when}</div></div>`).join('');
+  $('#missing').innerHTML=missingData.map(r=>`<div class="arow"><div class="ic soon">⌁</div>
+    <div class="ab"><b>${r.name}</b><small>${r.note}</small></div><div class="when">${r.when}</div></div>`).join('');
+  $('#care').innerHTML=careData.map(r=>`<div class="arow"><div class="ic ${r.ic}">${r.ic==='ok'?'✓':'♥'}</div>
+    <div class="ab"><b>${r.name}</b><small>${r.note}</small></div><div class="when ${r.when==='Today'?'':'soft'}">${r.when}</div></div>`).join('');
+}
+
+// charts
+let attChart,giveChart;
+const NAVY='#122a52',TEAL='#2f7d8a',GOLD='#b3892f',SLATE='#9aa7bd',RED='#c8102e';
+function buildCharts(p){
+  if(typeof Chart==='undefined') return;
+  const D = p==='month'?mo : p==='year'?yr : wk;
+  const tip={enabled:true};
+  if(attChart)attChart.destroy(); if(giveChart)giveChart.destroy();
+  attChart=new Chart($('#attChart'),{type:'line',
+    data:{labels:D.labels,datasets:[
+      {label:'Sunday AM',data:D.am,borderColor:NAVY,backgroundColor:NAVY,tension:.3,borderWidth:2.5,pointRadius:2},
+      {label:'Sunday School',data:D.ss,borderColor:TEAL,backgroundColor:TEAL,tension:.3,borderWidth:2,pointRadius:2},
+      {label:'Wednesday',data:D.wed,borderColor:GOLD,backgroundColor:GOLD,tension:.3,borderWidth:2,pointRadius:2},
+      {label:'Online',data:D.online,borderColor:SLATE,backgroundColor:SLATE,tension:.3,borderWidth:2,borderDash:[4,3],pointRadius:0},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{family:'Inter',size:11}}},tooltip:tip},
+      scales:{y:{beginAtZero:true,grid:{color:'#eef1f6'},ticks:{font:{family:'Inter'}}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10}}}}}});
+  giveChart=new Chart($('#giveChart'),{type:'bar',
+    data:{labels:D.labels,datasets:[
+      {type:'bar',label:'Received',data:D.give,backgroundColor:'#2f4d86',borderRadius:4,maxBarThickness:28},
+      {type:'line',label:'Budget need',data:D.labels.map(()=>D.budget),borderColor:RED,borderWidth:2,borderDash:[5,4],pointRadius:0},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{family:'Inter',size:11}}},
+        tooltip:{callbacks:{label:c=>c.dataset.label+': $'+c.parsed.y.toLocaleString()}}},
+      scales:{y:{beginAtZero:true,grid:{color:'#eef1f6'},ticks:{font:{family:'Inter'},callback:v=>'$'+(v/1000)+'k'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10}}}}}});
+}
+
+let curP='today';
+function setPeriod(p){
+  curP=p;
+  document.querySelectorAll('#periodSeg button').forEach(b=>b.classList.toggle('on',b.dataset.p===p));
+  const isWeekish = p==='today'||p==='week';
+  $('#attSub').textContent = (p==='month'?'Last 12 months':p==='year'?'By year (plant launch → today)':'Last 12 weeks')+' · click a legend item to toggle';
+  $('#giveSub').textContent = (p==='month'?'Last 12 months':p==='year'?'By year':'Last 12 weeks')+' · bars = received, red line = budget';
+  renderHero(p); buildCharts(p);
+}
+
+document.querySelectorAll('#periodSeg button').forEach(b=>b.onclick=()=>setPeriod(b.dataset.p));
+const hr=new Date().getHours();
+$('#greeting').textContent=(hr<12?'Good morning':hr<17?'Good afternoon':'Good evening')+', Pastor';
+renderFunnel(); renderComp(); renderActions(); setPeriod('today');
+</script>
+
+<script>
+  /* Soft private-preview gate (shared session unlock across /LHBC/*). */
+  (function(){
+    var PASS="lincolnhwy";
+    if(sessionStorage.getItem("lhbc_ok")==="1") return;
+    var ov=document.createElement("div");
+    ov.style.cssText="position:fixed;inset:0;z-index:9999;background:#122a52;color:#fff;display:grid;place-items:center;font-family:'Inter',system-ui,sans-serif";
+    ov.innerHTML='<form style="text-align:center;width:320px;max-width:88vw;padding:24px">'
+      +'<div style="font:700 1.5rem Merriweather,Georgia,serif;margin-bottom:6px">Lincoln Highway Baptist Church</div>'
+      +'<div style="opacity:.8;font-size:.9rem;margin-bottom:22px">Private preview &middot; please enter the password</div>'
+      +'<input type="password" placeholder="Password" autofocus style="width:100%;padding:12px 14px;border:none;border-radius:5px;font-size:1rem;margin-bottom:10px">'
+      +'<button style="width:100%;padding:12px;border:none;border-radius:5px;background:#c8102e;color:#fff;font:600 1rem Inter,sans-serif;cursor:pointer">Enter</button>'
+      +'<div class="err" style="color:#f3b8b8;font-size:.82rem;height:18px;margin-top:8px"></div></form>';
+    document.documentElement.appendChild(ov);
+    var f=ov.querySelector("form"),inp=ov.querySelector("input"),err=ov.querySelector(".err");
+    f.onsubmit=function(e){e.preventDefault();
+      if(inp.value===PASS){sessionStorage.setItem("lhbc_ok","1");ov.remove();}
+      else{err.textContent="Incorrect password.";inp.value="";inp.focus();}
+    };
+  })();
+</script>
+</body>
+</html>

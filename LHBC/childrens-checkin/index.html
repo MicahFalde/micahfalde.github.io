@@ -37,7 +37,8 @@
   .tab:hover:not(.active){border-color:var(--navy)}
 
   .grid{display:grid;grid-template-columns:1fr 380px;gap:20px}
-  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .cols2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media(max-width:900px){.grid,.cols2{grid-template-columns:1fr}}
   .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:0 2px 14px rgba(15,27,45,.04)}
   .panel h2{font-size:1.16rem;margin-bottom:4px}
   .panel .sub{color:var(--ink-soft);font-size:.86rem;margin-bottom:18px}
@@ -200,7 +201,7 @@
 
   <!-- DATA -->
   <section id="data" class="hidden">
-    <div class="grid" style="grid-template-columns:1fr 1fr">
+    <div class="cols2">
       <div class="panel">
         <h2>What happens on check-in</h2>
         <p class="sub">The kiosk writes a record, then (when connected) syncs it to the church management system.</p>
