@@ -300,7 +300,8 @@ const REQ=[
   {id:'R14',pri:'nice',title:'Member self-service app',desc:'Where members give, register for events, find their group, check in, and update their info — the everyday "side door" for people who already attend (vs. R6, the public site for visitors). E.g. PCO Church Center, free.'},
   {id:'R15',pri:'should',title:'SongSelect (song library + chord charts)',desc:'CCLI’s catalog — lyrics, chord charts, and lead sheets that feed ProPresenter and Planning Center. A big convenience for the worship team, but (unlike R8) not legally required.'},
 ];
-document.getElementById('reqList').innerHTML=REQ.map(r=>`<div class="reqrow">
+const PRANK={must:0,should:1,nice:2};
+document.getElementById('reqList').innerHTML=REQ.slice().sort((a,b)=>(PRANK[a.pri]??9)-(PRANK[b.pri]??9)).map(r=>`<div class="reqrow">
   <span class="reqid">${r.id}</span><span class="pri ${r.pri}">${r.pri}</span>
   <div class="rb"><b>${r.title}</b><p>${r.desc}</p></div></div>`).join('');
 
