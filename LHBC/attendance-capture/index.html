@@ -31,57 +31,71 @@
 
   .backlink{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;color:var(--ink-soft);margin:14px 0 2px}
   .backlink:hover{color:var(--navy)}
-  .tabs{display:flex;gap:8px;margin:18px 0}
-  .tab{border:1px solid var(--line);background:var(--surface);padding:11px 22px;border-radius:999px;font-weight:600;
-    font-size:.9rem;cursor:pointer;color:var(--ink-soft);transition:.15s}
+  .tabs{display:flex;gap:8px;margin:18px 0;flex-wrap:wrap}
+  .tab{border:1px solid var(--line);background:var(--surface);padding:11px 20px;border-radius:999px;font-weight:600;
+    font-size:.88rem;cursor:pointer;color:var(--ink-soft);transition:.15s}
   .tab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
   .tab:hover:not(.active){border-color:var(--navy)}
   .hidden{display:none}
+  .intro{font-size:.9rem;color:var(--ink-soft);max-width:74ch;margin-bottom:18px}
+  .intro b{color:var(--ink)}
 
-  .toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
-  .toolbar select,.toolbar .date{padding:10px 14px;border:1px solid var(--line);border-radius:8px;font:600 .88rem var(--body);background:#fff}
-  .btn{display:inline-flex;align-items:center;gap:8px;font:600 .9rem var(--body);padding:11px 20px;border-radius:8px;cursor:pointer;border:1.5px solid transparent;transition:.15s}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 .9rem var(--body);padding:11px 18px;border-radius:8px;cursor:pointer;border:1.5px solid transparent;transition:.15s}
   .btn-primary{background:var(--red);color:#fff}.btn-primary:hover{filter:brightness(1.07)}
   .btn-ghost{background:#fff;color:var(--navy);border-color:var(--line)}.btn-ghost:hover{border-color:var(--navy)}
   .btn-sm{padding:8px 14px;font-size:.84rem}
-  .marked{margin-left:auto;font-size:.86rem;color:var(--ink-soft)} .marked b{color:var(--navy)}
 
-  /* ===== SMART ROSTER SHEET ===== */
-  .sheetwrap{display:flex;justify-content:center}
-  .sheet{background:#fffdfa;border:1px solid #e7e2d6;border-radius:6px;max-width:760px;width:100%;
-    padding:32px 36px;box-shadow:0 14px 40px rgba(15,27,45,.12)}
-  .sheet-head{display:flex;align-items:flex-start;justify-content:space-between;border-bottom:2px solid var(--navy);padding-bottom:14px;margin-bottom:6px}
-  .sheet-head .l b{font-family:var(--head);font-size:1.25rem;display:block}
-  .sheet-head .l span{font-size:.9rem;color:var(--ink-soft)}
-  .sheet-head .r{text-align:right}
-  .barcode{height:34px;width:150px;margin-left:auto;background:repeating-linear-gradient(90deg,#111 0 2px,#fff 2px 4px,#111 4px 5px,#fff 5px 9px);border-radius:2px}
-  .sheet-head .r small{display:block;font-size:.7rem;color:var(--ink-soft);margin-top:5px;letter-spacing:.05em}
-  .instr{font-size:.86rem;color:var(--ink-soft);margin:12px 0 18px}
-  .rosterlist{display:grid;grid-template-columns:1fr 1fr;gap:4px 30px}
-  @media(max-width:620px){.rosterlist{grid-template-columns:1fr}}
-  .rname{display:flex;align-items:center;gap:12px;padding:7px 4px;border-bottom:1px dotted #e0dccf;cursor:pointer;user-select:none}
-  .box{width:22px;height:22px;border:2px solid var(--navy);border-radius:4px;flex-shrink:0;display:grid;place-items:center;color:transparent;font-weight:800;font-size:.95rem}
-  .rname.on .box{background:var(--navy);color:#fff}
-  .rname .nm{font-size:.96rem;font-weight:500}
-  .rname.on .nm{font-weight:600}
-  .guests{margin-top:24px;border-top:2px solid var(--navy);padding-top:14px}
-  .guests h4{font-family:var(--head);font-size:1rem;margin-bottom:4px}
-  .guests p{font-size:.8rem;color:var(--ink-soft);margin-bottom:12px}
-  .gline{height:40px;border-bottom:1.5px solid #d8d3c4;display:flex;align-items:flex-end;padding:0 6px 4px}
-  .gline .hw{font-family:var(--hand);font-size:1.5rem;color:#1d2b44}
-  .sheet-foot{margin-top:22px;display:flex;justify-content:space-between;font-size:.7rem;color:#9a9485;border-top:1px solid #ece7da;padding-top:10px}
+  /* ===== LANES ===== */
+  .lanesgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  @media(max-width:980px){.lanesgrid{grid-template-columns:1fr}}
+  .lane{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:flex;flex-direction:column;box-shadow:0 2px 12px rgba(15,27,45,.04)}
+  .lane .top{display:flex;align-items:center;gap:11px;margin-bottom:10px}
+  .lane .ic{width:46px;height:46px;border-radius:11px;display:grid;place-items:center;flex-shrink:0}
+  .ic.tap{background:#e7eefb;color:var(--navy)} .ic.app{background:var(--hi-bg);color:var(--hi)} .ic.write{background:var(--mid-bg);color:var(--mid)}
+  .lane h3{font-size:1.12rem} .lane .who{font-size:.74rem;color:var(--ink-soft);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+  .lane p{font-size:.86rem;color:var(--ink-soft);line-height:1.5;flex:1;margin:6px 0 14px}
+  .lane .speed{font-size:.74rem;font-weight:700;padding:3px 9px;border-radius:999px;align-self:flex-start;margin-bottom:12px}
+  .speed.fast{background:var(--hi-bg);color:var(--hi)} .speed.slow{background:var(--mid-bg);color:var(--mid)}
+  .reader{height:78px;border-radius:10px;background:linear-gradient(135deg,#122a52,#1d3c6e);display:grid;place-items:center;margin-bottom:14px;position:relative;overflow:hidden}
+  .reader .ring{width:42px;height:42px;border:3px solid rgba(255,255,255,.6);border-radius:50%;animation:pp 1.8s infinite}
+  @keyframes pp{0%{box-shadow:0 0 0 0 rgba(255,255,255,.4)}70%{box-shadow:0 0 0 16px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+  .phone{height:78px;border-radius:10px;background:#f2f5fa;border:1px solid var(--line);display:grid;place-items:center;margin-bottom:14px}
+  .phone .scr{width:40px;height:58px;border:2px solid var(--navy);border-radius:7px;display:grid;place-items:center;font-size:1.1rem}
+  .penbox{height:78px;border-radius:10px;background:repeating-linear-gradient(#fcfbf7 0 18px,#e9ebe2 18px 19px);border:1px solid var(--line);margin-bottom:14px;padding:6px 12px;overflow:hidden}
+  .penbox .hw{font-family:var(--hand);font-size:1.35rem;color:#1b2a45;line-height:19px}
+
+  .note-lane{background:#f6f8fc;border:1px dashed var(--line);border-radius:var(--radius);padding:16px 18px;margin-top:14px;display:flex;gap:12px;align-items:flex-start}
+  .note-lane .ic{width:38px;height:38px;border-radius:9px;background:#eef1f6;color:var(--navy);display:grid;place-items:center;flex-shrink:0}
+  .note-lane b{font-size:.92rem} .note-lane p{font-size:.84rem;color:var(--ink-soft);margin-top:2px}
+
+  .totalbar{display:grid;grid-template-columns:1fr 1.3fr;gap:16px;margin-top:16px}
+  @media(max-width:760px){.totalbar{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:0 2px 12px rgba(15,27,45,.04)}
+  .bignum{font-family:var(--head);font-size:2.8rem;font-weight:900;line-height:1}
+  .biglb{font-size:.84rem;color:var(--ink-soft);margin-top:2px}
+  .mixbar{display:flex;height:26px;border-radius:7px;overflow:hidden;margin:16px 0 8px}
+  .mixbar i{display:flex;align-items:center;justify-content:center;color:#fff;font-size:.72rem;font-weight:700}
+  .legend{display:flex;gap:16px;font-size:.78rem;color:var(--ink-soft);flex-wrap:wrap}
+  .legend span{display:flex;align-items:center;gap:6px} .legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .feed{max-height:280px;overflow:auto}
+  .frow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line)}
+  .frow:last-child{border-bottom:none}
+  .frow .av{width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:.74rem;font-weight:700;flex-shrink:0}
+  .frow .nm{flex:1;font-size:.9rem;font-weight:500}
+  .lbadge{font-size:.64rem;font-weight:700;padding:2px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:.04em}
+  .lbadge.tap{background:#e7eefb;color:var(--navy)} .lbadge.app{background:var(--hi-bg);color:var(--hi)} .lbadge.write{background:var(--mid-bg);color:var(--mid)}
+  .frow .st{font-size:.7rem;color:var(--hi);font-weight:600} .frow .st.rev{color:var(--mid)}
 
   /* ===== REVIEW QUEUE ===== */
   .rq-head{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:16px}
-  .rq-head .h2 h2{font-size:1.3rem} .rq-head .h2 p{font-size:.86rem;color:var(--ink-soft);margin-top:3px;max-width:46ch}
+  .rq-head .h2 h2{font-size:1.3rem} .rq-head .h2 p{font-size:.86rem;color:var(--ink-soft);margin-top:3px;max-width:52ch}
   .rq-stats{margin-left:auto;display:flex;gap:10px}
-  .stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 16px;text-align:center;min-width:96px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 16px;text-align:center;min-width:92px}
   .stat b{font-size:1.5rem;display:block;font-family:var(--head)} .stat span{font-size:.72rem;color:var(--ink-soft)}
-  .qcard{display:grid;grid-template-columns:260px 1fr;gap:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-bottom:14px;box-shadow:0 2px 12px rgba(15,27,45,.04)}
+  .qcard{display:grid;grid-template-columns:240px 1fr;gap:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-bottom:14px;box-shadow:0 2px 12px rgba(15,27,45,.04)}
   @media(max-width:720px){.qcard{grid-template-columns:1fr}}
-  .scan{background:repeating-linear-gradient(#fcfbf7 0 27px,#eef0e6 27px 28px);border-right:1px solid var(--line);
-    padding:20px;position:relative;display:flex;align-items:center;justify-content:center;min-height:150px}
-  .scan .hw{font-family:var(--hand);font-size:2.3rem;color:#1b2a45;transform:rotate(-1.5deg);text-align:center;line-height:1.1}
+  .scan{background:repeating-linear-gradient(#fcfbf7 0 27px,#eef0e6 27px 28px);border-right:1px solid var(--line);padding:20px;position:relative;display:flex;align-items:center;justify-content:center;min-height:150px}
+  .scan .hw{font-family:var(--hand);font-size:2.2rem;color:#1b2a45;transform:rotate(-1.5deg);text-align:center;line-height:1.1}
   .scan .conf{position:absolute;top:10px;right:10px;font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:999px}
   .scan .src{position:absolute;bottom:8px;left:12px;font-size:.66rem;color:#a9a496}
   .conf.hi{background:var(--hi-bg);color:var(--hi)} .conf.mid{background:var(--mid-bg);color:var(--mid)} .conf.lo{background:var(--lo-bg);color:var(--lo)}
@@ -91,37 +105,39 @@
   .cbar{height:7px;background:#eef1f6;border-radius:4px;overflow:hidden;margin:8px 0 4px;max-width:260px}
   .cbar i{display:block;height:100%;border-radius:4px}
   .cnote{font-size:.78rem;color:var(--ink-soft);margin-bottom:12px}
-  .cand-lab{font-size:.78rem;color:var(--ink-soft);margin-bottom:7px}
   .cands{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
   .cand{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 15px;font-size:.86rem;font-weight:500;cursor:pointer;transition:.12s}
-  .cand:hover{border-color:var(--navy)}
-  .cand.sel{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .cand:hover{border-color:var(--navy)} .cand.sel{background:var(--navy);color:#fff;border-color:var(--navy)}
   .qactions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
   .learn{font-size:.76rem;color:var(--hi);background:var(--hi-bg);padding:3px 10px;border-radius:999px;font-weight:600}
-  .typ{display:none;gap:6px;margin-top:10px}
-  .typ input{flex:1;padding:8px 12px;border:1px solid var(--line);border-radius:7px;font:.88rem var(--body)}
-  .emptyq{text-align:center;padding:50px 20px;color:var(--ink-soft)}
-  .emptyq .big{font-size:2.4rem;margin-bottom:8px}
+  .emptyq{text-align:center;padding:50px 20px;color:var(--ink-soft)} .emptyq .big{font-size:2.4rem;margin-bottom:8px}
 
-  /* ===== PIPELINE ===== */
+  /* ===== ADOPTION ===== */
+  .adopt-cols{display:flex;align-items:flex-end;gap:8px;height:230px;border-bottom:2px solid var(--line);padding-top:14px}
+  .acol{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;cursor:default}
+  .acol .stack{display:flex;flex-direction:column;border-radius:4px 4px 0 0;overflow:hidden}
+  .acol .seg{width:100%}
+  .acol .cl{text-align:center;font-size:.66rem;color:var(--ink-soft);margin-top:6px}
+  .acallouts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+  @media(max-width:760px){.acallouts{grid-template-columns:1fr}}
+  .acard{border:1px solid var(--line);border-radius:9px;padding:16px}
+  .acard .v{font-family:var(--head);font-size:1.6rem;font-weight:900} .acard .l{font-size:.82rem;color:var(--ink-soft);margin-top:3px}
+
+  /* ===== HOW ===== */
   .pgrid{display:grid;grid-template-columns:1.3fr 1fr;gap:16px}
   @media(max-width:900px){.pgrid{grid-template-columns:1fr}}
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;box-shadow:0 2px 12px rgba(15,27,45,.04)}
-  .card h3{font-size:1.08rem;margin-bottom:4px} .card .csub{font-size:.8rem;color:var(--ink-soft);margin-bottom:16px}
   .flow{display:flex;flex-direction:column;gap:13px}
   .fstep{display:flex;gap:12px;align-items:flex-start}
   .fstep .n{width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:700;font-size:.8rem;flex-shrink:0}
   .fstep b{font-size:.92rem} .fstep p{font-size:.82rem;color:var(--ink-soft);margin-top:1px}
-  .route{display:flex;height:30px;border-radius:7px;overflow:hidden;margin:6px 0 4px}
-  .route i{display:flex;align-items:center;justify-content:center;color:#fff;font-size:.74rem;font-weight:700}
   .kstats{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin-top:4px}
   .ks{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:.86rem}
   .ks span{color:var(--ink-soft)} .ks b{font-weight:600}
   .pill{display:inline-block;font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--hi-bg);color:var(--hi)}
+  .card h3.ch{font-size:1.08rem;margin-bottom:4px} .csub{font-size:.8rem;color:var(--ink-soft);margin-bottom:16px}
 
   .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--navy);color:#fff;
-    padding:13px 22px;border-radius:10px;font-weight:600;font-size:.9rem;box-shadow:0 12px 34px rgba(0,0,0,.28);
-    transition:.35s cubic-bezier(.2,.9,.3,1.2);z-index:60}
+    padding:13px 22px;border-radius:10px;font-weight:600;font-size:.9rem;box-shadow:0 12px 34px rgba(0,0,0,.28);transition:.35s cubic-bezier(.2,.9,.3,1.2);z-index:60}
   .toast.show{transform:translateX(-50%) translateY(0)}
   .draftbar{margin-top:24px;font-size:.78rem;color:var(--ink-soft);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
   .tag{background:var(--gold);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:5px}
@@ -136,48 +152,69 @@
         <rect x="2" y="2" width="44" height="44" rx="3" stroke="#b3892f" stroke-width="1.5" opacity=".6"/>
         <path d="M24 9v9M19.5 13.5h9" stroke="#b3892f" stroke-width="2" stroke-linecap="round"/>
         <path d="M14 39V25l10-8 10 8v14" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/>
-        <path d="M21 39v-7h6v7" stroke="#fff" stroke-width="1.6"/>
-      </svg>
+        <path d="M21 39v-7h6v7" stroke="#fff" stroke-width="1.6"/></svg>
       <div><b>Attendance Capture</b><span>Lincoln Highway Baptist · Dalton, OH</span></div>
     </div>
-    <div class="sync"><span class="dot"></span><span>Sun, Jun 28 · sheets ready</span></div>
+    <div class="sync"><span class="dot"></span><span>Sun, Jun 28 · capturing</span></div>
   </header>
 
   <div class="tabs">
-    <button class="tab active" data-tab="roster">Smart Roster Sheet</button>
+    <button class="tab active" data-tab="lanes">Sign-In Lanes</button>
     <button class="tab" data-tab="review">Review Queue</button>
-    <button class="tab" data-tab="pipeline">How It Works</button>
+    <button class="tab" data-tab="adopt">Adoption Over Time</button>
+    <button class="tab" data-tab="how">How It Works</button>
   </div>
 
-  <!-- ROSTER -->
-  <section id="roster">
-    <div class="toolbar">
-      <select id="sectionSel"></select>
-      <span class="date">📅 Sunday, June 28, 2026</span>
-      <button class="btn btn-ghost btn-sm" onclick="toast('Printing 4 section sheets…')">🖨 Print all sheets</button>
-      <span class="marked">Marked: <b id="markCount">0</b> / <span id="markTotal">0</span></span>
+  <!-- LANES -->
+  <section id="lanes">
+    <p class="intro">People check in <b>however suits them</b> — older folks sign the sheet, the
+      tech-comfortable tap or use the app. <b>Every lane writes to one attendance record.</b> Over time
+      we nudge more people to the faster lanes, but the handwriting line never goes away. <em>Try each
+      lane below.</em></p>
+    <div class="lanesgrid">
+      <div class="lane">
+        <div class="top"><div class="ic tap">📡</div><div><h3>Tap to check in</h3><div class="who">For the tech-comfortable</div></div></div>
+        <div class="reader"><div class="ring"></div></div>
+        <span class="speed fast">Instant · exact</span>
+        <p>Tap an NFC fob/card or scan a personal QR at a reader by the door. No typing, no OCR — a perfect record.</p>
+        <button class="btn btn-primary btn-sm" onclick="sim('tap')">Simulate a tap</button>
+      </div>
+      <div class="lane">
+        <div class="top"><div class="ic app">📱</div><div><h3>Church app</h3><div class="who">For phone users</div></div></div>
+        <div class="phone"><div class="scr">✓</div></div>
+        <span class="speed fast">Instant · exact</span>
+        <p>One tap of "I'm here" in the church app on their phone. Great for members who already use it for giving and events.</p>
+        <button class="btn btn-primary btn-sm" onclick="sim('app')">Simulate app check-in</button>
+      </div>
+      <div class="lane">
+        <div class="top"><div class="ic write">✍️</div><div><h3>Sign the sheet</h3><div class="who">The universal lane</div></div></div>
+        <div class="penbox"><span class="hw">Edith Vance</span><br><span class="hw">the Okafor family</span></div>
+        <span class="speed slow">Always works · needs OCR</span>
+        <p>Print your name on the next blank line — passes down the row, never grows with the church. Scanned &amp; read on the back end; only the unsure ones get reviewed.</p>
+        <button class="btn btn-primary btn-sm" onclick="sim('write')">Simulate handwritten names</button>
+      </div>
     </div>
-    <p style="font-size:.84rem;color:var(--ink-soft);margin-bottom:14px;max-width:70ch">
-      This is the sheet that prints and passes down the pew. Regulars just <b>check the box</b> by their
-      name (read as a checkbox — Scantron-reliable). Guests print their name on the lines below. The
-      roster is generated automatically from the church database each week. <em>Try checking some boxes.</em></p>
-    <div class="sheetwrap">
-      <div class="sheet">
-        <div class="sheet-head">
-          <div class="l"><b>Attendance</b><span id="sheetSection">Center · Main Floor</span></div>
-          <div class="r"><div class="barcode"></div><small id="sheetMeta">SEC-C · 2026-06-28 · p.1/4</small></div>
+
+    <div class="note-lane">
+      <div class="ic">☑️</div>
+      <div><b>Small groups &amp; Sunday School use a short checkbox roster (OMR).</b>
+        <p>Where the list is short and stable, a printed roster with checkboxes is fastest. That's reserved for classes/groups — not the main worship pass-down, where free-write scales better.</p></div>
+    </div>
+
+    <div class="totalbar">
+      <div class="card">
+        <div class="bignum num" id="total">0</div>
+        <div class="biglb">checked in today · all lanes → one record</div>
+        <div class="mixbar" id="mixbar"></div>
+        <div class="legend">
+          <span><i style="background:#122a52"></i> Tap <b class="num" id="lgTap">0</b></span>
+          <span><i style="background:#2f7d52"></i> App <b class="num" id="lgApp">0</b></span>
+          <span><i style="background:#b3892f"></i> Handwritten <b class="num" id="lgWrite">0</b></span>
         </div>
-        <div class="instr">Pass down the row — please <b>check the box</b> by your name. Guests, print your name below. Thank you!</div>
-        <div class="rosterlist" id="rosterList"></div>
-        <div class="guests">
-          <h4>Guests &amp; visitors</h4>
-          <p>Welcome! Please print your name (and a phone or email if you'd like us to follow up).</p>
-          <div class="gline"><span class="hw">Margaret Ellison</span></div>
-          <div class="gline"><span class="hw">the Okafor family</span></div>
-          <div class="gline"></div>
-          <div class="gline"></div>
-        </div>
-        <div class="sheet-foot"><span>Lincoln Highway Baptist Church · Dalton, OH</span><span>Auto-generated from the church database</span></div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:1.04rem;margin-bottom:10px">Live check-in feed</h3>
+        <div class="feed" id="feed"></div>
       </div>
     </div>
   </section>
@@ -186,7 +223,7 @@
   <section id="review" class="hidden">
     <div class="rq-head">
       <div class="h2"><h2>Review queue</h2>
-        <p>Checkbox marks were saved automatically. Only the handwritten lines the system isn't sure about land here — confirm or correct each one. Your answers train the recognizer.</p></div>
+        <p>Tap &amp; app check-ins save themselves. Only the handwritten lines the system isn't sure about land here — confirm or correct each one, and it trains the recognizer to know that person next time.</p></div>
       <div class="rq-stats">
         <div class="stat"><b id="stRemain" class="num">0</b><span>need review</span></div>
         <div class="stat"><b id="stDone" class="num">0</b><span>confirmed today</span></div>
@@ -196,45 +233,56 @@
     <div id="queue"></div>
   </section>
 
-  <!-- PIPELINE -->
-  <section id="pipeline" class="hidden">
+  <!-- ADOPTION -->
+  <section id="adopt" class="hidden">
+    <div class="card">
+      <h3 class="ch">Slowly moving off paper</h3>
+      <p class="csub">Share of check-ins by lane, month over month. Paper stays as the universal fallback — but becomes the minority as tap &amp; app catch on, so the handwriting/review load keeps shrinking.</p>
+      <div class="adopt-cols" id="adoptCols"></div>
+      <div class="legend" style="margin-top:12px">
+        <span><i style="background:#b3892f"></i> Handwritten</span>
+        <span><i style="background:#2f7d52"></i> App</span>
+        <span><i style="background:#122a52"></i> Tap</span>
+      </div>
+      <div class="acallouts">
+        <div class="acard"><div class="v">92% → 41%</div><div class="l">Handwritten share, launch → now</div></div>
+        <div class="acard"><div class="v">59%</div><div class="l">Now using tap or app (was 8%)</div></div>
+        <div class="acard"><div class="v">~60% ↓</div><div class="l">Weekly review load since launch</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section id="how" class="hidden">
     <div class="pgrid">
       <div class="card">
-        <h3>How a Sunday flows through</h3>
-        <p class="csub">Paper in, clean named attendance out — review only the exceptions.</p>
+        <h3 class="ch">How a Sunday flows through</h3>
+        <p class="csub">Many ways in, one attendance record out — review only the exceptions.</p>
         <div class="flow">
-          <div class="fstep"><div class="n">1</div><div><b>Usher section counts</b><p>Instant reliable totals — the backstop for "how many."</p></div></div>
-          <div class="fstep"><div class="n">2</div><div><b>Scan the stack</b><p>Sheets run through the sheet-fed printer (ADF) into a watched OneDrive folder. The barcode tags each sheet's section + date.</p></div></div>
-          <div class="fstep"><div class="n">3</div><div><b>Read the checkboxes (OMR)</b><p>Marks next to printed names are read at Scantron reliability — ~85% of attenders, zero handwriting needed.</p></div></div>
-          <div class="fstep"><div class="n">4</div><div><b>Recognize the guest lines (OCR)</b><p>Only the handwritten lines are transcribed and <b>matched against the member roster</b> (closed set, not open text) — with a confidence score.</p></div></div>
-          <div class="fstep"><div class="n">5</div><div><b>Route by confidence</b><p>High → saved automatically. Low → the review queue for a person.</p></div></div>
-          <div class="fstep"><div class="n">6</div><div><b>Learn &amp; promote</b><p>Confirmations raise a person's confidence; a confirmed guest is <b>promoted onto next week's printed roster</b> — graduating from handwriting to a checkbox.</p></div></div>
-          <div class="fstep"><div class="n">7</div><div><b>Inference + weekly QA</b><p>Auto-mark anyone whose child checked in or who gave that morning. A weekly random sample is human-checked to catch drift.</p></div></div>
+          <div class="fstep"><div class="n">1</div><div><b>Three lanes, one record</b><p>Tap (NFC/QR), church app, or sign the sheet — all write to the same attendance database, tagged by lane.</p></div></div>
+          <div class="fstep"><div class="n">2</div><div><b>Tap &amp; app = instant + exact</b><p>No transcription, no review. A perfect record the moment someone checks in.</p></div></div>
+          <div class="fstep"><div class="n">3</div><div><b>Handwriting → scan → read</b><p>Sheets scan into a watched folder; OCR transcribes each line and <b>matches it against the member roster</b> (closed set), with a confidence score.</p></div></div>
+          <div class="fstep"><div class="n">4</div><div><b>Route by confidence</b><p>High → saved automatically. Low → the review queue for a person.</p></div></div>
+          <div class="fstep"><div class="n">5</div><div><b>Learn</b><p>Each confirmation teaches the recognizer that person's handwriting, so next week it auto-clears. Regulars stop needing review.</p></div></div>
+          <div class="fstep"><div class="n">6</div><div><b>Inference + usher counts</b><p>Auto-mark anyone whose child checked in or who gave; ushers give the totals backstop. Weekly random-sample QA catches drift.</p></div></div>
+          <div class="fstep"><div class="n">7</div><div><b>Nudge the migration</b><p>Offer fobs/QR + the app; as adoption grows the handwriting pile shrinks — the system gets easier the longer it runs.</p></div></div>
         </div>
       </div>
       <div class="card">
-        <h3>This Sunday</h3>
+        <h3 class="ch">This Sunday</h3>
         <p class="csub">June 28, 2026 · synthetic numbers</p>
         <div class="kstats">
           <div class="ks"><span>Usher count (total)</span><b class="num">96</b></div>
-          <div class="ks"><span>Checkbox marks (OMR)</span><b class="num">81</b></div>
-          <div class="ks"><span>Handwritten lines</span><b class="num">11</b></div>
-          <div class="ks"><span>Auto-matched (≥85%)</span><b class="num">8</b></div>
-          <div class="ks"><span>Sent to review</span><b class="num">3</b></div>
-          <div class="ks"><span>Promoted to roster</span><b class="num">2</b></div>
+          <div class="ks"><span>Tap check-ins</span><b class="num">34</b></div>
+          <div class="ks"><span>App check-ins</span><b class="num">22</b></div>
+          <div class="ks"><span>Handwritten lines</span><b class="num">28</b></div>
+          <div class="ks"><span>Handwriting auto-matched</span><b class="num">24</b></div>
+          <div class="ks"><span>Sent to review</span><b class="num">4</b></div>
           <div class="ks"><span>Inferred (kids/giving)</span><b class="num">+4</b></div>
           <div class="ks"><span>Manual entry needed</span><b class="num">~0</b></div>
         </div>
-        <h3 style="margin-top:22px;font-size:1rem">Confidence routing</h3>
-        <div class="route">
-          <i style="width:88%;background:var(--hi)">88% auto-saved</i>
-          <i style="width:12%;background:var(--mid)">12% review</i>
-        </div>
-        <p style="font-size:.78rem;color:var(--ink-soft)">Checkbox marks + high-confidence matches save themselves; only the amber/red slice needs a human.</p>
-        <div style="margin-top:18px">
-          <span class="pill">Effort drops weekly</span>
-          <p style="font-size:.82rem;color:var(--ink-soft);margin-top:8px">As regulars get recognized and guests get promoted onto the printed roster, the handwriting pile — and the review queue — shrink toward nothing.</p>
-        </div>
+        <div style="margin-top:18px"><span class="pill">Effort drops weekly</span>
+          <p style="font-size:.82rem;color:var(--ink-soft);margin-top:8px">59% now tap or app (no OCR at all). Of the handwriting that's left, ~86% auto-matches — only a handful ever reach a person.</p></div>
       </div>
     </div>
   </section>
@@ -243,94 +291,113 @@
 <div class="toast" id="toast">Saved</div>
 
 <script>
-// ===== roster data =====
-const SECTIONS={
-  'Center · Main Floor':{meta:'SEC-C · 2026-06-28 · p.1/4',names:['Aldridge, Bill & Carol','Bauer, Tom & Janet','Calloway, Ruth','Dietrich, Mark & Sue','Falde, Micah & Hannah','Garrett, Paul','Hollis, Dan & Beth','Ito, Ken & Mari','Klein, David & Sarah','Lambert, Joyce','Mercer, Frank & Lois','Nguyen, Pham','Okeke, Sam & Ada','Pruitt, Greg & Tina','Reyes, Daniel','Schmidt, Karl & Edna','Tucker, Bob & Sheila','Vance, Edith','Webb, Marcus & Tabitha','Whitcomb, Sarah','Young, Pastor Ed & Lois','Zimmerman, Hal']},
-  'Left · Main Floor':{meta:'SEC-L · 2026-06-28 · p.2/4',names:['Barnett, Cliff & Mary','Donovan, Pat','Espinoza, Luis & Rosa','Franklin, Gail','Harmon, Ted & Sue','Lowe, Jerry & Pam','Mathis, Carol','Oakley, Stan & Jean']},
-  'Right · Main Floor':{meta:'SEC-R · 2026-06-28 · p.3/4',names:['Carver, Joel & Amy','Fitch, Norma','Holloway, Gary','Knapp, Ron & Deb','Patterson, Hugh','Sutton, Will & Kay','Tran, Minh']},
-  'Balcony':{meta:'SEC-B · 2026-06-28 · p.4/4',names:['Abbott, Lee','Dunn, Faith','Greer, Sam','Maddox, Cole & Jen','Reed, Opal']},
-};
-let curSec='Center · Main Floor';
-const preCheck=new Set([0,1,4,6,8,10,13,16,18,20]); // simulate a marked-up sheet
-const marked={};
-
-const sel=document.getElementById('sectionSel');
-Object.keys(SECTIONS).forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;sel.appendChild(o);});
-sel.onchange=()=>{curSec=sel.value;renderRoster();};
-
-function renderRoster(){
-  const sec=SECTIONS[curSec];
-  document.getElementById('sheetSection').textContent=curSec.replace(' · ',' · ');
-  document.getElementById('sheetMeta').textContent=sec.meta;
-  const host=document.getElementById('rosterList');host.innerHTML='';
-  if(!marked[curSec]) marked[curSec]=new Set([...preCheck].filter(i=>i<sec.names.length));
-  const on=marked[curSec];
-  sec.names.forEach((n,i)=>{
-    const el=document.createElement('div');el.className='rname'+(on.has(i)?' on':'');
-    el.innerHTML=`<div class="box">✓</div><div class="nm">${n}</div>`;
-    el.onclick=()=>{on.has(i)?on.delete(i):on.add(i);renderRoster();};
-    host.appendChild(el);
-  });
-  document.getElementById('markCount').textContent=on.size;
-  document.getElementById('markTotal').textContent=sec.names.length;
+const NAMES=['Bill Aldridge','Carol Bauer','Ruth Calloway','Mark Dietrich','Hannah Falde','Paul Garrett','Dan Hollis','Ken Ito','Sarah Klein','Joyce Lambert','Frank Mercer','Pham Nguyen','Sam Okeke','Greg Pruitt','Daniel Reyes','Karl Schmidt','Bob Tucker','Edith Vance','Marcus Webb','Sarah Whitcomb','Hal Zimmerman','Gail Franklin','Luis Espinoza','Jean Oakley','Cliff Barnett','Norma Fitch'];
+let pool=[...NAMES];
+const counts={tap:28,app:19,write:24};
+let feed=[];
+const $=s=>document.querySelector(s);
+function init(){
+  // seed feed
+  [['Sarah Klein','tap'],['Cliff Barnett','app'],['Edith Vance','write'],['Ken Ito','tap'],['Gail Franklin','app'],['Greg Pruitt','write']]
+    .forEach(([n,l])=>feed.unshift({n,l,st:'saved',t:tm()}));
+  renderTotals();renderFeed();
+}
+function tm(){const h=10,m=(8+Math.floor(Math.random()*52));return '10:'+String(m).padStart(2,'0');}
+function pick(){if(!pool.length)pool=[...NAMES];return pool.splice(Math.floor(Math.random()*pool.length),1)[0];}
+function sim(lane){
+  if(lane==='write'){
+    const k=1+Math.floor(Math.random()*2);
+    for(let i=0;i<k;i++){const n=pick();const review=Math.random()<0.32;
+      counts.write++;feed.unshift({n,l:'write',st:review?'review':'saved',t:tm()});
+      if(review){QUEUE.push(makeReview(n));}}
+    toast(k+' handwritten name'+(k>1?'s':'')+' scanned');
+    renderQueueCount();
+  }else{
+    const n=pick();counts[lane]++;feed.unshift({n,l:lane,st:'saved',t:tm()});
+    toast(n+' checked in ('+(lane==='tap'?'tap':'app')+')');
+  }
+  feed=feed.slice(0,14);renderTotals();renderFeed();
+}
+function renderTotals(){
+  const t=counts.tap+counts.app+counts.write;
+  $('#total').textContent=t;
+  $('#lgTap').textContent=counts.tap;$('#lgApp').textContent=counts.app;$('#lgWrite').textContent=counts.write;
+  const seg=[['tap','#122a52',counts.tap],['app','#2f7d52',counts.app],['write','#b3892f',counts.write]];
+  $('#mixbar').innerHTML=seg.map(s=>{const p=Math.round(s[2]/t*100);return `<i style="width:${p}%;background:${s[1]}">${p>9?p+'%':''}</i>`;}).join('');
+}
+function renderFeed(){
+  $('#feed').innerHTML=feed.map(f=>{const ini=f.n.split(' ').map(x=>x[0]).slice(0,2).join('');
+    return `<div class="frow"><div class="av">${ini}</div><div class="nm">${f.n}</div>
+      <span class="lbadge ${f.l}">${f.l==='write'?'sheet':f.l}</span>
+      <span class="st ${f.st==='review'?'rev':''}">${f.st==='review'?'needs review':'saved'}</span>
+      <span style="font-size:.72rem;color:var(--ink-soft)">${f.t}</span></div>`;}).join('');
 }
 
 // ===== review queue =====
+function makeReview(n){return {hw:n,guess:n,conf:40+Math.floor(Math.random()*22),cands:[n,n.split(' ')[0]+' (new)','— type a name —'],seen:Math.random()<0.5?2:0,note:'Handwritten line — confidence below the auto-save threshold.'};}
 let QUEUE=[
-  {hw:'Margaret Ellison',guess:'Margaret Ellison',conf:64,cands:['Margaret Ellison (new)','Margaret Ellis','Marian Ellison'],seen:2,note:'New guest · seen 2 Sundays — 1 more confirm auto-adds her to the printed roster.'},
-  {hw:'J. Whitcomb',guess:'Sarah Whitcomb',conf:58,cands:['Sarah Whitcomb','Jacob Whitcomb','Jane Whitfield'],seen:6,note:'A regular wrote instead of checking the box. Likely Sarah (sits Center).'},
-  {hw:'the Okafor family',guess:'Okeke, Sam & Ada',conf:71,cands:['Okeke, Sam & Ada','Okafor (new family)','Olsen, Kay'],seen:1,note:'Could be our Okekes, or a brand-new family — your call.'},
+  {hw:'Margaret Ellison',guess:'Margaret Ellison',conf:64,cands:['Margaret Ellison (new)','Margaret Ellis','Marian Ellison'],seen:2,note:'New guest · seen 2 Sundays — 1 more confirm and her handwriting auto-clears next time.'},
+  {hw:'J. Whitcomb',guess:'Sarah Whitcomb',conf:58,cands:['Sarah Whitcomb','Jacob Whitcomb','Jane Whitfield'],seen:6,note:'A regular who signed the sheet. Likely Sarah.'},
+  {hw:'the Okafor family',guess:'Okeke, Sam & Ada',conf:71,cands:['Okeke, Sam & Ada','Okafor (new family)','Olsen, Kay'],seen:1,note:'Our Okekes, or a brand-new family — your call.'},
   {hw:'Rooth Hellixn',guess:'Ruth Calloway',conf:39,cands:['Ruth Calloway','Ruth Hollis','— type a name —'],seen:0,note:'Low confidence — illegible. Pick a match or type it.'},
 ];
 let done=0;
 function confClass(c){return c>=85?'hi':c>=60?'mid':'lo';}
+function renderQueueCount(){$('#stRemain').textContent=QUEUE.length;}
 function renderQueue(){
   const host=document.getElementById('queue');host.innerHTML='';
-  document.getElementById('stRemain').textContent=QUEUE.length;
-  document.getElementById('stDone').textContent=done;
-  if(!QUEUE.length){host.innerHTML='<div class="emptyq"><div class="big">✓</div><b>Queue clear.</b><div style="margin-top:6px">Every entry for this Sunday is confirmed and saved.</div></div>';return;}
+  $('#stRemain').textContent=QUEUE.length;$('#stDone').textContent=done;
+  if(!QUEUE.length){host.innerHTML='<div class="emptyq"><div class="big">✓</div><b>Queue clear.</b><div style="margin-top:6px">Every handwritten line is confirmed and saved.</div></div>';return;}
   QUEUE.forEach((q,idx)=>{
-    const cc=confClass(q.conf);
-    const card=document.createElement('div');card.className='qcard';
+    const cc=confClass(q.conf);const card=document.createElement('div');card.className='qcard';
     card.innerHTML=`
-      <div class="scan"><span class="conf ${cc}">${q.conf}% sure</span><div class="hw">${q.hw}</div><span class="src">scan · guest line</span></div>
+      <div class="scan"><span class="conf ${cc}">${q.conf}% sure</span><div class="hw">${q.hw}</div><span class="src">scan · handwriting lane</span></div>
       <div class="qbody">
-        <div class="lab">Best guess</div>
-        <div class="guess">${q.guess}</div>
+        <div class="lab">Best guess</div><div class="guess">${q.guess}</div>
         <div class="cbar"><i style="width:${q.conf}%;background:var(--${cc})"></i></div>
         <div class="cnote">${q.note}</div>
-        <div class="cand-lab">Closest matches in our roster — tap the right one:</div>
-        <div class="cands" data-i="${idx}">${q.cands.map((c,j)=>`<span class="cand${j===0?' sel':''}" data-c="${j}">${c}</span>`).join('')}</div>
+        <div style="font-size:.78rem;color:var(--ink-soft);margin-bottom:7px">Closest matches in our roster — tap the right one:</div>
+        <div class="cands" data-i="${idx}">${q.cands.map((c,j)=>`<span class="cand${j===0?' sel':''}">${c}</span>`).join('')}</div>
         <div class="qactions">
           <button class="btn btn-primary btn-sm" data-act="confirm" data-i="${idx}">✓ Confirm</button>
-          <button class="btn btn-ghost btn-sm" data-act="skip" data-i="${idx}">Skip for now</button>
+          <button class="btn btn-ghost btn-sm" data-act="skip" data-i="${idx}">Skip</button>
           <button class="btn btn-ghost btn-sm" data-act="notname" data-i="${idx}">Not a name</button>
-          ${q.seen>=2?`<span class="learn">★ learned — promotes to roster</span>`:''}
+          ${q.seen>=2?'<span class="learn">★ learned — auto-clears next time</span>':''}
         </div>
       </div>`;
     host.appendChild(card);
   });
-  host.querySelectorAll('.cand').forEach(c=>c.onclick=e=>{
-    const grp=c.parentElement;grp.querySelectorAll('.cand').forEach(x=>x.classList.remove('sel'));c.classList.add('sel');
-  });
+  host.querySelectorAll('.cands').forEach(grp=>grp.querySelectorAll('.cand').forEach(c=>c.onclick=()=>{grp.querySelectorAll('.cand').forEach(x=>x.classList.remove('sel'));c.classList.add('sel');}));
   host.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{
-    const i=+b.dataset.i,act=b.dataset.act;const q=QUEUE[i];
-    if(act==='confirm'){const sel=document.querySelector(`.cands[data-i="${i}"] .cand.sel`);const who=sel?sel.textContent:q.guess;
-      done++;QUEUE.splice(i,1);toast('Saved: '+who.replace(' (new)','')+(q.seen>=2?' · added to roster ★':''));renderQueue();}
-    else if(act==='skip'){QUEUE.push(QUEUE.splice(i,1)[0]);toast('Skipped — moved to the back');renderQueue();}
+    const i=+b.dataset.i,act=b.dataset.act,q=QUEUE[i];
+    if(act==='confirm'){const s=document.querySelector(`.cands[data-i="${i}"] .cand.sel`);const who=(s?s.textContent:q.guess).replace(' (new)','');
+      done++;QUEUE.splice(i,1);toast('Saved: '+who);renderQueue();}
+    else if(act==='skip'){QUEUE.push(QUEUE.splice(i,1)[0]);renderQueue();}
     else{QUEUE.splice(i,1);toast('Marked “not a name”');renderQueue();}
   });
 }
 
-// ===== tabs + plumbing =====
-let toastT;
-function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2200);}
+// ===== adoption =====
+const ADOPT=[[92,6,2],[88,8,4],[83,11,6],[78,14,8],[72,17,11],[66,20,14],[61,22,17],[55,24,21],[50,26,24],[46,28,26],[43,30,27],[41,31,28]];
+const AL=['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun'];
+function renderAdopt(){
+  document.getElementById('adoptCols').innerHTML=ADOPT.map((m,i)=>`<div class="acol">
+    <div class="stack" style="height:88%">
+      <div class="seg" style="height:${m[2]}%;background:#122a52"></div>
+      <div class="seg" style="height:${m[1]}%;background:#2f7d52"></div>
+      <div class="seg" style="height:${m[0]}%;background:#b3892f"></div>
+    </div><div class="cl">${AL[i]}</div></div>`).join('');
+}
+
+// ===== plumbing =====
+let tT;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2000);}
 document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');
-  ['roster','review','pipeline'].forEach(id=>document.getElementById(id).classList.add('hidden'));
+  ['lanes','review','adopt','how'].forEach(id=>document.getElementById(id).classList.add('hidden'));
   document.getElementById(t.dataset.tab).classList.remove('hidden');
+  if(t.dataset.tab==='review')renderQueue();
 });
-renderRoster();renderQueue();
+init();renderQueue();renderAdopt();
 </script>
 
 <script>
