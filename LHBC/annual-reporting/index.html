@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LHBC · Annual Report</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap');
+  :root{
+    --navy:#122a52; --navy-deep:#0d1f3d; --ink:#16203a; --ink-soft:#5a6781; --line:#e4e9f1;
+    --bg:#e9edf3; --paper:#ffffff; --red:#c8102e; --red-soft:#f8dde0; --hi:#2f7d52; --teal:#2f7d8a; --gold:#b3892f;
+    --head:'Merriweather',Georgia,serif; --body:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:inherit;text-decoration:none}
+
+  /* chrome */
+  .chrome{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:14px;
+    background:var(--navy);color:#fff;padding:12px 22px;box-shadow:0 8px 24px rgba(18,42,82,.18);flex-wrap:wrap}
+  .chrome .l{display:flex;align-items:center;gap:12px}
+  .crest{width:34px;height:34px}
+  .chrome b{font-family:var(--head);font-size:1.04rem}
+  .chrome .r{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .chrome select{padding:9px 12px;border:none;border-radius:7px;font:600 .86rem var(--body);background:#fff;color:var(--navy)}
+  .genbadge{font-size:.72rem;opacity:.85;display:flex;align-items:center;gap:7px}
+  .genbadge .d{width:8px;height:8px;border-radius:50%;background:#7fd49a}
+  .btn{display:inline-flex;align-items:center;gap:7px;font:600 .86rem var(--body);padding:10px 18px;border-radius:7px;cursor:pointer;border:1.5px solid transparent}
+  .btn-red{background:var(--red);color:#fff}.btn-red:hover{filter:brightness(1.08)}
+  .btn-ghost{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.3)}
+
+  .backlink{display:inline-flex;gap:6px;align-items:center;font-size:.82rem;color:var(--ink-soft);margin:14px auto 0;max-width:840px;padding:0 16px;width:100%}
+  .backlink:hover{color:var(--navy)}
+
+  /* report document */
+  .report{max-width:840px;margin:14px auto 60px;background:var(--paper);border:1px solid #dfe4ee;border-radius:6px;
+    box-shadow:0 16px 50px rgba(15,27,45,.12);overflow:hidden}
+  .cover{background:linear-gradient(160deg,var(--navy),var(--navy-deep));color:#fff;padding:46px 52px 40px;position:relative}
+  .cover::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--red)}
+  .cover .kj{font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;opacity:.8}
+  .cover h1{font-family:var(--head);font-weight:900;font-size:3.1rem;line-height:1.04;margin:10px 0 6px}
+  .cover h1 span{color:#e7b3bb}
+  .cover .ch{font-size:1.05rem;opacity:.92}
+  .cover .vis{margin-top:22px;display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.1);border-radius:999px;padding:8px 16px;font-size:.84rem}
+
+  .body{padding:38px 52px 46px}
+  @media(max-width:640px){.cover{padding:34px 26px}.cover h1{font-size:2.2rem}.body{padding:28px 24px}}
+  .letter{font-family:var(--head);font-size:1.02rem;line-height:1.7;color:#33405c;border-left:3px solid var(--gold);padding:4px 0 4px 20px;margin-bottom:14px}
+  .sign{font-family:var(--head);font-style:italic;color:var(--ink-soft);font-size:.92rem;margin-bottom:34px}
+
+  .sec{margin-bottom:34px}
+  .sec h2{font-family:var(--head);font-size:1.4rem;padding-bottom:8px;border-bottom:2px solid var(--navy);margin-bottom:18px;display:flex;align-items:baseline;gap:10px}
+  .sec h2 small{font-size:.74rem;font-family:var(--body);font-weight:600;color:var(--ink-soft);letter-spacing:.08em;text-transform:uppercase;margin-left:auto}
+
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:640px){.kpis{grid-template-columns:1fr 1fr}}
+  .kpi{border:1px solid var(--line);border-radius:9px;padding:16px}
+  .kpi .v{font-family:var(--head);font-size:1.9rem;font-weight:900;line-height:1}
+  .kpi .lb{font-size:.8rem;color:var(--ink-soft);margin-top:4px}
+  .kpi .dl{font-size:.76rem;font-weight:600;margin-top:7px;color:var(--hi)}
+  .kpi .dl.flat{color:var(--ink-soft)}
+
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+  @media(max-width:640px){.twocol{grid-template-columns:1fr;gap:20px}}
+  .prose{font-size:.92rem;line-height:1.65;color:#39435c}
+  .prose b{color:var(--ink)}
+
+  /* CSS charts */
+  .cols{display:flex;align-items:flex-end;gap:18px;height:150px;padding:10px 0 0;border-bottom:2px solid var(--line)}
+  .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+  .col .bar{width:64%;background:var(--navy);border-radius:5px 5px 0 0;position:relative;min-height:4px}
+  .col .bar.cur{background:var(--red)}
+  .col .bv{position:absolute;top:-20px;left:0;right:0;text-align:center;font-size:.78rem;font-weight:700}
+  .col .cl{margin-top:8px;font-size:.78rem;color:var(--ink-soft)}
+  .hbars{display:flex;flex-direction:column;gap:11px}
+  .hbar .t{display:flex;justify-content:space-between;font-size:.86rem;margin-bottom:5px}
+  .hbar .t b{font-weight:600} .hbar .tr{height:12px;background:#eef1f6;border-radius:6px;overflow:hidden}
+  .hbar .tr i{display:block;height:100%;border-radius:6px}
+
+  table.t{width:100%;border-collapse:collapse;font-size:.88rem}
+  table.t th{text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);padding:8px 10px;border-bottom:2px solid var(--line)}
+  table.t td{padding:9px 10px;border-bottom:1px solid var(--line)}
+  table.t td.r,table.t th.r{text-align:right}
+  table.t tr:last-child td{border-bottom:none}
+  .up{color:var(--hi);font-weight:600}
+
+  .hl{display:grid;grid-template-columns:1fr 1fr;gap:10px 26px}
+  @media(max-width:640px){.hl{grid-template-columns:1fr}}
+  .hl .i{display:flex;gap:10px;font-size:.9rem;padding:7px 0;border-bottom:1px solid var(--line)}
+  .hl .i .n{font-family:var(--head);font-weight:700;color:var(--navy);min-width:54px}
+  .ahead{background:#f6f8fc;border:1px solid var(--line);border-radius:9px;padding:20px 22px}
+  .ahead h3{font-family:var(--head);font-size:1.1rem;margin-bottom:6px}
+  .ahead p{font-size:.9rem;color:#39435c;line-height:1.6}
+
+  .rfoot{background:#f6f8fc;border-top:1px solid var(--line);padding:18px 52px;font-size:.76rem;color:var(--ink-soft);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  .draft{display:inline-block;background:var(--gold);color:#fff;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:5px}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--navy);color:#fff;
+    padding:13px 22px;border-radius:10px;font-weight:600;font-size:.9rem;box-shadow:0 12px 34px rgba(0,0,0,.28);transition:.35s cubic-bezier(.2,.9,.3,1.2);z-index:60}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+
+  @media print{
+    body{background:#fff}
+    .chrome,.backlink,.toast{display:none!important}
+    .report{box-shadow:none;border:none;margin:0;max-width:100%;border-radius:0}
+    .sec{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="chrome">
+  <div class="l">
+    <svg class="crest" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+      <rect x="2" y="2" width="44" height="44" rx="3" stroke="#b3892f" stroke-width="1.5" opacity=".6"/>
+      <path d="M24 9v9M19.5 13.5h9" stroke="#b3892f" stroke-width="2" stroke-linecap="round"/>
+      <path d="M14 39V25l10-8 10 8v14" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M21 39v-7h6v7" stroke="#fff" stroke-width="1.6"/></svg>
+    <b>Annual Report</b>
+  </div>
+  <div class="r">
+    <span class="genbadge"><span class="d"></span><span id="genTxt">Generated from the church database · 2.4s · 14,602 records</span></span>
+    <label style="font-size:.78rem;opacity:.85">Year</label>
+    <select id="yearSel"><option value="2025">2025</option><option value="2024">2024</option></select>
+    <button class="btn btn-red" onclick="window.print()">⤓ Export PDF</button>
+  </div>
+</div>
+<a class="backlink" href="/LHBC/">← All LHBC mockups</a>
+
+<div class="report" id="report"></div>
+<div class="toast" id="toast">Saved</div>
+
+<script>
+const DATA={
+  2025:{
+    aw:76, awPrev:52, give:232000, givePrev:148000, budget:210000,
+    bapt:19, baptPrev:8, prof:31, profPrev:14, members:64, membersPrev:38, newMem:31, lost:5,
+    guests:210, guestsPrev:120, units:38, retention:89,
+    ss:54, wed:38, kids:25, recurring:38,
+    funds:[['General Fund — tithes & offerings',186000,'#122a52'],['Faith-promise missions',28000,'#2f7d8a'],['Building fund',14000,'#b3892f'],['Benevolence',4000,'#7b8aa3']],
+    fp:{given:28000,goal:30000}, building:{raised:14000,goal:150000,cum:48000},
+    attYears:[['2023',0],['2024',52],['2025',76]],
+    highlights:[['19','believers baptized'],['31','professions of faith'],['210','first-time guests welcomed'],['31','joined as members'],['3','small groups launched'],['1','mission trip (12 went)'],['46','average kids in Sunday School'],['4','community outreach events']],
+    letter:'What a year of God’s faithfulness. We began 2025 still finding our footing as a young church and ended it as a growing family of faith — 76 souls gathering each Lord’s Day, 19 baptized into Christ, and giving that outpaced every expectation. The numbers below are not the point; they are markers of the people behind them. To God be the glory.',
+    ahead:'Our 2026 theme is “Increase Your Faith” (Luke 17:5). We’re praying toward an average attendance of 110, our first building down-payment, and sending two families into deeper ministry leadership.'
+  },
+  2024:{
+    aw:52, awPrev:0, give:148000, givePrev:0, budget:140000,
+    bapt:8, baptPrev:0, prof:14, profPrev:0, members:38, membersPrev:0, newMem:38, lost:0,
+    guests:120, guestsPrev:0, units:24, retention:0,
+    ss:34, wed:30, kids:16, recurring:30,
+    funds:[['General Fund — tithes & offerings',122000,'#122a52'],['Faith-promise missions',16000,'#2f7d8a'],['Building fund',7000,'#b3892f'],['Benevolence',3000,'#7b8aa3']],
+    fp:{given:16000,goal:18000}, building:{raised:7000,goal:150000,cum:7000},
+    attYears:[['2023',0],['2024',52],['2025',0]],
+    highlights:[['8','believers baptized'],['14','professions of faith'],['120','first-time guests welcomed'],['38','charter members'],['1','small group launched'],['—','first Easter as a church'],['34','average kids in Sunday School'],['2','community outreach events']],
+    letter:'Our founding year. Lincoln Highway Baptist Church opened its doors and the Lord brought us 38 charter members and far more guests than we dared hope. We planted; God gave the growth. This first report is a record of His kindness to a brand-new church.',
+    ahead:'For 2025 we are praying toward steady weekly worship of 75+, doubling our Sunday School, and turning first-time guests into committed members.'
+  }
+};
+const $=s=>document.querySelector(s);
+const money=n=>'$'+n.toLocaleString();
+const moneyK=n=>'$'+Math.round(n/1000)+'K';
+function pct(a,b){return b?Math.round((a-b)/b*100):0;}
+function dl(a,b,suffix){if(!b) return `<span class="dl">new this year</span>`;const p=pct(a,b);return `<span class="dl">▲ +${p}% vs prior year</span>`;}
+
+function render(y){
+  const d=DATA[y];
+  const fundMax=Math.max(...d.funds.map(f=>f[1]));
+  const attMax=Math.max(...d.attYears.map(a=>a[1]),1);
+  $('#report').innerHTML=`
+  <div class="cover">
+    <div class="kj">Lincoln Highway Baptist Church · Dalton, Ohio</div>
+    <h1>${y} <span>Annual<br>Report</span></h1>
+    <div class="ch">A year in the life of our church family</div>
+    <div class="vis">🔥 Vision: ${y==='2025'?'“Built on the Rock”':'“A Church is Born”'} · presented at the Annual Meeting</div>
+  </div>
+  <div class="body">
+    <div class="letter">${d.letter}</div>
+    <div class="sign">— Pastor Ed Kramer, Lead Pastor</div>
+
+    <div class="sec">
+      <h2>The year at a glance <small>${y}</small></h2>
+      <div class="kpis">
+        <div class="kpi"><div class="v num">${d.aw}</div><div class="lb">Avg weekly attendance</div>${dl(d.aw,d.awPrev)}</div>
+        <div class="kpi"><div class="v num">${moneyK(d.give)}</div><div class="lb">Total giving</div>${dl(d.give,d.givePrev)}</div>
+        <div class="kpi"><div class="v num">${d.bapt}</div><div class="lb">Baptisms</div>${dl(d.bapt,d.baptPrev)}</div>
+        <div class="kpi"><div class="v num">${d.prof}</div><div class="lb">Professions of faith</div>${dl(d.prof,d.profPrev)}</div>
+        <div class="kpi"><div class="v num">${d.members}</div><div class="lb">Members (year-end)</div>${dl(d.members,d.membersPrev)}</div>
+        <div class="kpi"><div class="v num">${d.guests}</div><div class="lb">First-time guests</div>${dl(d.guests,d.guestsPrev)}</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <h2>Attendance</h2>
+      <div class="twocol">
+        <div>
+          <div class="cols">${d.attYears.map(a=>`<div class="col"><div class="bar ${a[0]===y?'cur':''}" style="height:${a[1]/attMax*100}%"><span class="bv">${a[1]||''}</span></div><div class="cl">${a[0]}</div></div>`).join('')}</div>
+          <p style="font-size:.76rem;color:var(--ink-soft);margin-top:8px">Average weekly worship attendance by year</p>
+        </div>
+        <div class="prose">
+          <p>Sunday worship averaged <b>${d.aw}</b> this year. Beyond the main service, <b>${d.ss}</b> gathered for Sunday School and <b>${d.wed}</b> for Wednesday prayer meeting, with about <b>${d.kids}</b> children checked into our nursery and classes each week.</p>
+          <table class="t" style="margin-top:14px"><tr><th>Gathering</th><th class="r">Avg / week</th></tr>
+            <tr><td>Sunday morning worship</td><td class="r num">${d.aw}</td></tr>
+            <tr><td>Sunday School</td><td class="r num">${d.ss}</td></tr>
+            <tr><td>Wednesday prayer meeting</td><td class="r num">${d.wed}</td></tr>
+            <tr><td>Children checked in</td><td class="r num">${d.kids}</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <h2>Stewardship</h2>
+      <div class="twocol">
+        <div class="prose">
+          <p>The Lord provided <b>${money(d.give)}</b> in total giving against a budget of <b>${money(d.budget)}</b> — <b class="up">${Math.round(d.give/d.budget*100)}% of budget</b>. ${d.recurring}% of households gave through recurring gifts, and the congregation supported missions through faith-promise.</p>
+          <table class="t" style="margin-top:14px"><tr><th>Measure</th><th class="r">${y}</th></tr>
+            <tr><td>Total giving</td><td class="r num">${money(d.give)}</td></tr>
+            <tr><td>Giving vs. budget</td><td class="r up">${Math.round(d.give/d.budget*100)}%</td></tr>
+            <tr><td>Giving households (units)</td><td class="r num">${d.units}</td></tr>
+            <tr><td>Faith-promise missions</td><td class="r num">${money(d.fp.given)}</td></tr></table>
+        </div>
+        <div>
+          <div class="hbars">${d.funds.map(f=>`<div class="hbar"><div class="t"><b>${f[0]}</b><span class="num">${money(f[1])}</span></div><div class="tr"><i style="width:${f[1]/fundMax*100}%;background:${f[2]}"></i></div></div>`).join('')}</div>
+          <p style="font-size:.76rem;color:var(--ink-soft);margin-top:10px">Giving by fund</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <h2>Growth &amp; the Gospel</h2>
+      <div class="prose" style="margin-bottom:14px">We rejoice that <b>${d.bapt} believers were baptized</b> and <b>${d.prof} professed faith in Christ</b> this year. ${d.guests} first-time guests visited${d.guestsPrev?` — comfortably more than our average weekly attendance, a healthy sign of a growing front door`:''}. ${d.newMem} joined as members${d.retention?`, and we retained ${d.retention}% of our people year over year`:''}.</p>
+      <table class="t"><tr><th>Disciple-making</th><th class="r">${y}</th><th class="r">Prior</th></tr>
+        <tr><td>Baptisms</td><td class="r num">${d.bapt}</td><td class="r num">${d.baptPrev||'—'}</td></tr>
+        <tr><td>Professions of faith</td><td class="r num">${d.prof}</td><td class="r num">${d.profPrev||'—'}</td></tr>
+        <tr><td>New members</td><td class="r num">${d.newMem}</td><td class="r num">${y==='2025'?38:'—'}</td></tr>
+        <tr><td>First-time guests</td><td class="r num">${d.guests}</td><td class="r num">${d.guestsPrev||'—'}</td></tr></table>
+    </div>
+
+    <div class="sec">
+      <h2>Ministry highlights</h2>
+      <div class="hl">${d.highlights.map(h=>`<div class="i"><span class="n num">${h[0]}</span><span>${h[1]}</span></div>`).join('')}</div>
+    </div>
+
+    <div class="sec">
+      <h2>Looking ahead</h2>
+      <div class="ahead"><h3>${y==='2025'?'2026':'2025'} — ${y==='2025'?'“Increase Your Faith”':'building momentum'}</h3><p>${d.ahead}</p></div>
+    </div>
+  </div>
+  <div class="rfoot">
+    <span><span class="draft">Draft</span> &nbsp;Generated ${'—'} synthetic data from the church management system</span>
+    <span>Lincoln Highway Baptist Church · Dalton, OH · ${y} Annual Report</span>
+  </div>`;
+}
+$('#yearSel').onchange=e=>{render(e.target.value);
+  $('#genTxt').textContent='Generated from the church database · '+(1.8+Math.random()*1.4).toFixed(1)+'s · '+(e.target.value==='2025'?'14,602':'7,940')+' records';
+  toast('Report regenerated for '+e.target.value);window.scrollTo({top:0,behavior:'smooth'});};
+let tT;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2200);}
+render('2025');
+</script>
+
+<script>
+  /* Soft private-preview gate (shared session unlock across /LHBC/*). */
+  (function(){
+    var PASS="lincolnhwy";
+    if(sessionStorage.getItem("lhbc_ok")==="1") return;
+    var ov=document.createElement("div");
+    ov.style.cssText="position:fixed;inset:0;z-index:9999;background:#122a52;color:#fff;display:grid;place-items:center;font-family:'Inter',system-ui,sans-serif";
+    ov.innerHTML='<form style="text-align:center;width:320px;max-width:88vw;padding:24px">'
+      +'<div style="font:700 1.5rem Merriweather,Georgia,serif;margin-bottom:6px">Lincoln Highway Baptist Church</div>'
+      +'<div style="opacity:.8;font-size:.9rem;margin-bottom:22px">Private preview &middot; please enter the password</div>'
+      +'<input type="password" placeholder="Password" autofocus style="width:100%;padding:12px 14px;border:none;border-radius:5px;font-size:1rem;margin-bottom:10px">'
+      +'<button style="width:100%;padding:12px;border:none;border-radius:5px;background:#c8102e;color:#fff;font:600 1rem Inter,sans-serif;cursor:pointer">Enter</button>'
+      +'<div class="err" style="color:#f3b8b8;font-size:.82rem;height:18px;margin-top:8px"></div></form>';
+    document.documentElement.appendChild(ov);
+    var f=ov.querySelector("form"),inp=ov.querySelector("input"),err=ov.querySelector(".err");
+    f.onsubmit=function(e){e.preventDefault();
+      if(inp.value===PASS){sessionStorage.setItem("lhbc_ok","1");ov.remove();}
+      else{err.textContent="Incorrect password.";inp.value="";inp.focus();}
+    };
+  })();
+</script>
+</body>
+</html>
