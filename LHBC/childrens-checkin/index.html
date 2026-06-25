@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LHBC · Children's Check-In</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Inter:wght@400;500;600;700&display=swap');
+  :root{
+    --navy:#122a52; --navy-deep:#0d1f3d; --ink:#0f1b2d; --ink-soft:#51607a;
+    --line:#e4e9f1; --bg:#eef1f6; --surface:#ffffff; --accent:#9e2b3a; --accent-soft:#efd9db;
+    --ok:#2f7d52; --ok-bg:#e4f1ea; --warn:#9c3d18; --warn-bg:#fbe4d8;
+    --gold:#b3892f; --radius:8px;
+    --head:'Merriweather',Georgia,serif; --body:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);color:var(--ink);background:var(--bg);min-height:100vh;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1200px;margin:0 auto;padding:18px 20px 64px}
+  h1,h2,h3{font-family:var(--head);font-weight:700;letter-spacing:-.01em}
+  a{color:inherit}
+
+  /* header */
+  header.app{display:flex;align-items:center;justify-content:space-between;gap:16px;
+    background:var(--navy);color:#fff;padding:14px 22px;border-radius:14px;box-shadow:0 10px 30px rgba(18,42,82,.2)}
+  .brand{display:flex;align-items:center;gap:13px}
+  .crest{width:40px;height:40px}
+  .brand b{font-family:var(--head);font-size:1.16rem;display:block;line-height:1.05}
+  .brand span{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.75}
+  .sync{display:flex;align-items:center;gap:8px;font-size:.78rem;background:rgba(255,255,255,.12);padding:8px 14px;border-radius:999px}
+  .dot{width:9px;height:9px;border-radius:50%;background:#7fd49a;box-shadow:0 0 0 0 rgba(127,212,154,.7);animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(127,212,154,.6)}70%{box-shadow:0 0 0 8px rgba(127,212,154,0)}100%{box-shadow:0 0 0 0 rgba(127,212,154,0)}}
+
+  .tabs{display:flex;gap:8px;margin:20px 0}
+  .tab{border:1px solid var(--line);background:var(--surface);padding:11px 22px;border-radius:999px;font-weight:600;
+    font-size:.9rem;cursor:pointer;color:var(--ink-soft);transition:.15s}
+  .tab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .tab:hover:not(.active){border-color:var(--navy)}
+
+  .grid{display:grid;grid-template-columns:1fr 380px;gap:20px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:0 2px 14px rgba(15,27,45,.04)}
+  .panel h2{font-size:1.16rem;margin-bottom:4px}
+  .panel .sub{color:var(--ink-soft);font-size:.86rem;margin-bottom:18px}
+
+  .search{display:flex;gap:10px;margin-bottom:18px}
+  .search input{flex:1;padding:14px 16px;border:1px solid var(--line);border-radius:var(--radius);font-size:1rem;font-family:var(--body)}
+  .search input:focus{outline:2px solid var(--navy);border-color:var(--navy)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:.95rem;font-family:var(--body);
+    padding:14px 26px;border-radius:var(--radius);cursor:pointer;border:1.5px solid transparent;transition:.15s}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-primary:hover{filter:brightness(1.07)}
+  .btn-primary:disabled{background:#c9cfdb;cursor:not-allowed}
+  .btn-ghost{background:transparent;color:var(--navy);border-color:var(--line)}
+  .btn-ghost:hover{border-color:var(--navy)}
+  .btn-sm{padding:9px 16px;font-size:.85rem}
+
+  .family{border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;background:#fcfdff}
+  .family-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+  .family-head .name{font-weight:700;font-size:1.02rem}
+  .family-head .phone{font-size:.8rem;color:var(--ink-soft)}
+  .kids{display:flex;flex-direction:column;gap:9px}
+  .kid{display:flex;align-items:center;gap:13px;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);
+    background:#fff;cursor:pointer;transition:.12s;user-select:none}
+  .kid:hover{border-color:var(--navy)}
+  .kid.sel{border-color:var(--navy);background:#eef3fb}
+  .kid.checked{opacity:.5}
+  .avatar{width:42px;height:42px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:700;font-size:.95rem;flex-shrink:0}
+  .kid .meta{flex:1;min-width:0}
+  .kid .meta .kn{font-weight:600;font-size:.98rem}
+  .kid .meta .kd{font-size:.78rem;color:var(--ink-soft);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .room-pill{font-size:.7rem;font-weight:600;padding:2px 9px;border-radius:999px;background:#e9eef7;color:var(--navy)}
+  .badge{font-size:.68rem;padding:3px 9px;border-radius:999px;font-weight:700;letter-spacing:.02em;white-space:nowrap}
+  .badge.allergy{background:var(--warn-bg);color:var(--warn)}
+  .badge.in{background:var(--ok-bg);color:var(--ok)}
+  .check{width:24px;height:24px;border-radius:6px;border:2px solid var(--line);display:grid;place-items:center;flex-shrink:0;color:transparent}
+  .kid.sel .check{background:var(--navy);border-color:var(--navy);color:#fff}
+
+  .actionbar{position:sticky;bottom:0;display:flex;gap:12px;align-items:center;margin-top:12px;
+    padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:var(--radius)}
+  .actionbar .count{font-weight:700}
+  .actionbar .count span{color:var(--ink-soft);font-weight:500}
+  .actionbar .btn{margin-left:auto}
+
+  /* side: live roster + tag preview */
+  .side h2{font-size:1.05rem;margin-bottom:2px}
+  .empty{color:var(--ink-soft);font-size:.88rem;text-align:center;padding:26px 10px}
+  .rrow{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px dashed var(--line)}
+  .rrow:last-child{border-bottom:none}
+  .rrow .av{width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:.8rem;font-weight:700;flex-shrink:0}
+  .rrow .info{flex:1;min-width:0}
+  .rrow .info b{font-size:.9rem}
+  .rrow .info small{display:block;color:var(--ink-soft);font-size:.74rem}
+  .rrow .code{font-family:var(--head);font-weight:700;font-size:.92rem;color:var(--accent)}
+
+  /* printed tag preview */
+  .tagwrap{margin-top:18px}
+  .tagwrap .lbl{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin-bottom:10px}
+  .tags{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .tag{border:1px dashed var(--navy);border-radius:8px;padding:12px;background:#fff;position:relative}
+  .tag .role{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+  .tag .nm{font-family:var(--head);font-weight:700;font-size:1.05rem;line-height:1.1;margin:4px 0}
+  .tag .rm{font-size:.74rem;color:var(--ink-soft)}
+  .tag .cd{margin-top:8px;font-family:var(--head);font-weight:900;font-size:1.4rem;letter-spacing:.14em;color:var(--navy)}
+  .tag .al{margin-top:6px;font-size:.68rem;font-weight:700;color:var(--warn);background:var(--warn-bg);padding:2px 7px;border-radius:5px;display:inline-block}
+  .tag.guardian{background:#f7f9fc}
+
+  /* rooms tab */
+  .roomcard{border:1px solid var(--line);border-radius:var(--radius);margin-bottom:16px;overflow:hidden}
+  .roomcard .rhead{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:#f6f8fc;border-bottom:1px solid var(--line)}
+  .roomcard .rhead b{font-family:var(--head);font-size:1.05rem}
+  .roomcard .rhead .cnt{font-size:.82rem;color:var(--ink-soft)}
+  .roomcard .rbody{padding:6px 18px}
+  .roomcard .rrow .btn{margin-left:auto}
+
+  /* data tab */
+  .flowstep{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
+  .flowstep .num{width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:700;font-size:.8rem;flex-shrink:0}
+  .flowstep b{font-size:.92rem}.flowstep p{margin:2px 0 0;font-size:.84rem;color:var(--ink-soft)}
+  .schema{font-family:ui-monospace,'SF Mono',monospace;font-size:.78rem;line-height:1.7}
+  .schema .tbl{color:var(--accent);font-weight:700}.schema .col{color:var(--navy)}.schema .ty{color:var(--ink-soft)}
+  .cfg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+  .cfg label{font-size:.72rem;font-weight:600;color:var(--ink-soft);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
+  .cfg input,.cfg select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:6px;font-size:.88rem;font-family:var(--body)}
+  .cfg .full{grid-column:1/-1}
+  .console{background:#0e1726;border-radius:var(--radius);overflow:hidden;margin-top:8px}
+  .console .bar{display:flex;align-items:center;gap:7px;padding:11px 16px;background:#15233a;color:#9fb0c9;font-size:.8rem}
+  .console .bar .c{width:11px;height:11px;border-radius:50%}
+  .console pre{margin:0;padding:16px 18px;color:#cfe3d6;font-family:ui-monospace,'SF Mono',monospace;font-size:.76rem;line-height:1.55;max-height:320px;overflow:auto;white-space:pre-wrap}
+  .console .k{color:#e0b65a}.console .s{color:#86d29a}.console .n{color:#e08a5d}.console .d{color:#6b7c91}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--navy);color:#fff;
+    padding:14px 22px;border-radius:10px;font-weight:600;font-size:.92rem;box-shadow:0 12px 34px rgba(0,0,0,.28);
+    transition:.35s cubic-bezier(.2,.9,.3,1.2);z-index:60;display:flex;gap:10px;align-items:center}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+  .hidden{display:none}
+  .backlink{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;color:var(--ink-soft);margin-bottom:14px;text-decoration:none}
+  .backlink:hover{color:var(--navy)}
+  .draft{display:inline-block;background:var(--gold);color:#fff;font-size:.64rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:5px;margin-left:10px;vertical-align:middle}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="backlink" href="/LHBC/">← All LHBC mockups</a>
+  <header class="app">
+    <div class="brand">
+      <svg class="crest" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <rect x="2" y="2" width="44" height="44" rx="3" stroke="#b3892f" stroke-width="1.5" opacity=".6"/>
+        <path d="M24 9v9M19.5 13.5h9" stroke="#b3892f" stroke-width="2" stroke-linecap="round"/>
+        <path d="M14 39V25l10-8 10 8v14" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/>
+        <path d="M21 39v-7h6v7" stroke="#fff" stroke-width="1.6"/>
+      </svg>
+      <div><b>Children's Check-In</b><span>Lincoln Highway Baptist · Station 1</span></div>
+    </div>
+    <div class="sync"><span class="dot"></span><span id="syncLabel">ChMS sync · demo</span></div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="checkin">Check-In</button>
+    <button class="tab" data-tab="rooms">Rooms &amp; Pickup</button>
+    <button class="tab" data-tab="data">Data &amp; ChMS</button>
+  </div>
+
+  <!-- CHECK-IN -->
+  <section id="checkin">
+    <div class="grid">
+      <div class="panel">
+        <h2>Find a family <span class="draft">mockup</span></h2>
+        <p class="sub">Search by family name or phone, then tap each child to check in. Rooms are assigned by age.</p>
+        <div class="search">
+          <input id="q" placeholder="Search &ldquo;Falde&rdquo; or last 4 of phone…" autocomplete="off">
+          <button class="btn btn-ghost" onclick="clearSel()">Clear</button>
+        </div>
+        <div id="families"></div>
+        <div class="actionbar">
+          <div class="count" id="selCount">0 <span>children selected</span></div>
+          <button class="btn btn-primary" id="checkBtn" disabled onclick="doCheckIn()">Check in &amp; print tags</button>
+        </div>
+      </div>
+
+      <div class="panel side">
+        <h2>In our care now</h2>
+        <p class="sub" id="careCount">No children checked in yet.</p>
+        <div id="liveRoster"></div>
+        <div class="tagwrap" id="tagPreview" style="display:none">
+          <div class="lbl">Last tags printed</div>
+          <div class="tags" id="tagPair"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROOMS -->
+  <section id="rooms" class="hidden">
+    <div class="panel">
+      <h2>Rooms &amp; secure pickup</h2>
+      <p class="sub">A child is released only to a guardian presenting the matching pickup code. Every check-out is recorded (who &amp; when).</p>
+      <div id="roomsView"><div class="empty">No active check-ins. Head to Check-In to begin.</div></div>
+    </div>
+  </section>
+
+  <!-- DATA -->
+  <section id="data" class="hidden">
+    <div class="grid" style="grid-template-columns:1fr 1fr">
+      <div class="panel">
+        <h2>What happens on check-in</h2>
+        <p class="sub">The kiosk writes a record, then (when connected) syncs it to the church management system.</p>
+        <div class="flowstep"><div class="num">1</div><div><b>Local write</b><p>A <code>checkin</code> row is inserted with child, guardian, room, timestamp, and who checked them in.</p></div></div>
+        <div class="flowstep"><div class="num">2</div><div><b>Secure pickup code</b><p>A short code is generated and printed on <em>both</em> the child tag and the guardian tag.</p></div></div>
+        <div class="flowstep"><div class="num">3</div><div><b>ChMS sync</b><p>The record posts to your ChMS (Planning Center Check-Ins, Breeze, ChurchTrac…) as an attendance event.</p></div></div>
+        <div class="flowstep"><div class="num">4</div><div><b>Confirmation &amp; attendance</b><p>The ChMS returns an ID; the row is marked synced. Attendance persists for the dashboard &amp; annual report.</p></div></div>
+        <h2 style="margin-top:22px">ChMS connection <span class="draft">demo</span></h2>
+        <p class="sub">No real calls are made — the data backbone isn't wired yet (decision tabled).</p>
+        <div class="cfg">
+          <div><label>Provider</label><select id="cmsProvider"><option>Planning Center</option><option>Breeze ChMS</option><option>ChurchTrac</option><option>Tithe.ly</option><option>Custom / none yet</option></select></div>
+          <div><label>Default room</label><input value="auto by age" id="roomId"></div>
+          <div class="full"><label>API base URL</label><input value="https://api.planningcenteronline.com/check-ins/v2"></div>
+          <div class="full"><label>API key</label><input value="pco_live_••••••••••••3f9a" type="password"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>Database schema</h2>
+        <p class="sub">Four tables back the whole flow.</p>
+        <div class="schema">
+<span class="tbl">children</span>
+  <span class="col">id</span> <span class="ty">uuid pk</span>
+  <span class="col">first_name, last_name</span> <span class="ty">text</span>
+  <span class="col">birthdate</span> <span class="ty">date</span>
+  <span class="col">allergies</span> <span class="ty">text null</span>
+  <span class="col">guardian_id</span> <span class="ty">fk→guardians</span>
+
+<span class="tbl">guardians</span>
+  <span class="col">id</span> <span class="ty">uuid pk</span>
+  <span class="col">name, phone</span> <span class="ty">text</span>
+
+<span class="tbl">rooms</span>
+  <span class="col">id</span> <span class="ty">text pk</span>
+  <span class="col">label, min_age, max_age</span>
+
+<span class="tbl">checkins</span>
+  <span class="col">id</span> <span class="ty">uuid pk</span>
+  <span class="col">child_id</span> <span class="ty">fk→children</span>
+  <span class="col">room_id</span> <span class="ty">fk→rooms</span>
+  <span class="col">pickup_code</span> <span class="ty">text</span>
+  <span class="col">checked_in_at / by</span> <span class="ty">ts / text</span>
+  <span class="col">checked_out_at / by</span> <span class="ty">ts / text null</span>
+  <span class="col">cms_event_id, synced</span> <span class="ty">text / bool</span>
+        </div>
+        <div style="margin-top:18px">
+          <div class="console">
+            <div class="bar"><span class="c" style="background:#e0584f"></span><span class="c" style="background:#e6b04a"></span><span class="c" style="background:#5fb56a"></span><span style="margin-left:8px">checkin.db · sync.log</span></div>
+            <pre id="log"><span class="d">// Waiting for first check-in…</span></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="toast" id="toast"><span>✓</span><span id="toastMsg">Checked in</span></div>
+
+<script>
+// ---------- rooms ----------
+const ROOMS=[
+  {id:'nursery',label:'Nursery (0–2)'},
+  {id:'toddlers',label:'Toddlers (2–3)'},
+  {id:'preschool',label:'Preschool (4–5)'},
+  {id:'elementary',label:'Elementary (K–5)'},
+];
+const roomLabel=id=>(ROOMS.find(r=>r.id===id)||{}).label||id;
+function roomFor(birth){const a=(Date.now()-new Date(birth))/3.15576e10;
+  if(a<2)return 'nursery'; if(a<4)return 'toddlers'; if(a<6)return 'preschool'; return 'elementary';}
+function ageLabel(birth){const m=(Date.now()-new Date(birth))/2.628e9|0; return m<24? m+' mo' : (m/12|0)+' yr';}
+
+// ---------- mock data (acts as the app database) ----------
+const DB={
+  guardians:[
+    {id:'g1',name:'Micah & Hannah Falde',phone:'330-555-0142'},
+    {id:'g2',name:'David & Sarah Klein',phone:'330-555-0188'},
+    {id:'g3',name:'Marcus & Tabitha Webb',phone:'330-555-0203'},
+    {id:'g4',name:'José & Maria Rivera',phone:'330-555-0271'},
+  ],
+  children:[
+    {id:'c1',first:'Eli',last:'Falde',birth:'2021-04-11',allergy:null,gid:'g1'},
+    {id:'c2',first:'Nora',last:'Falde',birth:'2024-09-02',allergy:'Peanuts',gid:'g1'},
+    {id:'c3',first:'Asher',last:'Klein',birth:'2019-01-19',allergy:null,gid:'g2'},
+    {id:'c4',first:'Lydia',last:'Klein',birth:'2023-03-10',allergy:null,gid:'g2'},
+    {id:'c5',first:'Liam',last:'Webb',birth:'2024-02-28',allergy:'Dairy',gid:'g3'},
+    {id:'c6',first:'Sofia',last:'Rivera',birth:'2017-07-30',allergy:null,gid:'g4'},
+    {id:'c7',first:'Mateo',last:'Rivera',birth:'2022-11-14',allergy:null,gid:'g4'},
+  ],
+  checkins:[]
+};
+const VOLUNTEER='K. Howard'; // logged-in check-in volunteer (demo)
+const PROVIDER=()=>document.getElementById('cmsProvider').value;
+let selected=new Set();
+let lastBatch=[];
+
+const isIn=cid=>DB.checkins.some(c=>c.child_id===cid && !c.checked_out_at);
+const uuid=()=>'xxxxxxxx'.replace(/x/g,()=>(Math.random()*16|0).toString(16));
+const genCode=()=>Math.random().toString(36).slice(2,6).toUpperCase();
+
+// ---------- check-in list ----------
+function renderFamilies(){
+  const q=(document.getElementById('q').value||'').toLowerCase().trim();
+  const host=document.getElementById('families'); host.innerHTML='';
+  DB.guardians.forEach(g=>{
+    const kids=DB.children.filter(c=>c.gid===g.id);
+    const match=!q||g.name.toLowerCase().includes(q)||g.phone.replace(/\D/g,'').includes(q.replace(/\D/g,''))||kids.some(k=>(k.first+' '+k.last).toLowerCase().includes(q));
+    if(!match)return;
+    const fam=document.createElement('div'); fam.className='family';
+    fam.innerHTML=`<div class="family-head"><div class="name">${g.name}</div><div class="phone">${g.phone}</div></div>`;
+    const wrap=document.createElement('div'); wrap.className='kids';
+    kids.forEach(k=>{
+      const checked=isIn(k.id);
+      const row=document.createElement('div');
+      row.className='kid'+(selected.has(k.id)?' sel':'')+(checked?' checked':'');
+      row.innerHTML=`
+        <div class="avatar">${k.first[0]}${k.last[0]}</div>
+        <div class="meta"><div class="kn">${k.first} ${k.last}</div>
+          <div class="kd">${ageLabel(k.birth)} old <span class="room-pill">${roomLabel(roomFor(k.birth))}</span></div></div>
+        ${k.allergy?`<span class="badge allergy">⚠ ${k.allergy}</span>`:''}
+        ${checked?'<span class="badge in">In room</span>':'<div class="check">✓</div>'}`;
+      if(!checked) row.onclick=()=>{selected.has(k.id)?selected.delete(k.id):selected.add(k.id);renderFamilies();updateBar();};
+      wrap.appendChild(row);
+    });
+    fam.appendChild(wrap); host.appendChild(fam);
+  });
+  if(!host.children.length) host.innerHTML='<div class="empty">No families match that search.</div>';
+}
+function updateBar(){
+  document.getElementById('selCount').innerHTML=`${selected.size} <span>children selected</span>`;
+  document.getElementById('checkBtn').disabled=selected.size===0;
+}
+function clearSel(){selected.clear();document.getElementById('q').value='';renderFamilies();updateBar();}
+
+// ---------- check-in action ----------
+function doCheckIn(){
+  const stamp=new Date().toISOString(); lastBatch=[];
+  selected.forEach(cid=>{
+    const child=DB.children.find(c=>c.id===cid);
+    const row={id:uuid(),child_id:cid,room_id:roomFor(child.birth),pickup_code:genCode(),
+      checked_in_at:stamp,checked_in_by:VOLUNTEER,checked_out_at:null,checked_out_by:null,cms_event_id:null,synced:false};
+    DB.checkins.push(row); lastBatch.push({row,child}); logLine(localWrite(row,child));
+  });
+  setTimeout(()=>lastBatch.forEach(m=>syncToCMS(m.row,m.child)),650);
+  toast(`${lastBatch.length} checked in · tag${lastBatch.length>1?'s':''} printing`);
+  renderTagPreview(); selected.clear(); renderFamilies(); updateBar(); renderRosters();
+}
+function localWrite(row,child){
+  return `<span class="k">INSERT INTO</span> checkins <span class="d">--</span> ${child.first} ${child.last}
+  { room:<span class="s">"${row.room_id}"</span>, by:<span class="s">"${row.checked_in_by}"</span>, code:<span class="n">"${row.pickup_code}"</span>, synced:<span class="n">false</span> }
+<span class="s">✓ committed locally (${row.id})</span>\n`;
+}
+function syncToCMS(row,child){
+  row.synced=true; row.cms_event_id='evt_'+uuid().slice(0,8);
+  logLine(`<span class="k">POST</span> <span class="d">/check_ins</span> → ${PROVIDER()} :: { person:"${child.first} ${child.last}", location:"${row.room_id}" }
+<span class="s">200 OK</span> · cms_event_id=<span class="n">"${row.cms_event_id}"</span>\n`);
+  const l=document.getElementById('syncLabel'); l.textContent='ChMS push · '+new Date().toLocaleTimeString();
+  setTimeout(()=>l.textContent='ChMS sync · demo',1600);
+  renderRosters();
+}
+function logLine(html){
+  const pre=document.getElementById('log');
+  if(pre.textContent.includes('Waiting')) pre.innerHTML='';
+  pre.innerHTML+=html+'\n'; pre.scrollTop=pre.scrollHeight;
+}
+
+// ---------- tag preview ----------
+function renderTagPreview(){
+  if(!lastBatch.length)return;
+  const wrap=document.getElementById('tagPreview'), pair=document.getElementById('tagPair');
+  const {row,child}=lastBatch[lastBatch.length-1];
+  const g=DB.guardians.find(x=>x.id===child.gid);
+  pair.innerHTML=`
+    <div class="tag"><div class="role">Child</div><div class="nm">${child.first} ${child.last}</div>
+      <div class="rm">${roomLabel(row.room_id)}</div>${child.allergy?`<div class="al">⚠ ${child.allergy}</div>`:''}
+      <div class="cd">${row.pickup_code}</div></div>
+    <div class="tag guardian"><div class="role">Guardian pickup</div><div class="nm">${g.name.split('&')[0].trim()}</div>
+      <div class="rm">${child.first}'s tag</div><div class="cd">${row.pickup_code}</div></div>`;
+  wrap.style.display='block';
+}
+
+// ---------- rosters ----------
+function renderRosters(){
+  const active=DB.checkins.filter(c=>!c.checked_out_at);
+  const live=document.getElementById('liveRoster');
+  document.getElementById('careCount').textContent=active.length?`${active.length} child${active.length>1?'ren':''} checked in across ${new Set(active.map(c=>c.room_id)).size} room(s).`:'No children checked in yet.';
+  live.innerHTML=active.length?active.map(c=>{
+    const k=DB.children.find(x=>x.id===c.child_id);
+    return `<div class="rrow"><div class="av">${k.first[0]}${k.last[0]}</div>
+      <div class="info"><b>${k.first} ${k.last}</b><small>${roomLabel(c.room_id)} · ${new Date(c.checked_in_at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})} · ${c.synced?'synced':'syncing…'}</small></div>
+      <div class="code">${c.pickup_code}</div></div>`;
+  }).join(''):'';
+
+  const rooms=document.getElementById('roomsView');
+  if(!active.length){rooms.innerHTML='<div class="empty">No active check-ins. Head to Check-In to begin.</div>';return;}
+  rooms.innerHTML=ROOMS.filter(r=>active.some(c=>c.room_id===r.id)).map(r=>{
+    const inRoom=active.filter(c=>c.room_id===r.id);
+    return `<div class="roomcard"><div class="rhead"><b>${r.label}</b><span class="cnt">${inRoom.length} present</span></div>
+      <div class="rbody">${inRoom.map(c=>{
+        const k=DB.children.find(x=>x.id===c.child_id), g=DB.guardians.find(x=>x.id===k.gid);
+        return `<div class="rrow"><div class="av">${k.first[0]}${k.last[0]}</div>
+          <div class="info"><b>${k.first} ${k.last}</b><small>Guardian: ${g.name} · ${g.phone}${k.allergy?' · ⚠ '+k.allergy:''}</small></div>
+          <div class="code">#${c.pickup_code}</div>
+          <button class="btn btn-ghost btn-sm" onclick="checkOut('${c.id}')">Check out</button></div>`;
+      }).join('')}</div></div>`;
+  }).join('');
+}
+function checkOut(id){
+  const c=DB.checkins.find(x=>x.id===id); c.checked_out_at=new Date().toISOString(); c.checked_out_by='Guardian #'+c.pickup_code;
+  const k=DB.children.find(x=>x.id===c.child_id);
+  logLine(`<span class="k">UPDATE</span> checkins <span class="k">SET</span> checked_out_at=now(), by=<span class="s">"${c.checked_out_by}"</span> <span class="k">WHERE</span> id=<span class="d">"${id.slice(0,8)}…"</span> <span class="d">// ${k.first} released</span>\n`);
+  toast(`${k.first} checked out`); renderRosters(); renderFamilies();
+}
+
+// ---------- plumbing ----------
+function toast(msg){document.getElementById('toastMsg').textContent=msg;const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active')); t.classList.add('active');
+  ['checkin','rooms','data'].forEach(id=>document.getElementById(id).classList.add('hidden'));
+  document.getElementById(t.dataset.tab).classList.remove('hidden');
+});
+document.getElementById('q').addEventListener('input',renderFamilies);
+renderFamilies(); updateBar(); renderRosters();
+</script>
+
+<script>
+  /* Soft private-preview gate (shared session unlock across /LHBC/*). */
+  (function(){
+    var PASS="lincolnhwy";
+    if(sessionStorage.getItem("lhbc_ok")==="1") return;
+    var ov=document.createElement("div");
+    ov.style.cssText="position:fixed;inset:0;z-index:9999;background:#122a52;color:#fff;display:grid;place-items:center;font-family:'Inter',system-ui,sans-serif";
+    ov.innerHTML='<form style="text-align:center;width:320px;max-width:88vw;padding:24px">'
+      +'<div style="font:700 1.5rem Merriweather,Georgia,serif;margin-bottom:6px">Lincoln Highway Baptist Church</div>'
+      +'<div style="opacity:.8;font-size:.9rem;margin-bottom:22px">Private preview &middot; please enter the password</div>'
+      +'<input type="password" placeholder="Password" autofocus style="width:100%;padding:12px 14px;border:none;border-radius:5px;font-size:1rem;margin-bottom:10px">'
+      +'<button style="width:100%;padding:12px;border:none;border-radius:5px;background:#9e2b3a;color:#fff;font:600 1rem Inter,sans-serif;cursor:pointer">Enter</button>'
+      +'<div class="err" style="color:#f3b8b8;font-size:.82rem;height:18px;margin-top:8px"></div></form>';
+    document.documentElement.appendChild(ov);
+    var f=ov.querySelector("form"),inp=ov.querySelector("input"),err=ov.querySelector(".err");
+    f.onsubmit=function(e){e.preventDefault();
+      if(inp.value===PASS){sessionStorage.setItem("lhbc_ok","1");ov.remove();}
+      else{err.textContent="Incorrect password.";inp.value="";inp.focus();}
+    };
+  })();
+</script>
+</body>
+</html>

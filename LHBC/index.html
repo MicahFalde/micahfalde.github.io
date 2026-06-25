@@ -3,385 +3,121 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lincoln Highway Baptist Church</title>
-<meta name="description" content="Lincoln Highway Baptist Church — a gospel-centered Baptist church. Join us Sundays at 10:30 AM.">
+<title>Lincoln Highway Baptist Church · Software Previews</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Inter:wght@400;500;600;700&display=swap');
-
-  /* ---------- DESIGN SYSTEM — "Modern" ----------
-     Inspired by the Parakaleo site: navy + white + slate text, Merriweather serif
-     headings, Inter body, small radius, generous white space. */
   :root{
-    --bg:#ffffff; --bg-alt:#f5f7fb; --surface:#ffffff;
-    --ink:#0f1b2d; --ink-soft:#51607a; --line:#e4e9f1;
-    --primary:#122a52; --primary-deep:#0d1f3d; --accent:#9e2b3a; --accent-soft:#efd9db;
-    --on-primary:#ffffff;
-    --font-head:'Merriweather',Georgia,serif; --head-wt:700; --head-tight:-0.01em;
-    --font-body:'Inter',system-ui,sans-serif;
-    --photo-a:#122a52; --photo-b:#37527e; --section-pad:96px; --radius:5px;
+    --navy:#122a52; --navy-deep:#0d1f3d; --ink:#0f1b2d; --ink-soft:#51607a;
+    --line:#e4e9f1; --bg:#f5f7fb; --surface:#ffffff; --accent:#9e2b3a; --gold:#b3892f;
+    --ok:#2f7d52; --ok-bg:#e4f1ea; --radius:10px;
+    --head:'Merriweather',Georgia,serif; --body:'Inter',system-ui,sans-serif;
   }
-
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{font-family:var(--font-body);color:var(--ink);background:var(--bg);line-height:1.6;
-    -webkit-font-smoothing:antialiased;transition:background .35s,color .35s}
-  h1,h2,h3,.serif{font-family:var(--font-head);font-weight:var(--head-wt);letter-spacing:var(--head-tight);line-height:1.12;color:var(--ink)}
+  body{font-family:var(--body);color:var(--ink);background:
+    radial-gradient(circle at 12% -5%, #e9eef8 0, transparent 42%),
+    radial-gradient(circle at 92% 110%, #eceef4 0, transparent 40%), var(--bg);min-height:100vh;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:920px;margin:0 auto;padding:54px 24px 72px}
+  h1,h2,h3{font-family:var(--head);font-weight:700;letter-spacing:-.01em}
   a{color:inherit;text-decoration:none}
-  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
-  .kicker{font-family:var(--font-body);font-weight:600;font-size:.74rem;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--accent)}
-  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.92rem;
-    padding:13px 26px;border-radius:var(--radius);cursor:pointer;border:1.5px solid transparent;transition:.18s;font-family:var(--font-body)}
-  .btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-  .btn-primary:hover{filter:brightness(1.07)}
-  .btn-ghost{background:transparent;color:var(--on-primary);border-color:rgba(255,255,255,.45)}
-  .btn-ghost:hover{background:rgba(255,255,255,.12)}
-  .btn-outline{background:transparent;color:var(--primary);border-color:var(--line)}
-  .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
 
-  /* ---------- DRAFT ribbon ---------- */
-  .draft{position:fixed;top:0;left:0;z-index:90;background:var(--accent);color:#fff;
-    font:600 .66rem/1 var(--font-body);letter-spacing:.12em;text-transform:uppercase;
-    padding:6px 12px;border-bottom-right-radius:6px;opacity:.92}
+  .masthead{display:flex;align-items:center;gap:16px;margin-bottom:8px}
+  .crest{width:54px;height:54px;flex-shrink:0}
+  .masthead h1{font-size:1.7rem;line-height:1.1}
+  .masthead .k{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600}
+  .intro{color:var(--ink-soft);font-size:1.02rem;max-width:60ch;margin:14px 0 8px;line-height:1.6}
+  .note{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;
+    padding:7px 16px;font-size:.8rem;color:var(--ink-soft);margin-top:14px}
+  .note .dot{width:8px;height:8px;border-radius:50%;background:var(--gold)}
 
-  /* ---------- header ---------- */
-  header.site{position:sticky;top:0;z-index:70;background:var(--primary);color:var(--on-primary);
-    border-bottom:1px solid rgba(255,255,255,.08);transition:background .35s}
-  .topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;height:74px}
-  .logo{display:flex;align-items:center;gap:13px}
-  .crest{width:40px;height:40px;flex-shrink:0}
-  .logo .wm{line-height:1.05}
-  .logo .wm b{font-family:var(--font-head);font-weight:var(--head-wt);font-size:1.12rem;display:block;letter-spacing:.01em}
-  .logo .wm span{font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;opacity:.75}
-  nav.main{display:flex;align-items:center;gap:26px}
-  nav.main a{font-size:.86rem;font-weight:500;opacity:.9;transition:.15s;position:relative;padding:4px 0}
-  nav.main a:hover{opacity:1}
-  nav.main a:hover::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1.5px;background:var(--accent)}
-  .header-cta{display:flex;align-items:center;gap:16px}
-  .times-chip{display:flex;flex-direction:column;align-items:flex-end;line-height:1.15;font-size:.72rem;opacity:.85}
-  .times-chip b{font-size:.86rem;letter-spacing:.02em;opacity:1}
-  .menu-btn{display:none;background:none;border:none;color:var(--on-primary);font-size:1.5rem;cursor:pointer}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:34px}
+  @media(max-width:680px){.grid{grid-template-columns:1fr}}
+  .card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px;transition:.16s;position:relative;min-height:172px}
+  a.card:hover{border-color:var(--navy);transform:translateY(-3px);box-shadow:0 18px 38px rgba(15,27,45,.09)}
+  .card.soon{opacity:.72}
+  .card .ic{width:46px;height:46px;border-radius:11px;background:#eef3fb;color:var(--navy);display:grid;place-items:center;margin-bottom:16px}
+  .card h3{font-size:1.2rem;margin-bottom:6px}
+  .card p{font-size:.9rem;color:var(--ink-soft);line-height:1.5;flex:1}
+  .badge{position:absolute;top:20px;right:20px;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+    padding:4px 10px;border-radius:999px}
+  .badge.live{background:var(--ok-bg);color:var(--ok)}
+  .badge.soon{background:#f0f1f4;color:var(--ink-soft)}
+  .go{margin-top:14px;font-size:.85rem;font-weight:600;color:var(--accent);display:inline-flex;align-items:center;gap:6px}
+  .card.soon .go{color:var(--ink-soft)}
 
-  /* ---------- hero ---------- */
-  .hero{background:var(--primary);color:var(--on-primary);position:relative;overflow:hidden}
-  .hero::before{content:"";position:absolute;inset:0;opacity:.10;
-    background:radial-gradient(circle at 85% 18%, var(--accent) 0, transparent 38%),
-               radial-gradient(circle at 10% 100%, #fff 0, transparent 30%)}
-  .hero-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center;
-    padding:78px 0 88px}
-  .hero h1{color:var(--on-primary);font-size:clamp(2.5rem,5vw,4rem);margin:18px 0 20px;font-weight:var(--head-wt)}
-  .hero p.lead{font-size:1.12rem;opacity:.9;max-width:30em;margin-bottom:32px}
-  .hero .kicker{color:var(--accent)}
-  .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
-  .arch{position:relative;border-radius:240px 240px 14px 14px;overflow:hidden;min-height:430px;
-    box-shadow:0 24px 60px rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.14)}
-
-  /* photo placeholders — intentional duotone blocks (real photos drop in here) */
-  .photo{position:relative;background:linear-gradient(150deg,var(--photo-a),var(--photo-b));display:grid;place-items:center;overflow:hidden}
-  .photo::after{content:attr(data-cap);position:absolute;bottom:0;left:0;right:0;
-    font:500 .72rem/1.3 var(--font-body);color:rgba(255,255,255,.92);
-    background:linear-gradient(transparent,rgba(0,0,0,.45));padding:34px 16px 12px;letter-spacing:.02em}
-  .photo .ph-ico{width:64px;height:64px;opacity:.5}
-
-  /* ---------- generic section ---------- */
-  section.band{padding:var(--section-pad) 0}
-  .band.alt{background:var(--bg-alt)}
-  .sec-head{max-width:42em;margin-bottom:46px}
-  .sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
-  .sec-head h2{font-size:clamp(1.9rem,3.4vw,2.7rem);margin:12px 0 14px}
-  .sec-head p{color:var(--ink-soft);font-size:1.05rem}
-
-  /* welcome */
-  .welcome-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:50px;align-items:center}
-  .welcome-grid .photo{border-radius:6px;min-height:360px}
-  .pastor-card{display:flex;align-items:center;gap:14px;margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
-  .pastor-card .pic{width:54px;height:54px;border-radius:50%;flex-shrink:0}
-  .pastor-card b{display:block;font-family:var(--font-head)}
-  .pastor-card span{font-size:.85rem;color:var(--ink-soft)}
-
-  /* plan a visit */
-  .visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
-  .visit-facts{display:grid;gap:2px;margin:24px 0 30px}
-  .fact{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
-  .fact .ic{width:26px;color:var(--accent);flex-shrink:0;margin-top:2px}
-  .fact b{display:block;font-size:.95rem}
-  .fact span{font-size:.9rem;color:var(--ink-soft)}
-  .expect{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:8px}
-  .expect .item h4{font-family:var(--font-head);font-size:1.05rem;margin-bottom:5px}
-  .expect .item p{font-size:.88rem;color:var(--ink-soft)}
-
-  /* sermon */
-  .sermon{background:var(--primary);color:var(--on-primary)}
-  .sermon .sec-head h2,.sermon .sec-head p{color:var(--on-primary)}
-  .sermon .sec-head p{opacity:.82}
-  .sermon-card{display:grid;grid-template-columns:.9fr 1.1fr;gap:0;border-radius:var(--radius);overflow:hidden;
-    background:var(--primary-deep);border:1px solid rgba(255,255,255,.12)}
-  .sermon-card .photo{min-height:300px}
-  .play{position:absolute;inset:0;display:grid;place-items:center}
-  .play .disc{width:74px;height:74px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;
-    box-shadow:0 8px 24px rgba(0,0,0,.3)}
-  .play .disc svg{margin-left:4px}
-  .sermon-meta{padding:40px}
-  .sermon-meta .kicker{color:var(--accent)}
-  .sermon-meta h3{color:var(--on-primary);font-size:1.7rem;margin:12px 0 8px}
-  .sermon-meta .ref{opacity:.8;font-size:.95rem;margin-bottom:6px}
-  .sermon-meta .by{opacity:.65;font-size:.85rem;margin-bottom:26px}
-
-  /* beliefs + next steps */
-  .belief-band{text-align:center}
-  .belief-statement{font-family:var(--font-head);font-size:clamp(1.4rem,2.8vw,2rem);line-height:1.4;
-    max-width:22em;margin:0 auto 14px;color:var(--ink)}
-  .belief-statement .accent{color:var(--accent)}
-  .creed{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;text-align:left;max-width:980px;margin:46px auto 12px}
-  .creed .c{padding:6px 18px;border-left:2px solid var(--accent)}
-  .creed h4{font-family:var(--font-head);font-size:1.06rem;margin-bottom:5px}
-  .creed p{font-size:.86rem;color:var(--ink-soft);line-height:1.5}
-  .creed-note{font-size:.82rem;color:var(--ink-soft);max-width:46em;margin:4px auto 0}
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:54px;text-align:left}
-  .step{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:30px;transition:.18s}
-  .step:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 16px 36px rgba(0,0,0,.07)}
-  .step .ic{width:42px;height:42px;border-radius:50%;background:var(--accent-soft);color:var(--accent);
-    display:grid;place-items:center;margin-bottom:18px}
-  .step h3{font-size:1.25rem;margin-bottom:8px}
-  .step p{font-size:.92rem;color:var(--ink-soft);margin-bottom:16px}
-  .step a{font-weight:600;font-size:.88rem;color:var(--accent);display:inline-flex;gap:6px;align-items:center}
-
-  /* footer */
-  footer.site{background:var(--primary-deep);color:var(--on-primary);padding:64px 0 28px}
-  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:40px;padding-bottom:46px;border-bottom:1px solid rgba(255,255,255,.12)}
-  .foot-grid h4{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;opacity:.6;margin-bottom:16px;font-family:var(--font-body);font-weight:600}
-  .foot-grid a,.foot-grid p{display:block;font-size:.9rem;opacity:.85;margin-bottom:9px}
-  .foot-grid a:hover{opacity:1;color:var(--accent)}
-  .foot-logo b{font-family:var(--font-head);font-size:1.3rem;display:block;margin-bottom:6px}
-  .foot-logo p{opacity:.7;max-width:24em}
-  .foot-map{margin-top:10px;height:120px;border-radius:6px;border:1px solid rgba(255,255,255,.15);
-    background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02));position:relative;overflow:hidden}
-  .foot-map::after{content:"📍 Map — address goes here";position:absolute;inset:0;display:grid;place-items:center;font-size:.78rem;opacity:.55}
-  .copyright{padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.8rem;opacity:.6}
-
-  @media(max-width:860px){
-    nav.main,.times-chip{display:none}
-    .menu-btn{display:block}
-    .hero-grid,.welcome-grid,.visit-grid,.sermon-card,.foot-grid{grid-template-columns:1fr;gap:34px}
-    .steps,.expect,.creed{grid-template-columns:1fr}
-    .arch{min-height:320px;order:-1}
-  }
+  footer{margin-top:40px;color:var(--ink-soft);font-size:.8rem;line-height:1.6}
+  footer code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.78rem}
 </style>
 </head>
 <body>
-<div class="draft">Draft mockup · placeholder content</div>
+<div class="wrap">
+  <div class="masthead">
+    <svg class="crest" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+      <rect x="2" y="2" width="44" height="44" rx="4" stroke="#b3892f" stroke-width="1.5" opacity=".7"/>
+      <path d="M24 8v10M19 13h10" stroke="#b3892f" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M13 40V24l11-9 11 9v16" stroke="#122a52" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M20 40v-8h8v8" stroke="#122a52" stroke-width="1.8"/>
+    </svg>
+    <div>
+      <div class="k">Lincoln Highway Baptist Church</div>
+      <h1>Software Previews</h1>
+    </div>
+  </div>
+  <p class="intro">A private workspace for the church-software mockups we're building. Each one is an
+    interactive draft with placeholder/synthetic data — nothing here is connected to live church data yet.
+    Pick a project to take a look.</p>
+  <span class="note"><span class="dot"></span> Private preview · synthetic data only · drafts in progress</span>
 
-<!-- ===== HEADER ===== -->
-<header class="site">
-  <div class="wrap topbar">
-    <a class="logo" href="#top">
-      <svg class="crest" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-        <rect x="2" y="2" width="44" height="44" rx="3" stroke="var(--accent)" stroke-width="1.5" opacity=".6"/>
-        <path d="M24 9v9M19.5 13.5h9" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
-        <path d="M14 39V25l10-8 10 8v14" stroke="var(--on-primary)" stroke-width="1.8" stroke-linejoin="round"/>
-        <path d="M21 39v-7h6v7" stroke="var(--on-primary)" stroke-width="1.6"/>
-      </svg>
-      <span class="wm"><b>Lincoln Highway</b><span>Baptist Church</span></span>
+  <div class="grid">
+    <a class="card" href="/LHBC/website/">
+      <span class="badge live">Live</span>
+      <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 4v5"/></svg></div>
+      <h3>Church Website</h3>
+      <p>The public site — who we are, what we believe, plan a visit, sermons, give.</p>
+      <span class="go">Open preview →</span>
     </a>
-    <nav class="main">
-      <a href="#visit">I'm New</a>
-      <a href="#welcome">About</a>
-      <a href="#sermon">Sermons</a>
-      <a href="#steps">Connect</a>
-      <a href="#give">Give</a>
-    </nav>
-    <div class="header-cta">
-      <div class="times-chip"><span>Sundays</span><b>10:30 AM</b></div>
-      <a class="btn btn-primary" href="#visit">Plan a Visit</a>
-      <button class="menu-btn" aria-label="Menu">☰</button>
-    </div>
-  </div>
-</header>
 
-<a id="top"></a>
-<!-- ===== HERO ===== -->
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <span class="kicker" id="heroKicker">Grace &amp; Truth · Massillon, Ohio</span>
-      <h1>A gospel-centered church on the Lincoln Highway.</h1>
-      <p class="lead">We're a Baptist church gathering each Sunday to worship Christ, sit under His Word,
-        and grow together as a family of faith. Whoever you are, there's a seat for you here.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#visit">Plan Your Visit →</a>
-        <a class="btn btn-ghost" href="#beliefs">What We Believe</a>
-      </div>
-    </div>
-    <div class="arch photo" data-cap="Photo: the congregation gathered on a Sunday morning">
-      <svg class="ph-ico" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.2" opacity=".55"><path d="M12 3v18M7 8h10M5 21V11l7-5 7 5v10"/></svg>
-    </div>
-  </div>
-</section>
+    <a class="card" href="/LHBC/childrens-checkin/">
+      <span class="badge live">Live</span>
+      <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11a3 3 0 100-6 3 3 0 000 6zM3 20a6 6 0 0112 0M16 8l2 2 4-4"/></svg></div>
+      <h3>Children's Check-In</h3>
+      <p>iPad kiosk — check kids into nursery &amp; Sunday school, print tags with secure pickup codes, keep attendance.</p>
+      <span class="go">Open preview →</span>
+    </a>
 
-<!-- ===== WELCOME / ABOUT ===== -->
-<section class="band alt" id="welcome">
-  <div class="wrap welcome-grid">
-    <div class="photo" data-cap="Photo: Pastor with the congregation"><svg class="ph-ico" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.2" opacity=".5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div>
-    <div>
-      <span class="kicker">Welcome</span>
-      <h2 style="font-size:clamp(1.8rem,3.2vw,2.5rem);margin:12px 0 16px">We're glad you found us.</h2>
-      <p style="color:var(--ink-soft);font-size:1.06rem;margin-bottom:14px">
-        Lincoln Highway Baptist Church is a new congregation with old convictions — that the Bible is
-        true, that Jesus Christ is Lord, and that the local church is where ordinary people are changed
-        by an extraordinary God. We keep it simple: faithful preaching, heartfelt worship, and real
-        community.</p>
-      <p style="color:var(--ink-soft);font-size:1.06rem">
-        You don't need to dress up, know the Bible, or have it all figured out. Come as you are — we'd
-        love to meet you.</p>
-      <div class="pastor-card">
-        <div class="pic photo" data-cap=""></div>
-        <div><b>Pastor John Mercer</b><span>Lead Pastor · [placeholder name]</span></div>
-      </div>
+    <div class="card soon">
+      <span class="badge soon">Coming soon</span>
+      <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 3v18h18M7 14l4-4 3 3 5-6"/></svg></div>
+      <h3>Pastor's Dashboard</h3>
+      <p>Daily numbers at a glance — attendance, giving, guests, follow-ups — with weekly/monthly/annual views.</p>
+      <span class="go">In design</span>
     </div>
-  </div>
-</section>
 
-<!-- ===== PLAN A VISIT ===== -->
-<section class="band" id="visit">
-  <div class="wrap visit-grid">
-    <div>
-      <span class="kicker">Plan Your Visit</span>
-      <h2 style="font-size:clamp(1.8rem,3.2vw,2.5rem);margin:12px 0 8px">What to expect on Sunday</h2>
-      <div class="visit-facts">
-        <div class="fact"><div class="ic">🕙</div><div><b>Sundays at 10:30 AM</b><span>Coffee &amp; fellowship from 10:00 AM</span></div></div>
-        <div class="fact"><div class="ic">📍</div><div><b>Lincoln Highway · Massillon, Ohio</b><span>Free parking · enter through the main doors · address finalizing [placeholder]</span></div></div>
-        <div class="fact"><div class="ic">⏱️</div><div><b>About 75 minutes</b><span>Singing, prayer, and a sermon from the Bible</span></div></div>
-        <div class="fact"><div class="ic">👶</div><div><b>Safe, staffed nursery &amp; kids' classes</b><span>Secure check-in for infants through elementary</span></div></div>
-      </div>
-      <a class="btn btn-primary" href="#">Let us know you're coming →</a>
+    <div class="card soon">
+      <span class="badge soon">Coming soon</span>
+      <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h16v4H4zM4 12h16M4 18h16M8 12v6M14 4v4"/></svg></div>
+      <h3>Attendance Capture</h3>
+      <p>Scan the paper pew booklets → handwriting recognition → attendance database, with human review of low-confidence names.</p>
+      <span class="go">In design</span>
     </div>
-    <div class="expect">
-      <div class="item"><h4>What do I wear?</h4><p>Come comfortable. You'll see everything from slacks to jeans — no dress code.</p></div>
-      <div class="item"><h4>Will I stand out?</h4><p>No pressure and no spotlight. You're welcome to simply observe and take it in.</p></div>
-      <div class="item"><h4>What about my kids?</h4><p>Loving volunteers and a secure check-in. You'll always know your children are safe.</p></div>
-      <div class="item"><h4>What's the preaching like?</h4><p>We teach straight through books of the Bible — clear, practical, and Christ-centered.</p></div>
-    </div>
-  </div>
-</section>
 
-<!-- ===== LATEST SERMON ===== -->
-<section class="band sermon" id="sermon">
-  <div class="wrap">
-    <div class="sec-head"><span class="kicker">From the Pulpit</span>
-      <h2>Latest message</h2>
-      <p>Can't make it in person, or want to know what we're about? Start here.</p>
-    </div>
-    <div class="sermon-card">
-      <div class="photo" data-cap="Sermon video / audio thumbnail">
-        <div class="play"><div class="disc"><svg width="22" height="22" viewBox="0 0 24 24" fill="#1a1713"><path d="M8 5v14l11-7z"/></svg></div></div>
-      </div>
-      <div class="sermon-meta">
-        <span class="kicker">Current series · The Gospel of Mark</span>
-        <h3>The Son of God, Revealed</h3>
-        <p class="ref">Mark 1:1–13</p>
-        <p class="by">Pastor John Mercer · June 22, 2026 · [placeholder]</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#">▶ Watch / Listen</a>
-          <a class="btn btn-ghost" href="#">All Sermons</a>
-        </div>
-      </div>
+    <div class="card soon">
+      <span class="badge soon">Coming soon</span>
+      <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2V9zM14 3v6h6M9 13h6M9 17h6"/></svg></div>
+      <h3>Annual Reporting</h3>
+      <p>One command turns a year of data into a finished report for the members — no manual spreadsheet work.</p>
+      <span class="go">In design</span>
     </div>
   </div>
-</section>
 
-<!-- ===== BELIEFS ===== -->
-<section class="band alt belief-band" id="beliefs">
-  <div class="wrap">
-    <span class="kicker">What We Believe</span>
-    <p class="belief-statement" style="margin-top:14px">
-      We are an independent <span class="accent">Baptist</span> church holding to the historic
-      Christian faith — the authority of <span class="accent">Scripture</span>, salvation by
-      <span class="accent">grace</span> through faith in <span class="accent">Christ</span> alone,
-      and a life lived for His glory.</p>
-    <div class="creed">
-      <div class="c"><h4>The Scriptures</h4><p>The Bible is the inspired, inerrant Word of God — our only complete and final authority.</p></div>
-      <div class="c"><h4>The Godhead</h4><p>One true and eternal God in three persons: Father, Son, and Holy Spirit.</p></div>
-      <div class="c"><h4>Jesus Christ</h4><p>Virgin-born, sinless, crucified for our sins, bodily risen, and coming again.</p></div>
-      <div class="c"><h4>Salvation</h4><p>A free gift of God's grace through faith in Christ alone — and the believer is eternally secure.</p></div>
-      <div class="c"><h4>The Ordinances</h4><p>Believer's baptism by immersion and the Lord's Supper, kept as a memorial.</p></div>
-      <div class="c"><h4>His Return</h4><p>Christ will return personally and bodily to reign — our blessed hope.</p></div>
-    </div>
-    <p class="creed-note">We share the doctrine of our sending church, First Baptist Church of Jackson. A full Statement of Faith will be published here.</p>
-    <a class="btn btn-outline" href="#" style="margin-top:22px">Read our Statement of Faith</a>
-  </div>
-</section>
-
-<!-- ===== NEXT STEPS ===== -->
-<section class="band" id="steps">
-  <div class="wrap">
-    <div class="sec-head center"><span class="kicker">Get Connected</span>
-      <h2>Your next step</h2>
-      <p>Church is meant to be lived together. Here's how to go deeper.</p>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 110 8 4 4 0 010-8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
-        <h3>Small Groups</h3>
-        <p>Mid-week gatherings in homes for Bible study, prayer, and friendship.</p>
-        <a href="#">Find a group <span>→</span></a>
-      </div>
-      <div class="step">
-        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 3a4 4 0 100 8 4 4 0 000-8z"/></svg></div>
-        <h3>Kids &amp; Families</h3>
-        <p>Safe, age-appropriate classes with secure check-in for every child.</p>
-        <a href="#">Children's ministry <span>→</span></a>
-      </div>
-      <div class="step">
-        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>
-        <h3>New Here?</h3>
-        <p>Let us know you're coming and we'll have someone ready to welcome you.</p>
-        <a href="#">Plan a visit <span>→</span></a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== FOOTER ===== -->
-<footer class="site" id="give">
-  <div class="wrap">
-    <div class="foot-grid">
-      <div class="foot-logo">
-        <b>Lincoln Highway Baptist Church</b>
-        <p>A gospel-centered Baptist church gathering each Sunday to worship Christ and grow as a family of faith.</p>
-        <div class="foot-map"></div>
-      </div>
-      <div>
-        <h4>Gather</h4>
-        <p>Sundays · 10:30 AM</p>
-        <a href="#visit">Plan a Visit</a>
-        <a href="#sermon">Sermons</a>
-        <a href="#beliefs">What We Believe</a>
-      </div>
-      <div>
-        <h4>Connect</h4>
-        <a href="#steps">Small Groups</a>
-        <a href="#steps">Kids &amp; Families</a>
-        <a href="#">Contact Us</a>
-        <a href="#">Events</a>
-      </div>
-      <div>
-        <h4>Give</h4>
-        <p>Support the ministry of LHBC.</p>
-        <a class="btn btn-primary" href="#" style="margin-top:4px">Give Online</a>
-        <p style="margin-top:16px">Lincoln Highway<br>Massillon, OH · [placeholder]<br>(330) 000-0000</p>
-      </div>
-    </div>
-    <div class="copyright">
-      <span>© 2026 Lincoln Highway Baptist Church · Draft mockup, placeholder content</span>
-      <span>Sundays at 10:30 AM</span>
-    </div>
-  </div>
-</footer>
+  <footer>
+    Lincoln Highway Baptist Church · independent Baptist church plant, Massillon, Ohio.<br>
+    Hosted at <code>micahfalde.com/LHBC</code> · password-protected preview · built with Claude Code.
+  </footer>
+</div>
 
 <script>
-  /* Soft private-preview gate. GitHub Pages is static — this is obscurity, not real
-     security (view-source reveals the password). Fine for a synthetic-data draft.
-     To change the password edit PASS; to remove the gate, delete this whole script. */
+  /* Soft private-preview gate (shared session unlock across /LHBC/*). */
   (function(){
     var PASS="lincolnhwy";
     if(sessionStorage.getItem("lhbc_ok")==="1") return;
