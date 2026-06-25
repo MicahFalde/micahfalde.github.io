@@ -150,7 +150,7 @@
     <button class="tab" data-tab="worship">Worship Software</button>
     <button class="tab" data-tab="ccli">CCLI &amp; Licensing</button>
     <button class="tab" data-tab="est">💰 Cost Estimator</button>
-    <button class="tab" data-tab="stacks">Recommended Stacks</button>
+    <button class="tab" data-tab="stacks">Stack Options</button>
   </div>
 
   <!-- REQUIREMENTS -->
@@ -180,7 +180,7 @@
       <h2>Commercial ChMS</h2>
       <div class="tablewrap"><table>
         <tr><th>Platform</th><th>Two-way API</th><th>Webhooks</th><th>Check-in</th><th>~Price @100</th><th>Best for</th></tr>
-        <tr class="rec"><td><b>Planning Center</b><span class="tagwin">pick</span></td><td class="y">Full (People); free on all tiers, PAT auth</td><td class="y">Yes</td><td><b>~$15/mo</b>, iPad+Brother</td><td><b>$0–40/mo</b></td><td>Best API-to-cost; ship fast</td></tr>
+        <tr><td><b>Planning Center</b></td><td class="y">Full (People); free on all tiers, PAT auth</td><td class="y">Yes</td><td><b>~$15/mo</b>, iPad+Brother</td><td><b>$0–40/mo</b></td><td>Strong API at low cost; ship fast</td></tr>
         <tr><td><b>Breeze / Tithely</b></td><td class="m">Full CRUD, but frozen since 2020</td><td class="n">No (poll)</td><td>Included</td><td><b>$72/mo flat</b></td><td>Simplest turnkey, light API use</td></tr>
         <tr><td><b>ChurchTrac</b></td><td class="n">None (closed)</td><td class="n">No</td><td>Excellent</td><td>$18–36/mo</td><td>Cheap — but ✗ for building on</td></tr>
         <tr><td><b>Pushpay / CCB</b></td><td class="m">Yes, legacy XML</td><td class="n">No</td><td>Good</td><td>$200–1,500/mo</td><td>Big churches; over-budget here</td></tr>
@@ -190,12 +190,12 @@
       <h2>Open-source / self-hostable <span style="font-size:.8rem;font-weight:400;color:var(--ink-soft)">— the "fork it and make it ours" angle</span></h2>
       <div class="tablewrap"><table>
         <tr><th>Project</th><th>License</th><th>Stack / host</th><th>Giving</th><th>Check-in</th><th>Take</th></tr>
-        <tr class="rec"><td><b>Rock RMS</b></td><td class="m">Source-available (not OSI)</td><td>.NET + SQL, Windows; ~$50/mo</td><td class="y">Strong</td><td class="y">Excellent</td><td>Powerful, overkill &lt;1,000; needs a dev</td></tr>
+        <tr><td><b>Rock RMS</b></td><td class="m">Source-available (not OSI)</td><td>.NET + SQL, Windows; ~$50/mo</td><td class="y">Strong</td><td class="y">Excellent</td><td>Powerful, overkill &lt;1,000; needs a dev</td></tr>
         <tr><td><b>ChurchCRM</b></td><td class="y">MIT (true open source)</td><td>PHP/MySQL; ~$10/mo</td><td class="n">Weak (manual)</td><td class="n">Absent</td><td>Only real fork base — but you'd build giving + check-in</td></tr>
         <tr><td><b>Chums / ChurchApps</b></td><td class="y">MIT</td><td>TypeScript/React</td><td class="m">Limited</td><td>Basic</td><td>Modern stack, younger/smaller</td></tr>
         <tr><td><b>ChurchInfo</b></td><td class="n">Unlicensed</td><td>PHP (dead 2023)</td><td class="n">Min.</td><td class="n">No</td><td>Abandoned — skip</td></tr>
       </table></div>
-      <p class="csub" style="margin-top:14px;margin-bottom:0"><b>Verdict:</b> for ~100 people, building custom on <b>Planning Center's free API</b> scratches the "make it ours" itch with far less risk — you customize at the integration layer (your own dashboards, kiosks, attendance tools) without owning a server or the next security patch. Stand up <b>ChurchCRM</b> as a parallel data-sovereignty experiment; only commit to a <b>fork</b> with a developer who'll own it for years. Full detail in <code>docs/chms-comparison.md</code>.</p>
+      <p class="csub" style="margin-top:14px;margin-bottom:0"><b>How to choose:</b> if you want to move fast with minimal ops, building on <b>Planning Center's free API</b> lets you customize at the integration layer (your own dashboards, kiosks, attendance tools) without owning a server or security patching. If you want full data ownership and have a developer, a self-hosted base (<b>ChurchCRM</b> — MIT, or Rock) is the path — accept owning the server and patching. ChurchCRM is also worth standing up as a parallel data-sovereignty experiment. Full detail in <code>docs/chms-comparison.md</code>.</p>
     </div>
   </section>
 
@@ -208,9 +208,9 @@
     <div class="card">
       <div class="tablewrap"><table>
         <tr><th>Software</th><th>Cost</th><th>Type</th><th>PCO sync</th><th>SongSelect import</th><th>CCLI auto-report</th><th>Streaming</th></tr>
-        <tr class="rec"><td><b>ProPresenter 7</b><span class="tagwin">standard</span></td><td><b>$289/yr</b></td><td>Paid</td><td class="y">Deepest</td><td class="y">Built-in</td><td class="y">Yes</td><td class="y">Best (NDI/alpha)</td></tr>
+        <tr><td><b>ProPresenter 7</b></td><td><b>$289/yr</b></td><td>Paid</td><td class="y">Deepest</td><td class="y">Built-in</td><td class="y">Yes</td><td class="y">Best (NDI/alpha)</td></tr>
         <tr><td><b>Proclaim</b> (Faithlife)</td><td>~$225/yr</td><td>Paid</td><td class="y">Yes</td><td class="y">Built-in</td><td class="y">Yes</td><td class="y">Good, cloud-sync</td></tr>
-        <tr class="rec"><td><b>FreeShow</b><span class="tagwin">free pick</span></td><td><b>Free</b></td><td>OSS</td><td class="y">Native</td><td class="n">No native</td><td class="n">No</td><td class="y">Native NDI/OBS</td></tr>
+        <tr><td><b>FreeShow</b></td><td><b>Free</b></td><td>OSS</td><td class="y">Native</td><td class="n">No native</td><td class="n">No</td><td class="y">Native NDI/OBS</td></tr>
         <tr><td><b>OpenLP</b></td><td><b>Free</b></td><td>OSS</td><td class="m">Plugin</td><td class="m">Manual file</td><td class="n">No</td><td class="m">Window capture</td></tr>
         <tr><td><b>EasyWorship</b></td><td>$210–330/yr</td><td>Paid</td><td class="m">Verify</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Capable</td></tr>
         <tr><td><b>Quelea / VideoPsalm</b></td><td>Free</td><td>OSS/free</td><td class="n">No</td><td class="m">Flaky</td><td class="n">No</td><td class="m">OBS</td></tr>
@@ -278,27 +278,28 @@
 
   <!-- STACKS -->
   <section id="stacks" class="hidden">
-    <p class="lead">Three complete bundles. <b>The ~$592/yr CCLI floor is fixed in all three</b> — the
-      real choice is the software on top.</p>
+    <p class="lead">Three complete bundles, each suited to a different way of operating — <b>pick by what
+      fits how you want to run things, not by a ranking.</b> The ~$592/yr CCLI floor is fixed in all
+      three; the real choice is the software on top.</p>
     <div class="stackgrid">
-      <div class="stack"><span class="pill">Lean / free software</span><h3>FreeShow + PCO</h3>
+      <div class="stack"><span class="pill">Lean &amp; free software</span><h3>FreeShow + Planning Center</h3>
         <div class="li"><span>Planning Center (People free, Check-Ins)</span><b>~$170/yr</b></div>
         <div class="li"><span>FreeShow presentation</span><b>$0</b></div>
         <div class="li"><span>CCLI (Copyright+Streaming+SongSelect)</span><b>~$592/yr</b></div>
         <div class="tot">~$762<span>/yr · ~$64/mo</span></div>
-        <p class="csub" style="margin-top:10px">Cheapest. Trade-off: manage lyrics manually in FreeShow (no live SongSelect import).</p></div>
-      <div class="stack rec"><span class="pill">Recommended</span><h3>ProPresenter + PCO</h3>
+        <p class="csub" style="margin-top:10px"><b>Fits you if:</b> budget is tight and a capable volunteer will manage lyrics by hand (no live SongSelect import in FreeShow).</p></div>
+      <div class="stack"><span class="pill">Standard &amp; hands-off</span><h3>ProPresenter + Planning Center</h3>
         <div class="li"><span>Planning Center (People free, Check-Ins)</span><b>~$170/yr</b></div>
         <div class="li"><span>ProPresenter</span><b>$289/yr</b></div>
         <div class="li"><span>CCLI (Copyright+Streaming+SongSelect)</span><b>~$592/yr</b></div>
         <div class="tot">~$1,051<span>/yr · ~$88/mo</span></div>
-        <p class="csub" style="margin-top:10px">Path of least resistance: everything native &amp; auto-syncing; most volunteers already know ProPresenter.</p></div>
+        <p class="csub" style="margin-top:10px"><b>Fits you if:</b> you want everything native and auto-syncing, the easiest volunteer hand-off, and you're fine paying for the presenter.</p></div>
       <div class="stack"><span class="pill">Own everything</span><h3>Rock RMS + OpenLP</h3>
         <div class="li"><span>Rock RMS (self-host server)</span><b>~$600/yr</b></div>
         <div class="li"><span>OpenLP presentation</span><b>$0</b></div>
         <div class="li"><span>CCLI (Copyright+Streaming+SongSelect)</span><b>~$592/yr</b></div>
         <div class="tot">~$1,192<span>/yr + dev time</span></div>
-        <p class="csub" style="margin-top:10px">Full data ownership &amp; control — only worth it with a developer who'll run the stack.</p></div>
+        <p class="csub" style="margin-top:10px"><b>Fits you if:</b> you want full data ownership and control, and have a developer to run the stack.</p></div>
     </div>
   </section>
 
@@ -354,7 +355,7 @@ function commit(){
 }
 function setSync(){
   const el=E('syncSt');
-  if(!SYNC_URL){el.className='syncst';el.textContent='Saved on this device only — not yet shared';return;}
+  if(!SYNC_URL){el.className='syncst';el.textContent='Edits save to this browser';return;}
   el.className='syncst ok';
   el.textContent=state.at?('Shared · last edit by '+(state.by||'—')+' · '+new Date(state.at).toLocaleString()):'Shared · synced';
 }
