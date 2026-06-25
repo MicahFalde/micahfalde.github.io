@@ -58,25 +58,6 @@
   .pri.must{background:var(--red-soft);color:var(--red)} .pri.should{background:var(--mid-bg);color:var(--mid)} .pri.nice{background:#eef1f6;color:var(--ink-soft)}
   .reqrow .rb b{font-size:.96rem} .reqrow .rb p{font-size:.82rem;color:var(--ink-soft);margin-top:2px}
   .reqid{font-family:var(--head);font-weight:700;color:var(--navy);min-width:34px}
-  .reqbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--line)}
-  .ename{padding:9px 12px;border:1px solid var(--line);border-radius:7px;font:.86rem var(--body);min-width:200px}
-  .ename:focus{outline:2px solid var(--navy);border-color:var(--navy)}
-  .syncst{font-size:.76rem;color:var(--ink-soft);display:flex;align-items:center;gap:6px}
-  .syncst::before{content:"";width:8px;height:8px;border-radius:50%;background:#c2cbd9}
-  .syncst.ok::before{background:var(--hi)} .syncst.sync::before{background:var(--mid)}
-  .btn-add{margin-left:auto;background:var(--navy);color:#fff;border:none;border-radius:7px;padding:9px 16px;font:600 .85rem var(--body);cursor:pointer}
-  .btn-add:hover{filter:brightness(1.12)}
-  .prisel{display:flex;gap:3px;flex-shrink:0}
-  .pb{border:1px solid var(--line);background:#fff;font:600 .62rem var(--body);text-transform:uppercase;letter-spacing:.03em;padding:5px 7px;border-radius:6px;cursor:pointer;color:var(--ink-soft)}
-  .pb.must.on{background:var(--red-soft);color:var(--red);border-color:var(--red-soft)}
-  .pb.should.on{background:var(--mid-bg);color:var(--mid);border-color:var(--mid-bg)}
-  .pb.nice.on{background:#e6eaf2;color:var(--navy);border-color:#e6eaf2}
-  .rtitle{font:600 .96rem var(--body);border:none;border-bottom:1px solid transparent;width:100%;padding:2px 0;color:var(--ink);background:transparent}
-  .rtitle:hover{border-bottom-color:var(--line)} .rtitle:focus{outline:none;border-bottom-color:var(--navy)}
-  .rdesc{font:.82rem var(--body);color:var(--ink-soft);border:none;width:100%;resize:none;padding:4px 6px;margin-top:2px;line-height:1.45;background:transparent;border-radius:5px;overflow:hidden}
-  .rdesc:hover{background:#f4f6fa} .rdesc:focus{outline:none;background:#f0f4fb}
-  .del{background:none;border:none;color:#c8cfdb;font-size:1.3rem;cursor:pointer;flex-shrink:0;line-height:1;padding:0 2px}
-  .del:hover{color:var(--red)}
 
   /* ccli */
   .three{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
@@ -155,18 +136,12 @@
 
   <!-- REQUIREMENTS -->
   <section id="req">
-    <p class="lead">What we're solving for — every option is judged against these. <b>This list is
-      editable:</b> click a title or description to change it, tap <b>Must / Should / Nice</b> to
-      re-prioritize, use <b>+ Add requirement</b>, or <b>×</b> to remove. The sync status in the bar
-      shows whether changes are shared with everyone or saved on this device only.</p>
-    <div class="card">
-      <div class="reqbar">
-        <input id="editorName" class="ename" placeholder="Your name (so edits are attributed)">
-        <span class="syncst" id="syncSt">Saved on this device only</span>
-        <button class="btn-add" id="addReq">+ Add requirement</button>
-      </div>
-      <div id="reqList"></div>
-    </div>
+    <p class="lead">What we're solving for — every option below is judged against these. Priority:
+      <span class="pri must" style="min-width:0">Must</span> non-negotiable ·
+      <span class="pri should" style="min-width:0">Should</span> important ·
+      <span class="pri nice" style="min-width:0">Nice</span> bonus.
+      See something missing or mis-prioritized? <b>Let Micah know and he'll update the list.</b></p>
+    <div class="card" id="reqList"></div>
     <p class="csub">Inputs that change the math: final average weekly attendance, whether we self-host, the monthly software budget, and which worship presenter we pick.</p>
   </section>
 
@@ -307,11 +282,8 @@
 </div>
 
 <script>
-// ===== requirements (editable + shareable) =====
-// To sync across people, set SYNC_URL to a shared JSON endpoint that supports
-// GET (returns the saved state) and PUT (saves the posted state). Empty = this device only.
-const SYNC_URL="";
-const SEED=[
+// ===== requirements =====
+const REQ=[
   {id:'R1',pri:'must',title:'Great two-way API',desc:'Read data out to our own dashboards AND write/update back in — so we build our own tools, not get locked in vendor UIs. Webhooks a plus.'},
   {id:'R2',pri:'must',title:'People / membership database',desc:'The hub of everything — households, custom fields.'},
   {id:'R3',pri:'must',title:'Giving (online + in-person)',desc:'Turn on early; watch processing fees.'},
@@ -327,59 +299,9 @@ const SEED=[
   {id:'R13',pri:'nice',title:'Service planning + volunteer scheduling',desc:'PCO Services strong here.'},
   {id:'R14',pri:'nice',title:'Member self-service app',desc:'Where members give, register for events, find their group, check in, and update their info — the everyday "side door" for people who already attend (vs. R6, the public site for visitors). E.g. PCO Church Center, free.'},
 ];
-let state={reqs:SEED.slice(),by:'',at:0,v:0};
-let editing=false, saveT;
-const E=s=>document.getElementById(s);
-const nm=()=>E('editorName').value.trim();
-const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-
-async function remoteGet(){if(!SYNC_URL)return null;try{const r=await fetch(SYNC_URL,{cache:'no-store'});if(!r.ok)return null;const d=await r.json();return(d&&Array.isArray(d.reqs))?d:null;}catch(e){return null;}}
-async function remotePut(s){if(!SYNC_URL)return;try{await fetch(SYNC_URL,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(s)});}catch(e){}}
-const loadLocal=()=>{try{return JSON.parse(localStorage.getItem('lhbc_reqs'));}catch(e){return null;}};
-
-async function boot(){
-  E('editorName').value=localStorage.getItem('lhbc_editor')||'';
-  const remote=await remoteGet(), local=loadLocal();
-  if(remote&&local) state = (remote.v||0)>=(local.v||0)?remote:local;
-  else state = remote||local||state;
-  if(!Array.isArray(state.reqs)) state.reqs=SEED.slice();
-  renderReq(); setSync();
-  if(SYNC_URL) setInterval(poll,15000);
-}
-async function poll(){if(editing)return;const r=await remoteGet();if(r&&(r.v||0)>(state.v||0)){state=r;renderReq();setSync();}}
-function commit(){
-  state.v=(state.v||0)+1; state.by=nm()||'someone'; state.at=Date.now();
-  localStorage.setItem('lhbc_editor',nm());
-  localStorage.setItem('lhbc_reqs',JSON.stringify(state)); setSync();
-  clearTimeout(saveT); saveT=setTimeout(()=>remotePut(state),400);
-}
-function setSync(){
-  const el=E('syncSt');
-  if(!SYNC_URL){el.className='syncst';el.textContent='Edits save to this browser';return;}
-  el.className='syncst ok';
-  el.textContent=state.at?('Shared · last edit by '+(state.by||'—')+' · '+new Date(state.at).toLocaleString()):'Shared · synced';
-}
-function autosize(t){t.style.height='auto';t.style.height=(t.scrollHeight+2)+'px';}
-function renderReq(){
-  E('reqList').innerHTML=state.reqs.map((r,i)=>`<div class="reqrow">
-    <span class="reqid">${esc(r.id)}</span>
-    <div class="prisel">${['must','should','nice'].map(p=>`<button class="pb ${p} ${r.pri===p?'on':''}" data-i="${i}" data-p="${p}" title="${p}">${p[0].toUpperCase()}</button>`).join('')}</div>
-    <div class="rb">
-      <input class="rtitle" data-i="${i}" value="${esc(r.title)}" placeholder="Requirement…">
-      <textarea class="rdesc" data-i="${i}" rows="1" placeholder="Description / why…">${esc(r.desc)}</textarea>
-    </div>
-    <button class="del" data-i="${i}" title="Remove">×</button>
-  </div>`).join('');
-  document.querySelectorAll('.rdesc').forEach(autosize);
-  document.querySelectorAll('.pb').forEach(b=>b.onclick=()=>{state.reqs[+b.dataset.i].pri=b.dataset.p;renderReq();commit();});
-  document.querySelectorAll('.rtitle').forEach(inp=>{inp.onfocus=()=>editing=true;inp.onblur=()=>editing=false;inp.oninput=()=>{state.reqs[+inp.dataset.i].title=inp.value;commit();};});
-  document.querySelectorAll('.rdesc').forEach(t=>{t.onfocus=()=>editing=true;t.onblur=()=>editing=false;t.oninput=()=>{state.reqs[+t.dataset.i].desc=t.value;autosize(t);commit();};});
-  document.querySelectorAll('.del').forEach(b=>b.onclick=()=>{if(confirm('Remove this requirement?')){state.reqs.splice(+b.dataset.i,1);renderReq();commit();}});
-}
-function nextId(){let n=0;state.reqs.forEach(r=>{const m=/^R(\d+)/.exec(r.id||'');if(m)n=Math.max(n,+m[1]);});return 'R'+(n+1);}
-E('addReq').onclick=()=>{state.reqs.push({id:nextId(),pri:'should',title:'',desc:''});renderReq();commit();const t=document.querySelectorAll('.rtitle');t[t.length-1].focus();};
-E('editorName').oninput=()=>localStorage.setItem('lhbc_editor',nm());
-boot();
+document.getElementById('reqList').innerHTML=REQ.map(r=>`<div class="reqrow">
+  <span class="reqid">${r.id}</span><span class="pri ${r.pri}">${r.pri}</span>
+  <div class="rb"><b>${r.title}</b><p>${r.desc}</p></div></div>`).join('');
 
 // ===== estimator =====
 let size=1; // index into [50,100,200,400]
