@@ -135,7 +135,7 @@
       <path d="M14 39V25l10-8 10 8v14" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/>
       <path d="M21 39v-7h6v7" stroke="#fff" stroke-width="1.6"/>
     </svg>
-    <div class="t"><b>Pastor's Dashboard</b><span id="greeting">Good morning, Pastor</span></div>
+    <div class="t"><b>Pastor's Dashboard</b><span id="greeting">Good morning, Pastor Kramer</span></div>
   </div>
   <div class="controls">
     <div class="seg" id="periodSeg">
@@ -421,7 +421,7 @@ function setPeriod(p){
 
 document.querySelectorAll('#periodSeg button').forEach(b=>b.onclick=()=>setPeriod(b.dataset.p));
 const hr=new Date().getHours();
-$('#greeting').textContent=(hr<12?'Good morning':hr<17?'Good afternoon':'Good evening')+', Pastor';
+$('#greeting').textContent=(hr<12?'Good morning':hr<17?'Good afternoon':'Good evening')+', Pastor Kramer';
 renderFunnel(); renderComp(); renderActions(); setPeriod('today');
 </script>
 
