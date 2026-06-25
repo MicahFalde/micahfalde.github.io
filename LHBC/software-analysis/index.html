@@ -290,14 +290,15 @@ const REQ=[
   {id:'R4',pri:'must',title:'Children’s check-in',desc:'iPad tags, secure pickup, liability record (when kids present).'},
   {id:'R5',pri:'must',title:'Named, per-person attendance',desc:'Multi-modal tap/app/handwrite → one record. Powers missing-in-action / follow-up.'},
   {id:'R6',pri:'must',title:'Public website',desc:'Independent of the ChMS; our own build.'},
-  {id:'R7',pri:'must',title:'Worship presentation software',desc:'Lyrics/slides — ProPresenter vs OpenLP/FreeShow.'},
-  {id:'R8',pri:'must',title:'CCLI licensing + SongSelect',desc:'Legal copyright coverage; song library + chord charts; report usage; integrates ProPresenter + PCO.'},
+  {id:'R7',pri:'should',title:'Worship presentation software',desc:'Lyrics/slides (ProPresenter vs OpenLP/FreeShow). A quality-of-life upgrade — lyrics can be done manually — not a legal requirement.'},
+  {id:'R8',pri:'must',title:'CCLI copyright licensing (legal)',desc:'The non-negotiable legal floor: a CCLI Copyright License to project/print lyrics, plus a Streaming License if we post or livestream, and reporting song usage. Being legally covered is a Must even if the worship tools are not.'},
   {id:'R9',pri:'should',title:'Pastor dashboard (custom)',desc:'Built on the API; already mocked up.'},
   {id:'R10',pri:'should',title:'Annual reporting (automated)',desc:'Internal; already mocked up.'},
   {id:'R11',pri:'should',title:'Groups / small groups + attendance',desc:'Discipleship; OMR checkbox roster fits here.'},
   {id:'R12',pri:'should',title:'Own-our-data / openness',desc:'Export, self-host option, fork-ability (Rock, ChurchCRM).'},
-  {id:'R13',pri:'nice',title:'Service planning + volunteer scheduling',desc:'PCO Services strong here.'},
+  {id:'R13',pri:'should',title:'Service planning + volunteer scheduling',desc:'Streamline scheduling and sign-ups so no one has to chase people down — service rosters, meal trains, harvest and outreach, evangelism, ministry and mission-trip sign-ups, all centralized and easy. (Pastor Ed: a high-value time-saver.) PCO Services is strong here.'},
   {id:'R14',pri:'nice',title:'Member self-service app',desc:'Where members give, register for events, find their group, check in, and update their info — the everyday "side door" for people who already attend (vs. R6, the public site for visitors). E.g. PCO Church Center, free.'},
+  {id:'R15',pri:'should',title:'SongSelect (song library + chord charts)',desc:'CCLI’s catalog — lyrics, chord charts, and lead sheets that feed ProPresenter and Planning Center. A big convenience for the worship team, but (unlike R8) not legally required.'},
 ];
 document.getElementById('reqList').innerHTML=REQ.map(r=>`<div class="reqrow">
   <span class="reqid">${r.id}</span><span class="pri ${r.pri}">${r.pri}</span>
