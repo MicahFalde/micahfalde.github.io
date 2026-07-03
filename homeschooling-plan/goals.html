@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homeschooling Goals — Family Education Vision</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        :root {
+            --navy: #002147;
+            --gold: #FFD700;
+            --gold-dark: #D4AF37;
+            --cream: #FFF8E7;
+            --cream-light: #FFFBF0;
+            --green: #2E8B57;
+            --green-light: #E8F5E9;
+            --blue-light: #E3F2FD;
+            --purple-light: #F3E5F5;
+            --red-light: #fde8e8;
+            --red: #c0392b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: #333;
+            background: var(--cream-light);
+        }
+        header {
+            background: var(--navy);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        header p { color: var(--gold); font-size: 1.1rem; font-style: italic; }
+        nav {
+            background: var(--navy);
+            padding: 0.8rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            border-bottom: 3px solid var(--gold);
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+        nav a:hover { background: var(--gold); color: var(--navy); }
+        main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        section {
+            background: white;
+            margin-bottom: 2.5rem;
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h2 { color: var(--navy); border-bottom: 3px solid var(--gold); padding-bottom: 0.5rem; margin-bottom: 1.5rem; font-size: 1.8rem; }
+        h3 { color: var(--navy); margin: 1.5rem 0 0.8rem; font-size: 1.4rem; }
+        h4 { color: #555; margin: 1.2rem 0 0.5rem; font-size: 1.1rem; }
+        p { margin-bottom: 1rem; }
+        ul, ol { margin: 0.5rem 0 1rem 2rem; }
+        li { margin-bottom: 0.5rem; }
+        .intro { background: var(--cream); padding: 1.5rem; border-left: 4px solid var(--gold); border-radius: 0 4px 4px 0; margin-bottom: 1.5rem; }
+        .goal-card {
+            background: var(--cream-light);
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border-left: 5px solid var(--gold);
+        }
+        .goal-card.primary {
+            border-left-color: var(--navy);
+            background: linear-gradient(135deg, var(--cream-light) 0%, #fff 100%);
+        }
+        .goal-card h3 {
+            color: var(--navy);
+            font-size: 1.5rem;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .goal-card.primary h3 {
+            font-size: 1.6rem;
+        }
+        .goal-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .goal-meta-item {
+            background: var(--navy);
+            color: var(--gold);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        .goal-meta-item.active { background: var(--green); color: white; }
+        .goal-meta-item.planned { background: #888; color: white; }
+        .why-do-this {
+            background: var(--blue-light);
+            padding: 1.2rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+            border-left: 4px solid #2196F3;
+        }
+        .why-do-this h4 {
+            color: #1976D2;
+            margin-top: 0;
+        }
+        .milestones {
+            background: var(--green-light);
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+        }
+        .milestones h4 {
+            color: var(--green);
+            margin-top: 0;
+        }
+        .milestone {
+            background: white;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 0.8rem 0;
+            border-left: 3px solid var(--green);
+        }
+        .milestone strong { color: var(--navy); }
+        .practices {
+            background: var(--purple-light);
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+        }
+        .practices h4 {
+            color: #7B1FA2;
+            margin-top: 0;
+        }
+        .practice-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 0.8rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .practice-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            width: 2rem;
+            text-align: center;
+        }
+        .practice-content h5 {
+            margin: 0 0 0.3rem 0;
+            color: var(--navy);
+        }
+        .resources {
+            background: #fff3e0;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+        }
+        .resources h4 {
+            color: #F57C00;
+            margin-top: 0;
+        }
+        .resource-tag {
+            display: inline-block;
+            background: #FF9800;
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            margin: 0.2rem;
+        }
+        .resource-tag.book { background: #4CAF50; }
+        .resource-tag.online { background: #2196F3; }
+        .resource-tag.tool { background: #9C27B0; }
+        .back-link {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #eee;
+        }
+        .back-link a {
+            color: var(--navy);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-link a:hover { color: var(--gold-dark); }
+        .vision-statement {
+            background: var(--cream);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            text-align: center;
+            font-size: 1.1rem;
+            font-style: italic;
+            border: 2px solid var(--gold);
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Homeschooling Goals</h1>
+    <p>Family Education Vision — What We're Building Together</p>
+</header>
+<nav>
+    <a href="#vision">Vision</a>
+    <a href="#typographic">Typographic Mind</a>
+    <a href="#academic">Academic Goals</a>
+    <a href="#character">Character</a>
+    <a href="#practical">Practical Skills</a>
+    <a href="#adult">Adult Growth</a>
+    <a href="#full-plan">Full Plan</a>
+</nav>
+<main>
+
+<section id="vision">
+    <h2>Family Vision Statement</h2>
+    <div class="vision-statement">
+        "We are building children who think deeply, communicate clearly, create boldly, and lead with wisdom. Through classical education, we cultivate minds that appreciate beauty in language and mathematics, hearts that love truth and beauty, and hands that build with purpose."
+    </div>
+    <div class="intro">
+        <p><strong>Our Approach:</strong> These goals are drawn from Classical Education, Jeffersonian principles, and research on gifted learners. They're designed to be pursued from early childhood through high school, with age-appropriate expressions at each stage.</p>
+        <p><strong>Philosophy:</strong> We're not just filling buckets—we're lighting fires. These goals develop <em>capabilities</em>, not just content knowledge. Every goal should produce something the child can DO, not just know.</p>
+    </div>
+</section>
+
+<section id="typographic" class="primary-goal">
+    <h2>Goal #1: Instill a Typographic Mind</h2>
+    <div class="goal-card primary">
+        <h3>📝 Deep Understanding of Letters, Language, and Visual Communication</h3>
+        
+        <div class="goal-meta">
+            <span class="goal-meta-item active">ACTIVE</span>
+            <span class="goal-meta-item">Priority: #1</span>
+            <span class="goal-meta-item">Ages: 5-18 (ongoing)</span>
+        </div>
+
+        <h4>What "Typographic Mind" Means</h4>
+        <p>A typographic mind doesn't just read text—it <strong>sees</strong> text. This child notices:</p>
+        <ul>
+            <li>The shape and character of individual letters</li>
+            <li>The rhythm and spacing between words</li>
+            <li>How fonts create mood and meaning</li>
+            <li>The architecture of paragraphs and pages</li>
+            <li>The relationship between form and function in written communication</li>
+        </ul>
+        <p>This is the foundation for exceptional writing, clear communication, and an appreciation for design and order in all things.</p>
+
+        <div class="why-do-this">
+            <h4>🔬 Why We Do This: The Science</h4>
+            <p><strong>Letter Awareness = Reading Success:</strong> Research consistently shows that children who develop strong letter recognition, phonemic awareness, and print concepts early will become stronger readers. This isn't just about reading—it's about seeing the building blocks of language.</p>
+            <p><strong>Visual Literacy in the Digital Age:</strong> We communicate through text daily—emails, documents, social media, websites. Understanding how text looks and feels (typography) makes someone a more effective communicator. Think about it: a resume designed well vs. poorly. The same content, completely different reception.</p>
+            <p><strong>Gifted Learners Need Visual Structure:</strong> Children who excel in math and logic often benefit from visual organization systems. Typography provides that structure for language—just as geometry provides structure for space.</p>
+            <p><strong>Classical Foundation:</strong> Classical education places heavy emphasis on the Trivium—Grammar, Logic, Rhetoric. The Grammar stage is literally about learning the "grammar" of language: letters, sounds, words, spelling. A typographic mind develops this foundation explicitly and intentionally.</p>
+            <p><strong>Connection to Other Goals:</strong> This goal directly supports literacy, writing excellence, communication skills, and even math (through pattern recognition and spatial reasoning).</p>
+        </div>
+
+        <h4>🎯 What This Looks Like: Milestones</h4>
+        <div class="milestones">
+            <div class="milestone">
+                <strong>Age 5-6 (Grammar Stage):</strong>
+                <ul>
+                    <li>Recognizes all letters by name and shape</li>
+                    <li>Understands that letters are different shapes with different sounds</li>
+                    <li>Notices when letters are upside down or backward</li>
+                    <li>Can trace and write their name</li>
+                    <li>Enjoys seeing different fonts and asks "What's that letter?"</li>
+                    <li>Daily copywork practice (10-15 minutes)</li>
+                </ul>
+            </div>
+            <div class="milestone">
+                <strong>Age 7-9 (Grammar to Logic Stage):</strong>
+                <ul>
+                    <li>Writes legibly with consistent letter size and spacing</li>
+                    <li>Understands the difference between print and cursive</li>
+                    <li>Notices when text is "ugly" or "beautifully designed"</li>
+                    <li>Can identify serif vs. sans-serif fonts (informally)</li>
+                    <li>Writes sentences with proper spacing between words</li>
+                    <li>Starts keeping a journal with attention to presentation</li>
+                </ul>
+            </div>
+            <div class="milestone">
+                <strong>Age 10-12 (Logic Stage):</strong>
+                <ul>
+                    <li>Understands why some fonts work for some purposes (poster vs. book)</li>
+                    <li>Can explain what makes text easy to read or hard to read</li>
+                    <li>Writes formal letters with attention to layout</li>
+                    <li>Recognizes typefaces by name (Times New Roman, Garamond, etc.)</li>
+                    <li>Creates simple layouts: name tags, book covers, invitation cards</li>
+                    <li>Studies letter forms and their historical development</li>
+                </ul>
+            </div>
+            <div class="milestone">
+                <strong>Age 13-15 (Logic to Rhetoric Stage):</strong>
+                <ul>
+                    <li>Understands typography as a design discipline</li>
+                    <li>Can choose appropriate typefaces for different contexts</li>
+                    <li>Creates well-formatted documents: essays, reports, newsletters</li>
+                    <li>Understands concepts: hierarchy, alignment, white space, contrast</li>
+                    <li>Appreciates beautiful book design and can articulate why</li>
+                    <li>May begin using design tools (Canva, basic InDesign)</li>
+                </ul>
+            </div>
+            <div class="milestone">
+                <strong>Age 16-18 (Rhetoric Stage):</strong>
+                <ul>
+                    <li>Produces professional-quality written work</li>
+                    <li>Understands typography as communication design</li>
+                    <li>Can create complete visual documents from concept to final</li>
+                    <li>Appreciates typography as art and craft</li>
+                    <li>Uses typographic principles in all written communication</li>
+                    <li>Maintains high standards for their own written work</li>
+                </ul>
+            </div>
+        </div>
+
+        <h4>🛠️ Daily Practices</h4>
+        <div class="practices">
+            <div class="practice-item">
+                <div class="practice-icon">✍️</div>
+                <div class="practice-content">
+                    <h5>Daily Copywork (10-15 minutes, ages 5-10)</h5>
+                    <p>Copypast classic passages, poetry, scripture. Focus on letter formation, spacing, and neatness. Use ruled paper with guidelines. This builds muscle memory and visual calibration for letter shapes.</p>
+                </div>
+            </div>
+            <div class="practice-item">
+                <div class="practice-icon">📖</div>
+                <div class="practice-content">
+                    <h5>Beautiful Books (daily)</h5>
+                    <p>Surround children with well-designed books. Point out beautiful covers, notice nice typefaces. Read books with excellent layout and typography. This develops their eye for what "good" looks like.</p>
+                </div>
+            </div>
+            <div class="practice-item">
+                <div class="practice-icon">🔍</div>
+                <div class="practice-content">
+                    <h5>Letter Hunts (ages 5-7)</h5>
+                    <p>Go on "letter hunts"—find specific letters in the environment (signs, packaging, books). Notice how letters appear differently in different contexts. Play "I spy with my little eye a letter that looks like..."</p>
+                </div>
+            </div>
+            <div class="practice-item">
+                <div class="practice-icon">✏️</div>
+                <div class="practice-content">
+                    <h5>Journal Writing (ages 7+, daily)</h5>
+                    <p>Keep a daily journal. Focus on neat handwriting, proper spacing, complete sentences. Revisit old entries and notice improvement. This builds consistency and pride in presentation.</p>
+                </div>
+            </div>
+            <div class="practice-item">
+                <div class="practice-icon">📐</div>
+                <div class="practice-content">
+                    <h5>Layout Projects (ages 9+, weekly)</h5>
+                    <p>Create simple layouts: name tags, book reports with covers, family newsletters, invitation cards. Practice alignment, spacing, hierarchy. Make it fun with projects they'll actually use.</p>
+                </div>
+            </div>
+            <div class="practice-item">
+                <div class="practice-icon">📚</div>
+                <div class="practice-content">
+                    <h5>Typeface Study (ages 10+, monthly)</h5>
+                    <p>Study one typeface per month. Learn its history, who designed it, when it was created, what makes it special. Look at it in different contexts. This builds typographic literacy.</p>
+                </div>
+            </div>
+        </div>
+
+        <h4>📚 Resources</h4>
+        <div class="resources">
+            <p><strong>Books:</strong></p>
+            <span class="resource-tag book">The Elements of Typographic Style (Robert Bringhurst)</span>
+            <span class="resource-tag book">Thinking with Type (Ellen Lupton)</span>
+            <span class="resource-tag book">The Font Book (Adobe)</span>
+            <span class="resource-tag book">S, M, L, XL (Olafur Eliasson)</span>
+            
+            <p><strong>Online:</strong></p>
+            <span class="resource-tag online">Typewolf (typewolf.com)</span>
+            <span class="resource-tag online">Fonts In Use (fontsinuse.com)</span>
+            <span class="resource-tag online">The Futur (thefutur.com)</span>
+            <span class="resource-tag online">YouTube: "How to Think About Typography"</span>
+            
+            <p><strong>Tools:</strong></p>
+            <span class="resource-tag tool">Canva (free design tool)</span>
+            <span class="resource-tag tool">Google Fonts (free fonts)</span>
+            <span class="resource-tag tool">Copic markers (lettering practice)</span>
+        </div>
+    </div>
+</section>
+
+<section id="academic">
+    <h2>Academic Goals</h2>
+    
+    <div class="goal-card">
+        <h3>📐 Deep Proficiency in Mathematics</h3>
+        <div class="goal-meta">
+            <span class="goal-meta-item active">ACTIVE</span>
+            <span class="goal-meta-item">Priority: #2</span>
+            <span class="goal-meta-item">Ages: 5-18</span>
+        </div>
+        <p>Mathematical thinking, problem-solving, and computational fluency through accelerated pathway for gifted learner.</p>
+        <div class="why-do-this">
+            <h4>🔬 Why We Do This</h4>
+            <p>Your child excels in math—gifted learners need depth and acceleration, not just more of the same. Research shows that gifted math students thrive with:</p>
+            <ul>
+                <li><strong>Depth over breadth:</strong> Understanding why, not just how</li>
+                <li><strong>Problem-solving:</strong> Open-ended challenges that require creative thinking</li>
+                <li><strong>Pattern recognition:</strong> Connecting mathematical concepts across domains</li>
+                <li><strong>Real-world application:</strong> Seeing math in science, nature, art, and daily life</li>
+            </ul>
+            <p><strong>Jefferson Connection:</strong> Thomas Jefferson believed geometry was essential for civic virtue and independent thought. He studied navigation (practical geometry) and believed mathematical reasoning trained the mind for all other learning.</p>
+        </div>
+        <div class="milestones">
+            <div class="milestone">
+                <strong>K-2:</strong> Number sense, basic operations, simple patterns, measurement
+            </div>
+            <div class="milestone">
+                <strong>3-4:</strong> Fractions, decimals, geometry basics, problem-solving strategies
+            </div>
+            <div class="milestone">
+                <strong>5-6:</strong> Pre-algebra, ratios, proportions, introductory proofs
+            </div>
+            <div class="milestone">
+                <strong>7-9:</strong> Algebra I & II, geometry, trigonometry, mathematical proofs
+            </div>
+            <div class="milestone">
+                <strong>10-12:</strong> Pre-calculus, calculus, statistics, discrete math
+            </div>
+        </div>
+    </div>
+
+    <div class="goal-card">
+        <h3>🔬 Scientific Thinking & Inquiry</h3>
+        <div class="goal-meta">
+            <span class="goal-meta-item active">ACTIVE</span>
+            <span class="goal-meta-item">Priority: #3</span>
+            <span class="goal-meta-item">Ages: 5-18</span>
+        </div>
+        <p>Scientific method, hands-on experimentation, and understanding of the natural world through observation and inquiry.</p>
+        <div class="why-do-this">
+            <h4>🔬 Why We Do This</h4>
+            <p>Jefferson emphasized "practical sciences" that could be observed and tested. He believed scientific thinking trained the mind to:</p>
+            <ul>
+                <li><strong>Observe carefully:</strong> Notice details others miss</li>
+                <li><strong>Think logically:</strong> Follow evidence, not just opinion</li>
+                <li><strong>Question assumptions:</strong> Test ideas, don't just accept them</li>
+                <li><strong>Understand nature:</strong> Appreciate the order and beauty of creation</li>
+            </ul>
+            <p><strong>Gifted Learner Need:</strong> Children who excel in math often love science because it applies mathematical thinking to real phenomena. Daily hands-on experiments keep engagement high.</p>
+        </div>
+        <div class="milestones">
+            <div class="milestone">
+                <strong>K-2:</strong> Nature observation, simple experiments, plant/animal life cycles
+            </div>
+            <div class="milestone">
+                <strong>3-4:</strong> Scientific method, earth science, basic physics, chemistry demos
+            </div>
+            <div class="milestone">
+                <strong>5-6:</strong> Biology, chemistry, physics fundamentals, lab skills
+            </div>
+            <div class="milestone">
+                <strong>7-9:</strong> Advanced biology, chemistry, physics, scientific writing
+            </div>
+            <div class="milestone">
+                <strong>10-12:</strong> AP-level science, research projects, independent inquiry
+            </div>
+        </div>
+    </div>
+
+    <div class="goal-card">
+        <h3>✍️ Exceptional Literacy & Writing</h3>
+        <div class="goal-meta">
+            <span class="goal-meta-item active">ACTIVE</span>
+            <span class="goal-meta-item">Priority: #4</span>
+            <span class="goal-meta-item">Ages: 3-18</span>
+        </div>
+        <p>Reading classics, writing with clarity and eloquence, strong vocabulary, and love of literature.</p>
+        <div class="why-do-this">
+            <h4>🔬 Why We Do This</h4>
+            <p>Classical education emphasizes the "trivium"—the three language arts: grammar, logic, rhetoric. Reading classics exposes children to:</p>
+            <ul>
+                <li><strong>Rich language:</strong> Complex sentence structures and vocabulary</li>
+                <li><strong>Great ideas:</strong> Timeless themes and wisdom</li>
+                <li><strong>Model writing:</strong> Excellent examples to learn from</li>
+                <li><strong>Cultural literacy:</strong> Shared references and allusions</li>
+            </ul>
+            <p><strong>Jefferson's View:</strong> Jefferson believed reading was essential for an informed citizenry. He created the library that became the University of Virginia's foundation because he believed educated minds were the foundation of democracy.</p>
+        </div>
+    </div>
+</section>
+
+<section id="character">
+    <h2>Character & Values Goals</h2>
+    
+    <div class="goal-card">
+        <h3>⛪ Biblical Literacy & Character Formation</h3>
+        <div class="goal-meta">
+            <span class="goal-meta-item active">ACTIVE</span>
+            <span class="goal-meta-item">Priority: #5</span>
+            <span class="goal-meta-item">Ages: 3-18</span>
+        </div>
+        <p>Bible reading, memorization, and understanding God's Word as the foundation for character and wisdom.</p>
+        <div class="why-do-this">
+            <h4>🔬 Why We Do This</h4>
+            <p>Classical education has always integrated spiritual formation. The Bible is:</p>
+            <ul>
+                <li><strong>The foundation:</strong> "The fear of the Lord is the beginning of wisdom" (Proverbs 9:10)</li>
+                <li><strong>The framework:</strong> Provides the ultimate narrative of creation, fall, redemption, restoration</li>
+                <li><strong>The standard:</strong> God's Word as truth against which all other claims are measured</li>
+            </ul>
+            <p>Daily reading and memorization build a biblical worldview that shapes how children think about everything they learn.</p>
+        </div>
+    </div>
+
+    <div class="goal-card">
+        <h3>💪 Critical Thinking & Logical Reasoning</h3>
+        <div class="goal-meta">
+            <span class="goal-meta-item active">ACTIVE</span>
+            <span class="goal-meta-item">Priority: #6</span>
+            <span class="goal-meta-item">Ages: 7-18</span>
+        </div>
+        <p>Ability to think clearly, argue logically, identify fallacies, and construct strong arguments.</p>
+        <div class="why-do-this">
+            <h4>🔬 Why We Do This</h4>
+            <p>The Logic stage (ages 7-12) is the perfect time to develop this skill. Research shows that:</p>
+            <ul>
+                <li>Children this age are naturally curious about "why" and "how"</li>
+                <li>Learning to think logically strengthens all other learning</li>
+                <li>Gifted learners especially need outlets for their analytical abilities</li>
+                <li>These skills transfer to every subject and every life situation</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section id="practical">
+    <h2>Practical Skills Goals</h2>
+    
+    <div class="goal-card">
+        <h3>🌍 World Language Proficiency</h3>
+        <div class="goal-meta">
+            <span class="goal-meta-item active">ACTIVE</span>
+            <span class="goal-meta-item">Priority: #7</span>
+            <span class="goal-meta-item">Ages: 5-18</span>
+        </div>
+        <p>Latin/Greek vocabulary study, root word mastery, and foundational understanding of language families.</p>
+        <div class="why-do-this">
+            <h4>🔬 Why We Do This</h4>
+            <p>Latin and Greek roots are the foundation of English vocabulary (60%+ of English words come from Latin/Greek). Studying them:</p>
+            <ul>
+                <li><strong>Expands vocabulary:</strong> Learn 1 root word, unlock 10+ English words</li>
+                <li><strong>Improves reading comprehension:</strong> Decode unfamiliar words</li>
+                <li><strong>Strengthens spelling:</strong> Understand word origins and patterns</li>
+                <li><strong>Prepares for other languages:</strong> Spanish, French, Italian are Romance languages</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="goal-card">
+        <h3>🎨 Creative Expression & Arts</h3>
+        <div class="goal-meta">
+            <span class="goal-meta-item active">ACTIVE</span>
+            <span class="goal-meta-item">Priority: #8</span>
+            <span class="goal-meta-item">Ages: 3-18</span>
+        </div>
+        <p>Visual arts, music, and creative expression as outlets for imagination and beauty.</p>
+    </div>
+
+    <div class="goal-card">
+        <h3>🏃 Physical Health & Coordination</h3>
+        <div class="goal-meta">
+            <span class="goal-meta-item active">ACTIVE</span>
+            <span class="goal-meta-item">Priority: #9</span>
+            <span class="goal-meta-item">Ages: 3-18</span>
+        </div>
+        <p>Daily physical activity, sports, and coordination development.</p>
+    </div>
+</section>
+
+<section id="adult">
+    <h2>Adult Growth Goals</h2>
+    <div class="intro">
+        <p>We're learning alongside our children. These goals help us grow in our roles as parents and educators.</p>
+    </div>
+    
+    <div class="goal-card">
+        <h3>📚 Continue Learning</h3>
+        <div class="milestones">
+            <div class="milestone">
+                Read 1 educational parenting book per quarter
+            </div>
+            <div class="milestone">
+                Join at least 1 homeschool community or co-op
+            </div>
+            <div class="milestone">
+                Practice teaching daily—model the learning mindset
+            </div>
+        </div>
+    </div>
+
+    <div class="goal-card">
+        <h3>🎯 Reflect & Adapt</h3>
+        <div class="milestones">
+            <div class="milestone">
+                Monthly review: What's working? What needs adjustment?
+            </div>
+            <div class="milestone">
+                Celebrate progress, not perfection
+            </div>
+            <div class="milestone">
+                Stay flexible—curriculum serves us, not the other way around
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="full-plan">
+    <h2>Full Homeschooling Plan</h2>
+    <div class="intro">
+        <p>This is the detailed curriculum plan with daily schedules, curriculum recommendations, and year-by-year progression.</p>
+    </div>
+    <p><strong><a href="index.html" style="color: var(--navy); font-weight: bold;">→ View the Complete Homeschooling Plan →</a></strong></p>
+    <p>Includes:</p>
+    <ul>
+        <li>Classical Trivium stages (Grammar, Logic, Rhetoric)</li>
+        <li>Jeffersonian principles integrated throughout</li>
+        <li>Daily schedules for each stage</li>
+        <li>Year-by-year progression from K-12</li>
+        <li>Curriculum recommendations by subject</li>
+        <li>Adult learning adaptations</li>
+        <li>Gifted learner pathways</li>
+    </ul>
+</section>
+
+<div class="back-link">
+    <a href="index.html">← Back to Full Homeschooling Plan</a>
+</div>
+
+</main>
+<footer style="background: var(--navy); color: white; text-align: center; padding: 2rem; margin-top: 3rem;">
+    <p style="color: var(--gold);">Built with ❤️ by the Falde Family</p>
+    <p style="color: #ccc; font-size: 0.9rem;">Classical Education — Classical Education — Building Minds, Building Character</p>
+</footer>
+</body>
+</html>
