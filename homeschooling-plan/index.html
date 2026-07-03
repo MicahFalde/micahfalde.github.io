@@ -3,994 +3,871 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comprehensive Homeschooling Plan — Classical & Jeffersonian</title>
-    <style>
-        :root {
-            --navy: #002147;
-            --gold: #FFD700;
-            --gold-dark: #D4AF37;
-            --cream: #FFF8E7;
-            --cream-light: #FFFBF0;
-            --green: #2E8B57;
-            --green-light: #E8F5E9;
-            --blue-light: #E3F2FD;
-            --purple-light: #F3E5F5;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Georgia', serif;
-            line-height: 1.8;
-            color: #333;
-            background: var(--cream-light);
-        }
-        header {
-            background: var(--navy);
-            color: white;
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        header p { color: var(--gold); font-size: 1.1rem; font-style: italic; }
-        nav {
-            background: var(--navy);
-            padding: 0.8rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.5rem;
-            border-bottom: 3px solid var(--gold);
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            padding: 0.4rem 1rem;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            transition: background 0.3s;
-        }
-        nav a:hover { background: var(--gold); color: var(--navy); }
-        main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-        section {
-            background: white;
-            margin-bottom: 2.5rem;
-            padding: 2.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        h2 { color: var(--navy); border-bottom: 3px solid var(--gold); padding-bottom: 0.5rem; margin-bottom: 1.5rem; font-size: 1.8rem; }
-        h3 { color: var(--navy); margin: 1.5rem 0 0.8rem; font-size: 1.3rem; }
-        h4 { color: #555; margin: 1.2rem 0 0.5rem; font-size: 1.1rem; }
-        p { margin-bottom: 1rem; }
-        ul, ol { margin: 0.5rem 0 1rem 2rem; }
-        li { margin-bottom: 0.5rem; }
-        .intro { background: var(--cream); padding: 1.5rem; border-left: 4px solid var(--gold); border-radius: 0 4px 4px 0; margin-bottom: 1.5rem; }
-        .model-card { background: var(--cream-light); border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem; margin: 1rem 0; }
-        .model-card h3 { margin-top: 0; color: var(--navy); }
-        .pros-cons { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-        .pros, .cons { flex: 1; min-width: 250px; }
-        .pros { background: var(--green-light); padding: 1rem; border-radius: 4px; }
-        .cons { background: #fde8e8; padding: 1rem; border-radius: 4px; }
-        .pros h4 { color: var(--green); }
-        .cons h4 { color: #c0392b; }
-        .trivium-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
-        .trivium-stage { text-align: center; padding: 1.5rem; border-radius: 8px; border-top: 4px solid var(--gold); }
-        .trivium-stage:nth-child(1) { background: #E8F5E9; }
-        .trivium-stage:nth-child(2) { background: #E3F2FD; }
-        .trivium-stage:nth-child(3) { background: #F3E5F5; }
-        .trivium-stage h3 { color: var(--navy); }
-        .trivium-stage .stage-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        .stage-card { border: 1px solid #ddd; border-radius: 8px; margin: 1.5rem 0; overflow: hidden; }
-        .stage-header { background: var(--navy); color: white; padding: 1rem 1.5rem; }
-        .stage-header h3 { color: var(--gold); margin: 0; font-size: 1.4rem; }
-        .stage-header p { color: #ccc; margin: 0.3rem 0 0; font-style: italic; }
-        .stage-content { padding: 1.5rem; }
-        .subject-card { background: var(--cream-light); border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; margin: 1rem 0; }
-        .subject-card h4 { color: var(--navy); margin-top: 0; display: flex; align-items: center; gap: 0.5rem; }
-        .subject-card ul { margin-left: 1.5rem; }
-        .math { border-left: 4px solid var(--green); }
-        .langarts { border-left: 4px solid #2196F3; }
-        .science { border-left: 4px solid var(--green); }
-        .history { border-left: 4px solid #795548; }
-        .latin { border-left: 4px solid var(--gold-dark); }
-        .arts { border-left: 4px solid #E91E63; }
-        .pe { border-left: 4px solid #FF5722; }
-        .jefferson-tag { display: inline-block; background: var(--navy); color: var(--gold); font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 3px; margin-left: 0.5rem; vertical-align: middle; }
-        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
-        th { background: var(--navy); color: white; padding: 0.8rem 0.5rem; text-align: left; }
-        td { padding: 0.6rem 0.5rem; border-bottom: 1px solid #eee; vertical-align: top; }
-        tr:nth-child(even) { background: var(--cream-light); }
-        .weekly-schedule { overflow-x: auto; }
-        .schedule-table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        .schedule-table th { background: var(--gold-dark); color: var(--navy); padding: 0.7rem 0.5rem; }
-        .schedule-table td { padding: 0.6rem 0.5rem; border: 1px solid #ddd; vertical-align: top; font-size: 0.85rem; }
-        .schedule-table tr:nth-child(even) { background: var(--cream-light); }
-        footer { text-align: center; padding: 2rem; color: #888; font-size: 0.85rem; border-top: 1px solid #ddd; margin-top: 2rem; }
-        @media print {
-            nav { display: none; }
-            section { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
-            body { font-size: 11pt; }
-        }
-        @media (max-width: 768px) {
-            header {
-                padding: 2rem 1rem;
-            }
-            header h1 {
-                font-size: 1.5rem;
-                margin-bottom: 0.3rem;
-            }
-            header p {
-                font-size: 0.9rem;
-            }
-            nav {
-                padding: 0.5rem 0.5rem;
-                position: sticky;
-                top: 0;
-                z-index: 100;
-            }
-            nav a {
-                font-size: 0.8rem;
-                padding: 0.3rem 0.6rem;
-            }
-            main {
-                padding: 1rem 0.5rem;
-            }
-            section {
-                padding: 1rem;
-                margin-bottom: 1.5rem;
-            }
-            h2 {
-                font-size: 1.4rem;
-                margin-bottom: 1rem;
-            }
-            h3 {
-                font-size: 1.1rem;
-            }
-            .intro {
-                padding: 1rem;
-            }
-            .model-card {
-                padding: 1rem;
-            }
-            .pros-cons {
-                flex-direction: column;
-            }
-            .trivium-container {
-                grid-template-columns: 1fr;
-            }
-            .stage-card {
-                margin: 1rem 0;
-            }
-            .stage-header {
-                padding: 0.8rem 1rem;
-            }
-            .stage-header h3 {
-                font-size: 1.2rem;
-            }
-            .subject-card {
-                padding: 0.8rem;
-            }
-            table {
-                font-size: 0.8rem;
-                overflow-x: auto;
-                display: block;
-            }
-            .weekly-schedule {
-                overflow-x: auto;
-            }
-            .schedule-table {
-                min-width: 500px;
-            }
-        }
-    </style>
+    <title>Family Homeschooling Plan — Classical Education</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 <header>
-    <h1>Comprehensive Homeschooling Plan</h1>
-    <p>A Classical & Jeffersonian Framework from Early Childhood Through High School</p>
+    <h1>Family Homeschooling Plan</h1>
+    <p>Classical Education — From Early Childhood Through High School</p>
 </header>
 <nav>
     <a href="#overview">Overview</a>
-    <a href="#models">Models</a>
-    <a href="#trivium">Trivium Pillars</a>
-    <a href="#grammar">Grammar Stage</a>
-    <a href="#logic">Logic Stage</a>
-    <a href="#rhetoric">Rhetoric Stage</a>
-    <a href="#progression">Year-by-Year</a>
-    <a href="#schedule">Weekly Schedule</a>
+    <a href="#principles">Principles</a>
+    <a href="#trivium">Trivium Stages</a>
+    <a href="#math">Math Track</a>
+    <a href="#science">Science Track</a>
+    <a href="#language">Language Arts</a>
+    <a href="#history">History</a>
+    <a href="#latin">Latin/Languages</a>
+    <a href="#arts">Arts & PE</a>
+    <a href="#progression">K-12 Progression</a>
+    <a href="#resources">Resources</a>
 </nav>
 <main>
+
 <section id="overview">
-    <h2>1. Plan Overview</h2>
+    <h2>Plan Overview</h2>
     <div class="intro">
-        <p>This homeschooling plan is designed for a child who is not yet in school. It combines the <strong>Classical Education</strong> model — a time-tested approach focused on mastery of foundational skills before higher-order thinking — with select principles from <strong>Thomas Jefferson's educational philosophy</strong>, which emphasizes geometry, practical sciences, navigation, and the critical age window for language acquisition.</p>
-        <p>The plan covers all core subjects plus additional optional subjects, progressing from early childhood through high school graduation. Math and science receive emphasis with daily deep-dive time, while literacy (reading and writing) is woven into every stage through classical reading and writing methods.</p>
+        <p>This is a comprehensive homeschooling plan designed for a family using <strong>Classical Education</strong> with <strong>Jeffersonian principles</strong> integrated throughout. The plan covers all subjects from early childhood through high school graduation, with emphasis on deep proficiency in math and science, strong literacy, and classical learning methods.</p>
+        <p><strong>Key Features:</strong></p>
+        <ul>
+            <li>Classical Trivium stages (Grammar, Logic, Rhetoric) drive the curriculum</li>
+            <li>Math and science receive daily deep-dive time with hands-on experiments</li>
+            <li>Strong literacy foundation through reading classics, copywork, and word roots</li>
+            <li>Bible reading and writing integrated throughout</li>
+            <li>Gifted math pathway for advanced learners</li>
+            <li>Adult learning adaptations for parents</li>
+        </ul>
     </div>
-    <h3>Key Design Principles</h3>
-    <ul>
-        <li><strong>Classical Trivium Stages</strong>: Grammar (ages 5–11), Logic (ages 11–14), Rhetoric (ages 14–18) — each stage matches natural cognitive development</li>
-        <li><strong>Jeffersonian Emphasis</strong>: Geometry, navigation, and practical sciences integrated throughout; Latin introduced early to capitalize on the memory peak ages 8–16</li>
-        <li><strong>Deep Proficiency in Math & Science</strong>: Daily dedicated time, hands-on experiments, real-world problem solving, not just textbook work</li>
-        <li><strong>Strong Literacy</strong>: Reading aloud, copywork, grammar study, essay writing, debate, and oratory skills developed progressively</li>
-        <li><strong>All Subjects Covered</strong>: Math, Language Arts, Science, History/Geography, Latin/Languages, Arts, Physical Education, plus optional Computer Science, Music, Foreign Language</li>
-    </ul>
+    <p>This plan is designed to be <strong>flexible yet structured</strong>. You can adjust the pace based on your child's needs, but the overall progression follows classical education principles that have been refined over centuries.</p>
 </section>
 
-<section id="models">
-    <h2>2. Educational Models Compared</h2>
-    <p>Before selecting a primary model, here's a brief overview of four major educational philosophies — including the one chosen (Classical), the one you mentioned (Jefferson), and two alternatives you can adapt:</p>
-
-    <div class="model-card">
-        <h3>Classical Education (Chosen Primary Model)</h3>
-        <p><em>Pioneered by Dorothy Sayers in her 1947 essay "The Lost Tools of Learning," this model adapts the medieval Trivium (grammar, logic, rhetoric) to child development stages.</em></p>
-        <div class="pros-cons">
-            <div class="pros">
-                <h4>Pros</h4>
-                <ul>
-                    <li>Strong curriculum backbone with clear progression</li>
-                    <li>Matches natural cognitive development stages</li>
-                    <li>Large community and resource base</li>
-                    <li>Emphasizes critical thinking and communication</li>
-                    <li>Works well for non-teachers (structured lessons)</li>
-                </ul>
-            </div>
-            <div class="cons">
-                <h4>Cons</h4>
-                <ul>
-                    <li>Can feel rigid without adaptation</li>
-                    <li>Heavy reliance on reading/writing</li>
-                    <li>May not suit highly kinesthetic learners</li>
-                    <li>Requires commitment to long-term structure</li>
-                </ul>
-            </div>
+<section id="principles">
+    <h2>Educational Principles</h2>
+    <div class="card-grid">
+        <div class="card">
+            <h3>Classical Education</h3>
+            <p>Based on the medieval Trivium (grammar, logic, rhetoric), adapted to child development stages by Dorothy Sayers in her 1947 essay "The Lost Tools of Learning."</p>
+            <ul>
+                <li>Grammar Stage (ages 5–11): Absorb facts, rules, patterns</li>
+                <li>Logic Stage (ages 11–14): Question, analyze, reason</li>
+                <li>Rhetoric Stage (ages 14–18): Synthesize, persuade, create</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Jeffersonian Principles</h3>
+            <p>Based on Thomas Jefferson's 1779 "Bill for the More General Diffusion of Knowledge" — emphasis on geometry, navigation, practical sciences, and the critical window for language acquisition.</p>
+            <ul>
+                <li>Primary school (ages 6–8): Reading/writing/arithmetic/history</li>
+                <li>Intermediate (ages 9–16): Languages/geometry/navigation</li>
+                <li>University (ages 17–19): Specialized sciences</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Gifted Math Pathway</h3>
+            <p>For children who excel in math, this pathway provides acceleration, depth, and enrichment through:</p>
+            <ul>
+                <li>Early start (age 5)</li>
+                <li>Accelerated pace (skip grades if appropriate)</li>
+                <li>Depth (proofs, abstract thinking)</li>
+                <li>Enrichment (competition math, research)</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Adult Learning</h3>
+            <p>Parents continue growing through the same principles:</p>
+            <ul>
+                <li>Read one classic novel per month</li>
+                <li>Daily copywork (10 minutes)</li>
+                <li>Word roots study (10 minutes)</li>
+                <li>Read aloud together daily</li>
+                <li>Bible reading and writing</li>
+            </ul>
         </div>
     </div>
-
-    <div class="model-card">
-        <h3>Jeffersonian Education (Integrated as STEM Supplement)</h3>
-        <p><em>Based on Thomas Jefferson's 1779 "Bill for the More General Diffusion of Knowledge" — his plan for universal public education in Virginia.</em></p>
-        <div class="pros-cons">
-            <div class="pros">
-                <h4>Pros</h4>
-                <ul>
-                    <li>Emphasizes practical, useful knowledge</li>
-                    <li>Geometry and navigation build spatial reasoning</li>
-                    <li>Languages prioritized during memory peak (ages 8–16)</li>
-                    <li>Prepares for civic participation and self-reliance</li>
-                    <li>Hands-on, nature-based learning in early years</li>
-                </ul>
-            </div>
-            <div class="cons">
-                <h4>Cons</h4>
-                <ul>
-                    <li>Limited modern curriculum resources</li>
-                    <li>Not a complete stand-alone model</li>
-                    <li>Original plan focused on elite preparation</li>
-                    <li>Requires supplementation for modern needs</li>
-                </ul>
-            </div>
-        </div>
-        <p><strong>Jefferson's Three-Stage System:</strong> Primary school (ages 6–8) for reading/writing/arithmetic/history; Intermediate (ages 9–16) for languages/geometry/navigation; University (ages 17–19) for specialized sciences.</p>
-        <p><strong>Key Quote:</strong> <em>"The most precious gift from Nature is the power of memory... The mind acquires new faculties at certain ages, and loses them at others."</em></p>
-    </div>
-
-    <div class="model-card">
-        <h3>Education of the American Founders (Historical Context)</h3>
-        <p><em>The Founding Fathers were products of the same classical education that informs our plan. Understanding what they studied reveals why we teach what we teach.</em></p>
-        <div class="intro" style="margin-top: 1rem;">
-            <p><strong>The Colonial Education System:</strong> In the 1700s, education in America followed the English model: Latin grammar schools for boys (ages 7–14), followed by college (Harvard, Yale, Princeton). Education was fundamentally <strong>classical, Christian, and civic</strong>—designed to produce virtuous citizens and learned leaders.</p>
-        </div>
-        
-        <h4 style="margin-top: 1.5rem;">What the Founders Actually Studied</h4>
-        <table style="margin: 1rem 0; font-size: 0.9rem;">
-            <tr>
-                <th style="background: var(--navy); color: white; padding: 0.5rem; text-align: left; width: 20%;">Age/Stage</th>
-                <th style="background: var(--navy); color: white; padding: 0.5rem; text-align: left; width: 80%;">Curriculum</th>
-            </tr>
-            <tr>
-                <td style="padding: 0.5rem; border-bottom: 1px solid #eee; background: var(--cream-light);"><strong>Age 7–10</strong><br>(Grammar School)</td>
-                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Reading (primers, Bible, catechism), writing, arithmetic, English grammar, spelling</td>
-            </tr>
-            <tr>
-                <td style="padding: 0.5rem; border-bottom: 1px solid #eee; background: var(--cream-light);"><strong>Age 11–14</strong><br>(Latin School)</td>
-                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;"><strong>Latin</strong> (grammar, reading Cicero/Virgil/Ovid), <strong>Greek</strong> (some), <strong>Hebrew</strong> (rare), <strong>geometry</strong>, <strong>logic</strong>, <strong>ethics</strong>, <strong>history</strong>, <strong>oratory</strong></td>
-            </tr>
-            <tr>
-                <td style="padding: 0.5rem; border-bottom: 1px solid #eee; background: var(--cream-light);"><strong>Age 15–18</strong><br>(College: Harvard, Yale, Princeton)</td>
-                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;"><strong>Classics</strong> (Greek/Latin literature), <strong>philosophy</strong> (Aristotle, Locke, Locke), <strong>mathematics</strong> (Euclid, algebra), <strong>theology</strong> (systematic, apologetics), <strong>rhetoric</strong>, <strong>natural philosophy</strong> (early science), <strong>history</strong> (ancient + modern), <strong>geography</strong>, <strong>governing</strong> (politics, civics)</td>
-            </tr>
-        </table>
-
-        <h4 style="margin-top: 1.5rem;">The Founders' Own Words</h4>
-        <div class="intro" style="background: var(--blue-light); border-left-color: #2196F3;">
-            <p><strong>John Adams</strong> (2nd President): <em>"The Constitution, and the laws, have made no distinction between the sexes. They consider us as moral beings, and are alike attentive to our education, our morals, and our manners."</em></p>
-            <p style="margin-top: 0.5rem;"><strong>Thomas Jefferson</strong> (3rd President): <em>"If a nation expects to be ignorant and free, in a state of civilization, it expects what never was and never will be."</em></p>
-            <p style="margin-top: 0.5rem;"><strong>George Washington</strong> (1st President): <em>"Promote as much as possible institutions for the general diffusion of knowledge. In proportion as the structure of a government gives force to public opinion, it is essential that public opinion should be enlightened."</em></p>
-            <p style="margin-top: 0.5rem;"><strong>Benjamin Franklin</strong> (Founding Father): <em>"An investment in knowledge pays the best interest."</em></p>
-        </div>
-
-        <h4 style="margin-top: 1.5rem;">How This Connects to Our Plan</h4>
-        <ul>
-            <li><strong>Latin is essential</strong> — Every founder studied Latin for years. Jefferson, Adams, Washington, Hamilton, Madison, and Jay all read Latin classics in the original language.</li>
-            <li><strong>Logic and rhetoric matter</strong> — The founders were trained in formal logic and persuasive speech. Our Logic and Rhetoric stages mirror their educational journey.</li>
-            <li><strong>Bible is foundational</strong> — The founders cited Scripture constantly. Education was inseparable from moral and religious formation.</li>
-            <li><strong>Civics and government</strong> — Founders studied political philosophy (Locke, Montesquieu, Blackstone) to design a government. Our plan teaches this explicitly.</li>
-            <li><strong>Classics build character</strong> — Reading great books wasn't just intellectual exercise—it was moral formation. The founders believed character preceded liberty.</li>
-        </ul>
-
-        <h4 style="margin-top: 1.5rem;">Recommended: Read What They Read</h4>
-        <ul>
-            <li><strong>The Bible</strong> (KJV or ESV) — Primary text for all founders</li>
-            <li><strong>Cicero</strong> (On Duties, On Oratory) — Jefferson's favorite</li>
-            <li><strong>Plato & Aristotle</strong> (Republic, Nicomachean Ethics) — Core philosophy texts</li>
-            <li><strong>John Locke</strong> (Two Treatises of Government) — Foundation of American political thought</li>
-            <li><strong>The Federalist Papers</strong> — Hamilton, Madison, Jay — American political philosophy</li>
-            <li><strong>The Declaration of Independence</strong> — Jefferson's masterwork, steeped in classical and biblical references</li>
-            <li><strong>Milton</strong> (Paradise Lost) — Read by Adams, Jefferson, many others</li>
-            <li><strong>Shakespeare</strong> — Universal education for the educated</li>
-        </ul>
-    </div>
-
-    <div class="model-card">
-        <h3>Unit Study / Interest-Led Learning (Alternative)</h3>
-        <p><em>Organizes learning around a central theme or interest, combining multiple subjects into one project (e.g., a unit on ancient Egypt covering history, science, math, reading, and art).</em></p>
-        <div class="pros-cons">
-            <div class="pros">
-                <h4>Pros</h4>
-                <ul>
-                    <li>Highly engaging and personalized</li>
-                    <li>Connects subjects naturally</li>
-                    <li>Flexibility to follow the child's interests</li>
-                    <li>Great for hands-on, project-based learners</li>
-                </ul>
-            </div>
-            <div class="cons">
-                <h4>Cons</h4>
-                <ul>
-                    <li>May leave gaps in foundational skills</li>
-                    <li>Requires significant planning effort</li>
-                    <li>Harder to track academic progress</li>
-                    <li>Less structured for math/science sequencing</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="model-card">
-        <h3>Charlotte Mason (Alternative)</h3>
-        <p><em>Based on the philosophy of English educator Charlotte Mason (1842–1923), emphasizing "living books," nature study, short lessons, and education as an "atmosphere, discipline, and life."</em></p>
-        <div class="pros-cons">
-            <div class="pros">
-                <h4>Pros</h4>
-                <ul>
-                    <li>Rich literature and nature-based learning</li>
-                    <li>Short lessons suit shorter attention spans</li>
-                    <li>Emphasizes imagination and creativity</li>
-                    <li>Lessens pressure of "school-at-home"</li>
-                </ul>
-            </div>
-            <div class="cons">
-                <h4>Cons</h4>
-                <ul>
-                    <li>Limited math/science structure</li>
-                    <li>Requires expensive "living books"</li>
-                    <li>May not provide enough rigor for advanced learners</li>
-                    <li>Less emphasis on systematic grammar/logic</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <h3>Our Hybrid Approach</h3>
-    <p>We use <strong>Classical Education as the primary framework</strong> for its strong structure, then layer in <strong>Jeffersonian principles</strong> — particularly the emphasis on geometry, navigation, practical sciences, and the critical window for language acquisition. The result is a plan that is:</p>
-    <ul>
-        <li>Structured enough for a non-teacher parent to follow</li>
-        <li>Deep in math and science with daily hands-on time</li>
-        <li>Rich in literacy and communication skills</li>
-        <li>Adapted to your child's developmental stages</li>
-    </ul>
 </section>
 
 <section id="trivium">
-    <h2>3. The Trivium: Three Pillars of Classical Learning</h2>
+    <h2>The Trivium: Three Pillars of Classical Learning</h2>
     <p>The Trivium (Latin for "the three ways") is the foundation of classical education. Each stage corresponds to a child's natural learning tendencies and builds progressively:</p>
-    <div class="trivium-container">
-        <div class="trivium-stage">
-            <div class="stage-icon">Grammar</div>
+    <div class="card-grid">
+        <div class="card">
             <h3>Grammar Stage</h3>
             <p><strong>Ages 5–11 (K–6)</strong></p>
             <p>The "what" stage — children naturally absorb facts, rules, vocabulary, and patterns through repetition, songs, memorization, and hands-on exploration.</p>
+            <p><em>Focus: Memorization, repetition, concrete examples</em></p>
         </div>
-        <div class="trivium-stage">
-            <div class="stage-icon">Logic</div>
+        <div class="card">
             <h3>Logic Stage</h3>
             <p><strong>Ages 11–14 (7–9)</strong></p>
             <p>The "why" stage — children begin to question, analyze, and reason. They want to understand how things work and why rules exist.</p>
+            <p><em>Focus: Analysis, argumentation, formal logic</em></p>
         </div>
-        <div class="trivium-stage">
-            <div class="stage-icon">Rhetoric</div>
+        <div class="card">
             <h3>Rhetoric Stage</h3>
             <p><strong>Ages 14–18 (10–12)</strong></p>
             <p>The "how" stage — teenagers develop the ability to synthesize, persuade, create, and express their own voice and ideas clearly.</p>
+            <p><em>Focus: Synthesis, persuasion, original work</em></p>
         </div>
     </div>
-    <p><strong>Jeffersonian Connection:</strong> Jefferson believed the ages 8–16 represent the "prime window" for memory and language acquisition. The Grammar and Logic stages align perfectly with this window — this is when Latin, math, and facts should be memorized heavily. By the Rhetoric stage, the child has the foundation to reason and communicate effectively.</p>
+    <p><strong>Jeffersonian Connection:</strong> Jefferson believed the ages 8–16 represent the "prime window" for memory and language acquisition. The Grammar and Logic stages align perfectly with this window — this is when Latin, math, and facts should be memorized heavily.</p>
 </section>
 
-<section id="grammar">
-    <h2>4. Grammar Stage (Ages 5–11, Grades K–6)</h2>
-    <div class="stage-card">
-        <div class="stage-header">
-            <h3>Grammar Stage: Building the Foundation</h3>
-            <p>"Memorize the rules before you question them." — Dorothy Sayers</p>
-        </div>
-        <div class="stage-content">
-            <p>In the Grammar Stage, children absorb information like sponges. The focus is on building a rich foundation of facts, vocabulary, rules, and patterns through repetition, songs, games, memorization, and hands-on exploration. This is the perfect time to introduce Latin (per Jefferson's language-acquisition window) and to develop strong reading and math habits.</p>
-
-            <div class="subject-card math">
-                <h4>Mathematics <span class="jefferson-tag">JEFFERSONIAN EMBED</span></h4>
-                <p><strong>Goal:</strong> Mastery of arithmetic, fractions, geometry basics, and measurement through concrete and visual methods.</p>
-                <ul>
-                    <li><strong>Grades K–2:</strong> Counting, addition/subtraction facts, shapes, measurement, money, simple patterns</li>
-                    <li><strong>Grades 3–4:</strong> Multiplication/division facts, long division, fractions, decimals, area/perimeter, word problems</li>
-                    <li><strong>Grades 5–6:</strong> Integers, ratios, percentages, volume, coordinate planes, introductory algebra (solving equations)</li>
-                    <li><strong>Jeffersonian Addition:</strong> Weekly geometry puzzles using manipulatives (pattern blocks, geoboards); navigation exercises (mapping, compass work, scale drawings)</li>
-                </ul>
-            </div>
-
-            <div class="subject-card langarts">
-                <h4>Language Arts</h4>
-                <p><strong>Goal:</strong> Reading fluency, vocabulary expansion, grammar rules, and foundational writing skills.</p>
-                <ul>
-                    <li><strong>Grades K–2:</strong> Phonics, sight words, reading aloud daily, simple sentences, copywork (copying good writing), drawing + describing pictures</li>
-                    <li><strong>Grades 3–4:</strong> Grammar rules (parts of speech, sentences), paragraph writing, book reports, poetry memorization, vocabulary lists, spelling bees</li>
-                    <li><strong>Grades 5–6:</strong> Essay structure (introduction, body, conclusion), research projects, grammar analysis, creative writing, public speaking (short presentations)</li>
-                    <li><strong>Reading:</strong> Read aloud together daily; begin chapter books, biographies, mythology (Greek, Norse, Roman)</li>
-                </ul>
-            </div>
-
-            <div class="subject-card science">
-                <h4>Science <span class="jefferson-tag">JEFFERSONIAN EMBED</span></h4>
-                <p><strong>Goal:</strong> Curiosity-driven exploration of the natural world through observation, hands-on experiments, and nature journals.</p>
-                <ul>
-                    <li><strong>Grades K–2:</strong> Plants, animals, weather, five-sense observation, nature walks, simple experiments (sink/float, magnets), nature journaling</li>
-                    <li><strong>Grades 3–4:</strong> Life cycles, ecosystems, simple machines, weather patterns, basic chemistry (mixing substances), science fair projects</li>
-                    <li><strong>Grades 5–6:</strong> Earth science (rocks, minerals, plate tectonics), basic physics (forces, motion, energy), human body systems, chemistry intro (elements, periodic table)</li>
-                    <li><strong>Jeffersonian Addition:</strong> Monthly "practical science" projects — build a simple bridge, measure rainfall, track moon phases, create a weather log</li>
-                </ul>
-            </div>
-
-            <div class="subject-card history">
-                <h4>History & Geography</h4>
-                <p><strong>Goal:</strong> Build a timeline of world history and geographical awareness through stories, maps, and memorization.</p>
-                <ul>
-                    <li><strong>Grades K–2:</strong> Family history, local community helpers, simple maps, continents/oceans, holidays from around the world, fairy tales and folklore</li>
-                    <li><strong>Grades 3–4:</strong> Ancient civilizations (Egypt, Greece, Rome), medieval Europe, simple timelines, map skills (latitude/longitude basics)</li>
-                    <li><strong>Grades 5–6:</strong> American history (colonies through Civil War), U.S. geography, primary source documents, historical figures biographies</li>
-                </ul>
-            </div>
-
-            <div class="subject-card latin">
-                <h4>Latin / Foreign Language</h4>
-                <p><strong>Goal:</strong> Begin Latin in Grade 1 to capitalize on the memory peak. Introduce a second modern language in Grade 4.</p>
-                <ul>
-                    <li><strong>Grades 1–3:</strong> Latin alphabet, basic vocabulary, simple sentences, Roman mythology, Latin through songs and games</li>
-                    <li><strong>Grades 4–6:</strong> Latin grammar (declensions, conjugations), reading simplified Latin texts, Spanish begins (conversational, songs, basic grammar)</li>
-                    <li><strong>Jeffersonian Connection:</strong> "Latin is the key that unlocks the door to the languages of science and the classics."</li>
-                </ul>
-            </div>
-
-            <div class="subject-card arts">
-                <h4>Arts & Creative Expression</h4>
-                <ul>
-                    <li>Drawing, painting, coloring — daily free art time</li>
-                    <li>Classical art appreciation (looking at paintings, discussing colors and shapes)</li>
-                    <li>Music: singing, rhythm games, basic instrument introduction (keyboard, ukulele, or recorder)</li>
-                    <li>Crafts: make things related to history/science topics (build Roman columns, paint landscapes)</li>
-                </ul>
-            </div>
-
-            <div class="subject-card pe">
-                <h4>Physical Education</h4>
-                <ul>
-                    <li>Daily outdoor play (minimum 30 minutes)</li>
-                    <li>Basic sports: tag, relay races, ball games</li>
-                    <li>Yoga or simple stretching routines</li>
-                    <li>Swimming lessons (if available)</li>
-                    <li>Nature hikes and exploration walks</li>
-                </ul>
-            </div>
-        </div>
+<section id="math">
+    <h2>Mathematics Track</h2>
+    <div class="intro">
+        <p>Mathematics receives <strong>emphasis with daily deep-dive time</strong> and is a priority subject. For gifted learners, we follow an accelerated pathway with depth and enrichment.</p>
     </div>
-</section>
-
-<section id="logic">
-    <h2>5. Logic Stage (Ages 11–14, Grades 7–9)</h2>
-    <div class="stage-card">
-        <div class="stage-header">
-            <h3>Logic Stage: Questioning and Reasoning</h3>
-            <p>"The child who can ask 'why?' is ready to learn."</p>
+    <h3>Standard Pathway</h3>
+    <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+        <thead>
+            <tr>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Grade</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Age</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Math Focus</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">K–2</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">5–8</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Counting, basic operations, shapes, measurement</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">3–4</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">8–10</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Multiplication/division, fractions, decimals, geometry basics</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">5–6</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">10–12</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Pre-algebra, integers, ratios, coordinate planes</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">7</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">12–13</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Algebra 1</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">8</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">13–14</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Geometry (proofs, constructions)</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">9</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">14–15</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Algebra 2, Trigonometry</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">10</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">15–16</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Pre-Calculus or Geometry</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">11</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">16–17</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Calculus or Statistics</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">12</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">17–18</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Multivariable Calculus, AP Calculus BC</td>
+            </tr>
+        </tbody>
+    </table>
+    <h3>Gifted Math Pathway</h3>
+    <div class="intro">
+        <p>For children who excel in math, this pathway provides <strong>acceleration, depth, and enrichment</strong>:</p>
+    </div>
+    <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+        <thead>
+            <tr>
+                <th style="background: var(--green); color: white; padding: 0.8rem;">Age</th>
+                <th style="background: var(--green); color: white; padding: 0.8rem;">Grade Level</th>
+                <th style="background: var(--green); color: white; padding: 0.8rem;">Math Focus</th>
+                <th style="background: var(--green); color: white; padding: 0.8rem;">Enrichment</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">5–7</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">K–2</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Algebraic thinking, patterns, problem-solving</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Math puzzles, logic games, Beast Academy</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">7–9</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">3–5</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Pre-algebra, number theory, geometry proofs</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Math circles, AoPS, competitions</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">9–12</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">6–8</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Algebra 1, Geometry, Algebra 2, Pre-calc</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Olympiad training, research projects</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">12–15</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">9–11</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Calculus, Linear Algebra, Differential Equations</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">College courses, competitions</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">15–18</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">11–12</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Undergraduate math, independent study</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Research, publications, college credits</td>
+            </tr>
+        </tbody>
+    </table>
+    <h3>Curriculum Options</h3>
+    <div class="card-grid">
+        <div class="card">
+            <h4>Beast Academy</h4>
+            <p><strong>Best for:</strong> Gifted grades 2–5</p>
+            <ul>
+                <li>Puzzle-based, very engaging</li>
+                <li>Gifted-focused curriculum</li>
+                <li>Online platform with adaptive learning</li>
+                <li>Cost: ~$100/year per child</li>
+            </ul>
         </div>
-        <div class="stage-content">
-            <p>In the Logic Stage, children naturally begin to question everything. They want to understand how things work, debate ideas, and analyze arguments. This is the perfect time to introduce formal logic, structured argumentation, deeper scientific inquiry, and more rigorous mathematics. The Jeffersonian emphasis on geometry and navigation becomes central.</p>
-
-            <div class="subject-card math">
-                <h4>Mathematics <span class="jefferson-tag">JEFFERSONIAN EMBED</span></h4>
-                <p><strong>Goal:</strong> Develop logical reasoning through algebra, formal geometry, and problem-solving.</p>
-                <ul>
-                    <li><strong>Grade 7:</strong> Algebra 1 (variables, equations, inequalities, functions)</li>
-                    <li><strong>Grade 8:</strong> Geometry (proofs, triangles, circles, area/volume, coordinate geometry)</li>
-                    <li><strong>Grade 9:</strong> Algebra 2 (quadratic equations, polynomials, logarithms) + Trigonometry basics</li>
-                    <li><strong>Jeffersonian Addition:</strong> Weekly geometry proofs and constructions with compass/straightedge; navigation projects (triangulation, map reading, simple surveying); real-world problem sets (budgeting, measurements)</li>
-                </ul>
-            </div>
-
-            <div class="subject-card langarts">
-                <h4>Language Arts</h4>
-                <p><strong>Goal:</strong> Develop analytical reading, structured argumentation, and persuasive writing.</p>
-                <ul>
-                    <li><strong>Reading:</strong> Full novels (classic literature), nonfiction, historical documents, Shakespeare (beginning in Grade 8)</li>
-                    <li><strong>Grammar:</strong> Advanced grammar (sentences, clauses, punctuation), syntax analysis</li>
-                    <li><strong>Writing:</strong> Argumentative essays, analytical essays, book reports with thesis statements, research papers with citations</li>
-                    <li><strong>Debate:</strong> Simple debates on current events, literary analysis, logical fallacies identification</li>
-                    <li><strong>Vocabulary:</strong> Latin-root words, SAT-prep vocabulary lists, word games</li>
-                </ul>
-            </div>
-
-            <div class="subject-card science">
-                <h4>Science <span class="jefferson-tag">JEFFERSONIAN EMBED</span></h4>
-                <p><strong>Goal:</strong> Deep scientific understanding through the scientific method, lab work, and theoretical study.</p>
-                <ul>
-                    <li><strong>Grade 7:</strong> Biology (cells, genetics, ecology, biblical creation) with dissections and microscope work</li>
-                    <li><strong>Grade 8:</strong> Chemistry (atomic structure, periodic table, chemical reactions, balancing equations) with lab experiments</li>
-                    <li><strong>Grade 9:</strong> Physics (motion, forces, energy, waves, electricity) with experiments and mathematical applications</li>
-                    <li><strong>Jeffersonian Addition:</strong> Monthly "practical science" projects — build a simple circuit, create a chemical volcano, study local flora/fauna, measure and analyze data, write lab reports</li>
-                    <li><strong>Hands-on emphasis:</strong> Every science unit includes at least 2 hands-on experiments or field studies</li>
-                </ul>
-            </div>
-
-            <div class="subject-card history">
-                <h4>History & Geography</h4>
-                <p><strong>Goal:</strong> Understand cause-and-effect in history, analyze primary sources, and develop geographical literacy.</p>
-                <ul>
-                    <li><strong>Grade 7:</strong> World history (Renaissance, Reformation, Age of Exploration)</li>
-                    <li><strong>Grade 8:</strong> U.S. history (Constitution, Civil War, Reconstruction, Industrial Revolution)</li>
-                    <li><strong>Grade 9:</strong> World history (French Revolution, Industrial Revolution, World Wars, Modern Era)</li>
-                    <li><strong>Skills:</strong> Primary source analysis, cause-and-effect essays, map work, geographic reasoning</li>
-                    <li><strong>Jeffersonian Addition:</strong> Study of government and civics — Jefferson's own writings, the Declaration of Independence, Federalist Papers</li>
-                </ul>
-            </div>
-
-            <div class="subject-card latin">
-                <h4>Latin / Foreign Language</h4>
-                <p><strong>Goal:</strong> Advanced Latin grammar and reading; second language fluency; optional third language.</p>
-                <ul>
-                    <li><strong>Grade 7:</strong> Latin (Caesar's Gallic War readings, advanced grammar), Spanish (conversational fluency, reading simple texts)</li>
-                    <li><strong>Grade 8:</strong> Latin (Cicero, Roman history), Spanish (intermediate grammar, literature)</li>
-                    <li><strong>Grade 9:</strong> Latin (Virgil's Aeneid, advanced composition), Spanish (advanced literature, writing), optional third language (French, German, or Greek)</li>
-                    <li><strong>Jeffersonian Connection:</strong> "The mind acquires new faculties at certain ages, and loses them at others." — Latin and language study during the memory peak window.</li>
-                </ul>
-            </div>
-
-            <div class="subject-card arts">
-                <h4>Arts & Creative Expression</h4>
-                <ul>
-                    <li>Art history and analysis (moving from appreciation to critical evaluation)</li>
-                    <li>Portfolio development in one or two art forms (drawing, painting, photography, digital art)</li>
-                    <li>Music: continued instrument study or music theory, ensemble/group performance</li>
-                    <li> Creative writing: poetry, short stories, journaling</li>
-                </ul>
-            </div>
-
-            <div class="subject-card pe">
-                <h4>Physical Education</h4>
-                <ul>
-                    <li>Daily physical activity (minimum 30 minutes)</li>
-                    <li>Team sports (basketball, soccer, volleyball)</li>
-                    <li>Individual fitness (running, swimming, cycling)</li>
-                    <li>Self-defense or martial arts introduction</li>
-                    <li>Nature hikes, camping trips, outdoor adventures</li>
-                </ul>
-            </div>
+        <div class="card">
+            <h4>Art of Problem Solving (AoPS)</h4>
+            <p><strong>Best for:</strong> Gifted students grades 5+</p>
+            <ul>
+                <li>Gold standard for competition math</li>
+                <li>Deep problem-solving focus</li>
+                <li>Online courses available</li>
+                <li>Cost: ~$150–300/year</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>Saxon Math</h4>
+            <p><strong>Best for:</strong> Mastery-based, can be accelerated</p>
+            <ul>
+                <li>Spiral approach, constant review</li>
+                <li>Clear progression</li>
+                <li>Can skip ahead if appropriate</li>
+                <li>Cost: ~$80–120/year</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>Singapore Math</h4>
+            <p><strong>Best for:</strong> Deep conceptual understanding</p>
+            <ul>
+                <li>Concrete → pictorial → abstract</li>
+                <li>Strong problem-solving focus</li>
+                <li>Can be accelerated</li>
+                <li>Cost: ~$60–100/year</li>
+            </ul>
         </div>
     </div>
 </section>
 
-<section id="rhetoric">
-    <h2>6. Rhetoric Stage (Ages 14–18, Grades 10–12)</h2>
-    <div class="stage-card">
-        <div class="stage-header">
-            <h3>Rhetoric Stage: Synthesizing and Expressing</h3>
-            <p>"The ability to think clearly, argue well, and write powerfully."</p>
+<section id="science">
+    <h2>Science Track</h2>
+    <div class="intro">
+        <p>Science receives <strong>daily hands-on time</strong> with emphasis on experiments, observation, and the Jeffersonian "practical science" projects.</p>
+    </div>
+    <h3>Progression</h3>
+    <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+        <thead>
+            <tr>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Grade</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Science Focus</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Jeffersonian Projects</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">K–2</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Nature exploration, five senses, plants, animals, weather</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Nature journaling, simple experiments</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">3–4</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Life cycles, ecosystems, simple machines, weather</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Build a simple bridge, measure rainfall</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">5–6</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Earth science, basic physics, human body, chemistry intro</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Track moon phases, create weather log</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">7</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Biology (cells, genetics, ecology, biblical creation)</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Dissections, microscope work</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">8</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Chemistry (atomic structure, reactions)</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Build a simple circuit, chemical experiments</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">9</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Physics (motion, forces, energy, waves)</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Physics experiments, data analysis</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">10</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Advanced Biology or Environmental Science</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Field studies, research projects</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">11</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Advanced Chemistry or Physics</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Lab reports, independent experiments</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">12</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Senior Thesis / Independent Research</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Capstone project, publish findings</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section id="language">
+    <h2>Language Arts Track</h2>
+    <div class="intro">
+        <p>Strong literacy foundation through <strong>reading classics, copywork, and word roots</strong>. Bible reading and writing integrated throughout.</p>
+    </div>
+    <h3>Progression</h3>
+    <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+        <thead>
+            <tr>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Grade</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Reading</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Writing</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Grammar & Vocabulary</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">K–2</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Phonics, sight words, read aloud daily</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Copywork, simple sentences, drawing + describing</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Parts of speech intro, basic grammar</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">3–4</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Chapter books, biographies, mythology</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Paragraphs, book reports, poetry</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Grammar rules, vocabulary lists, spelling</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">5–6</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Classic literature, nonfiction, Shakespeare</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Essays, research projects, public speaking</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Advanced grammar, word roots, Latin roots</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">7</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Full novels, historical documents</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Argumentative essays, analytical essays</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Syntax analysis, logical fallacies</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">8</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Shakespeare complete, philosophy</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Research papers with citations</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">SAT vocabulary, rhetoric</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">9</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Great Books, classical literature</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Debate, oratory, literary analysis</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Advanced rhetoric, composition</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">10–12</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">College-level texts, philosophy</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">College essays, senior thesis, writing portfolio</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Advanced vocabulary, style</td>
+            </tr>
+        </tbody>
+    </table>
+    <h3>Daily Literacy Habits</h3>
+    <div class="card-grid">
+        <div class="card">
+            <h4>Reading Aloud (15–20 min)</h4>
+            <p>Read together daily — anything from fiction to nonfiction to newspapers. Models fluency and builds comprehension.</p>
         </div>
-        <div class="stage-content">
-            <p>In the Rhetoric Stage, teenagers develop the ability to think independently, argue persuasively, and create original work. They can now synthesize knowledge from all subjects and express their own voice with clarity and power. This is the time for college prep, advanced studies, leadership, and preparing for civic participation.</p>
-
-            <div class="subject-card math">
-                <h4>Mathematics <span class="jefferson-tag">JEFFERSONIAN EMBED</span></h4>
-                <p><strong>Goal:</strong> Advanced mathematical reasoning, preparation for college-level math, and real-world applications.</p>
-                <ul>
-                    <li><strong>Grade 10:</strong> Geometry (formal proofs, advanced theorems) or Pre-Calculus (trigonometry, complex numbers, conic sections)</li>
-                    <li><strong>Grade 11:</strong> Calculus (differential and integral) or Statistics and Probability</li>
-                    <li><strong>Grade 12:</strong> Multivariable Calculus, Linear Algebra, or AP Calculus BC / AP Statistics</li>
-                    <li><strong>Jeffersonian Addition:</strong> Applied mathematics — engineering projects, financial math (compound interest, investments), data analysis, coding with Python for math visualization</li>
-                </ul>
-            </div>
-
-            <div class="subject-card langarts">
-                <h4>Language Arts</h4>
-                <p><strong>Goal:</strong> Advanced literary analysis, persuasive writing, public speaking, and development of a personal voice.</p>
-                <ul>
-                    <li><strong>Reading:</strong> Great Books program (Plato, Aristotle, Augustine, Milton, Dickens, Tolstoy, Twain), Shakespeare complete works, philosophy texts</li>
-                    <li><strong>Writing:</strong> College-level essays, research papers with annotations, creative nonfiction, journalism, op-eds</li>
-                    <li><strong>Oratory:</strong> Formal speeches, debate competitions, mock trial, student-led seminars</li>
-                    <li><strong>Analysis:</strong> Literary criticism, rhetorical analysis, philosophical argumentation</li>
-                    <li><strong>Portfolio:</strong> Compile a writing portfolio by graduation</li>
-                </ul>
-            </div>
-
-            <div class="subject-card science">
-                <h4>Science <span class="jefferson-tag">JEFFERSONIAN EMBED</span></h4>
-                <p><strong>Goal:</strong> College-level science with independent research, lab work, and interdisciplinary connections.</p>
-                <ul>
-                    <li><strong>Grade 10:</strong> Advanced Biology (molecular biology, genetics, biochemistry) or Environmental Science</li>
-                    <li><strong>Grade 11:</strong> Advanced Chemistry (organic chemistry, thermodynamics) or Physics (electromagnetism, optics)</li>
-                    <li><strong>Grade 12:</strong> Senior Thesis / Independent Research Project in a chosen scientific area; AP Science exams if desired</li>
-                    <li><strong>Jeffersonian Addition:</strong> Capstone science project — design and execute an original experiment; publish findings or present at a science fair; connect science to ethics, philosophy, and society</li>
-                    <li><strong>Technology Integration:</strong> Use technology for data collection, analysis, and visualization; introduce coding (Python, R) for scientific computing</li>
-                </ul>
-            </div>
-
-            <div class="subject-card history">
-                <h4>History & Geography</h4>
-                <p><strong>Goal:</strong> Advanced historical analysis, political philosophy, and global awareness.</p>
-                <ul>
-                    <li><strong>Grade 10:</strong> American Government and Civics — Constitution, Bill of Rights, current events analysis</li>
-                    <li><strong>Grade 11:</strong> European History ( Enlightenment, Revolutions, World Wars, Cold War) with primary source analysis</li>
-                    <li><strong>Grade 12:</strong> Philosophy and Ethics — Plato, Aristotle, Aquinas, Locke, Rousseau, Kant, modern philosophers; debates on contemporary ethical issues</li>
-                    <li><strong>Skills:</strong> Historical argumentation, thesis-driven essays, geopolitical analysis, model UN or debate tournaments</li>
-                </ul>
-            </div>
-
-            <div class="subject-card latin">
-                <h4>Latin / Foreign Language</h4>
-                <p><strong>Goal:</strong> Advanced language proficiency, translation, and cultural understanding.</p>
-                <ul>
-                    <li><strong>Grade 10:</strong> Advanced Latin (Cicero, Tacitus, Seneca), Spanish (Baccalaureate level or equivalent)</li>
-                    <li><strong>Grade 11:</strong> Latin (Catullus, Ovid, advanced composition), second language (intermediate/advanced literature and writing)</li>
-                    <li><strong>Grade 12:</strong> Senior seminar in Classical Civilization or Comparative Literature; AP Latin or AP Spanish if desired</li>
-                    <li><strong>Jeffersonian Connection:</strong> "The mind acquires new faculties at certain ages, and loses them at others." — By this stage, the child should be reading classical texts in their original language.</li>
-                </ul>
-            </div>
-
-            <div class="subject-card arts">
-                <h4>Arts & Creative Expression</h4>
-                <ul>
-                    <li>Advanced art portfolio for college applications or personal development</li>
-                    <li>Music: ensemble performance, composition, music theory, or music history</li>
-                    <li> Film studies, drama, or creative writing workshops</li>
-                    <li> Art history seminar (moving from study to creation/interpretation)</li>
-                </ul>
-            </div>
-
-            <div class="subject-card pe">
-                <h4>Physical Education</h4>
-                <ul>
-                    <li>Daily physical activity (minimum 30 minutes)</li>
-                    <li>Team sports, intramural leagues</li>
-                    <li>Individual fitness goals (running, swimming, weight training)</li>
-                    <li> Outdoor adventure (hiking, rock climbing, kayaking)</li>
-                    <li> Lifelong fitness habits and health education</li>
-                </ul>
-            </div>
+        <div class="card">
+            <h4>Copywork (10 min)</h4>
+            <p>Copy passages from good writing daily. Builds grammar intuition, attention to detail, and a "mental library" of good sentences.</p>
+        </div>
+        <div class="card">
+            <h4>Word Roots (10 min)</h4>
+            <p>Study one Greek/Latin root per day. Expands vocabulary and decoding ability. Makes reading more interesting.</p>
+        </div>
+        <div class="card">
+            <h4>Bible Reading (15 min)</h4>
+            <p>Read Scripture daily. Copywork from Scripture improves writing and exposes to beautiful prose. Journal reflections.</p>
         </div>
     </div>
+</section>
+
+<section id="history">
+    <h2>History & Geography Track</h2>
+    <div class="intro">
+        <p>Build a timeline of world history through stories, maps, and analysis. Jeffersonian emphasis on civics and government.</p>
+    </div>
+    <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+        <thead>
+            <tr>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Grade</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">History Focus</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Geography</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Skills</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">K–2</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Family history, community helpers, fairy tales</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Simple maps, continents, oceans</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Timeline basics, map reading</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">3–4</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Ancient civilizations (Egypt, Greece, Rome)</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">World regions, climate zones</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Simple timelines, cause-and-effect</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">5–6</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">American history (colonies through Civil War)</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">U.S. geography, political maps</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Primary sources, biographies</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">7</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">World history (Renaissance, Reformation, Exploration)</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Latitude/longitude, scale maps</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Primary source analysis</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">8</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">U.S. history (Constitution, Civil War, Reconstruction)</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Regional geography, resources</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Cause-and-effect essays</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">9</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">World history (French Revolution, Industrial Revolution, World Wars)</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Geopolitics, trade routes</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Historical argumentation</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">10</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">American Government and Civics</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">U.S. political geography</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Current events analysis</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">11</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">European History (Enlightenment, Revolutions, Cold War)</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">European geography</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Thesis-driven essays</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">12</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Philosophy and Ethics</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Global geography</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Philosophical argumentation</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section id="latin">
+    <h2>Latin & Foreign Language Track</h2>
+    <div class="intro">
+        <p>Latin introduced early (Grade 1) to capitalize on the memory peak ages 8–16. Second language (Spanish) in Grade 4. Optional third language in Grade 9.</p>
+    </div>
+    <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+        <thead>
+            <tr>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Grade</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Latin</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Spanish</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Third Language</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">1</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Alphabet, basic vocabulary</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">—</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">—</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">2–3</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Simple sentences, Roman mythology</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">—</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">—</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">4</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Grammar, declensions</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Begins (conversational, songs)</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">—</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">5–6</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Reading simplified texts</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Basic grammar, vocabulary</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">—</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">7</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Caesar's Gallic War readings</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Conversational fluency</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">—</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">8</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Cicero, Roman history</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Intermediate grammar</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">—</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">9</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Virgil's Aeneid</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Advanced literature</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Optional (French, German, Greek)</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">10–12</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Advanced composition, Seneca, Tacitus</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Baccalaureate level</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Optional continuation</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section id="arts">
+    <h2>Arts & Physical Education Track</h2>
+    <div class="intro">
+        <p>Arts and PE are integrated throughout all stages. Arts develop creativity and cultural appreciation. PE builds physical health and lifelong fitness habits.</p>
+    </div>
+    <h3>Arts Progression</h3>
+    <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+        <thead>
+            <tr>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Stage</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Visual Arts</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Music</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Creative Expression</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Grammar (K–6)</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Drawing, painting, coloring, crafts related to topics</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Singing, rhythm games, basic instrument (keyboard, ukulele)</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Free art time, crafts, drama</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Logic (7–9)</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Art history, portfolio development</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Music theory, ensemble/group performance</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Creative writing, poetry, short stories</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Rhetoric (10–12)</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Advanced portfolio for college applications</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Ensemble performance, composition</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Film studies, drama, advanced creative writing</td>
+            </tr>
+        </tbody>
+    </table>
+    <h3>Physical Education Progression</h3>
+    <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+        <thead>
+            <tr>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Stage</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Activities</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Goals</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Grammar (K–6)</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Daily outdoor play, basic sports, yoga, nature hikes</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Build foundational movement skills, love of activity</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Logic (7–9)</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Team sports, individual fitness, self-defense/martial arts</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Develop teamwork, personal fitness habits</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Rhetoric (10–12)</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Team sports, intramural leagues, outdoor adventure</td>
+                <td style="padding: 0.6rem; border-bottom: 1px solid #eee;">Lifelong fitness habits, leadership</td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
 <section id="progression">
-    <h2>7. Year-by-Year Progression Table</h2>
-    <p>Summary of the complete K–12 progression across all subjects. This table provides a quick-reference overview of the entire educational journey.</p>
+    <h2>K–12 Year-by-Year Progression</h2>
+    <p>Summary of the complete educational journey across all subjects. This table provides a quick-reference overview.</p>
     <div style="overflow-x: auto;">
-    <table>
+    <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.85rem;">
         <thead>
             <tr>
-                <th>Grade</th>
-                <th>Age</th>
-                <th>Stage</th>
-                <th>Math</th>
-                <th>Language Arts</th>
-                <th>Science</th>
-                <th>History</th>
-                <th>Latin/Languages</th>
-                <th>Arts</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Grade</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Age</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Stage</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Math</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Language Arts</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Science</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">History</th>
+                <th style="background: var(--navy); color: white; padding: 0.8rem;">Latin/Languages</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>K</td><td>5–6</td><td>Grammar</td>
-                <td>Counting, shapes, patterns</td>
-                <td>Phonics, reading aloud, copywork</td>
-                <td>Nature exploration, five senses</td>
-                <td>Family, community, maps</td>
-                <td>—</td>
-                <td>Free art, music, crafts</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">K</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">5–6</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Grammar</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Counting, shapes</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Phonics, copywork</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Nature exploration</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Family, community</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">—</td>
             </tr>
             <tr>
-                <td>1</td><td>6–7</td><td>Grammar</td>
-                <td>Addition, subtraction, basic fractions</td>
-                <td>Reading fluency, simple sentences</td>
-                <td>Plants, animals, weather</td>
-                <td>Fairy tales, folklore, holidays</td>
-                <td>Latin begins (alphabet, vocab)</td>
-                <td>Drawing, painting, singing</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">1</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">6–7</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Grammar</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Addition, subtraction</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Reading fluency</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Plants, animals</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Fairy tales</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Latin begins</td>
             </tr>
             <tr>
-                <td>2</td><td>7–8</td><td>Grammar</td>
-                <td>Multi-digit addition/subtraction, measurement</td>
-                <td>Grammar basics, paragraph writing</td>
-                <td>Life cycles, simple machines</td>
-                <td>Ancient civilizations intro</td>
-                <td>Latin (simple sentences, myths)</td>
-                <td>Art projects, music instruments</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">2</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">7–8</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Grammar</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Multi-digit math</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Grammar basics</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Life cycles</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Ancient civilizations intro</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Latin continues</td>
             </tr>
             <tr>
-                <td>3</td><td>8–9</td><td>Grammar</td>
-                <td>Multiplication, division, fractions</td>
-                <td>Grammar rules, book reports</td>
-                <td>Ecosystems, basic chemistry</td>
-                <td>Ancient Egypt, Greece, Rome</td>
-                <td>Latin (grammar, reading)</td>
-                <td>Art history, music theory</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">3</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">8–9</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Grammar</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Multiplication, division</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Grammar rules</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Ecosystems</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Egypt, Greece, Rome</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Latin grammar</td>
             </tr>
             <tr>
-                <td>4</td><td>9–10</td><td>Grammar</td>
-                <td>Decimals, percentages, geometry basics</td>
-                <td>Essay intro, vocabulary, spelling</td>
-                <td>Earth science, weather</td>
-                <td>Medieval Europe, simple timelines</td>
-                <td>Latin continues; Spanish begins</td>
-                <td>Portfolio development</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">4</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">9–10</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Grammar</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Decimals, percentages</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Essay intro</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Earth science</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Medieval Europe</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Spanish begins</td>
             </tr>
             <tr>
-                <td>5</td><td>10–11</td><td>Grammar</td>
-                <td>Integers, ratios, coordinate planes</td>
-                <td>Essay structure, research projects</td>
-                <td>Human body, basic physics</td>
-                <td>U.S. history (colonies to Civil War)</td>
-                <td>Latin grammar, Spanish basics</td>
-                <td>Music ensemble, art portfolio</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">5</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">10–11</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Grammar</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Integers, ratios</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Essay structure</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Human body</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">U.S. history intro</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Latin advanced</td>
             </tr>
             <tr>
-                <td>6</td><td>11–12</td><td>Grammar</td>
-                <td>Pre-algebra, volume, area</td>
-                <td>Public speaking, creative writing</td>
-                <td>Chemistry intro, elements</td>
-                <td>American history continuation</td>
-                <td>Latin advanced, Spanish intermediate</td>
-                <td>Instrument mastery, creative writing</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">6</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">11–12</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Grammar</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Pre-algebra</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Public speaking</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Chemistry intro</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">U.S. history continuation</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Latin advanced</td>
             </tr>
             <tr>
-                <td>7</td><td>12–13</td><td>Logic</td>
-                <td>Algebra 1</td>
-                <td>Argumentative essays, logical fallacies</td>
-                <td>Biology (cells, genetics)</td>
-                <td>World history (Renaissance, Exploration)</td>
-                <td>Latin (Caesar), Spanish conversational</td>
-                <td>Art analysis, music ensemble</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">7</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">12–13</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Logic</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Algebra 1</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Argumentative essays</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Biology</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">World history (Renaissance)</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Caesar, Spanish fluency</td>
             </tr>
             <tr>
-                <td>8</td><td>13–14</td><td>Logic</td>
-                <td>Geometry (proofs, constructions)</td>
-                <td>Shakespeare begins, research papers</td>
-                <td>Chemistry (atomic structure)</td>
-                <td>U.S. history (Constitution, Civil War)</td>
-                <td>Latin (Cicero), Spanish intermediate</td>
-                <td>Art portfolio, music theory</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">8</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">13–14</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Logic</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Geometry</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Shakespeare begins</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Chemistry</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">U.S. history (Constitution)</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Cicero, Spanish intermediate</td>
             </tr>
             <tr>
-                <td>9</td><td>14–15</td><td>Logic</td>
-                <td>Algebra 2, Trigonometry</td>
-                <td>Debate, SAT vocabulary, literary analysis</td>
-                <td>Physics (forces, motion)</td>
-                <td>World history (Revolution, World Wars)</td>
-                <td>Latin (Virgil), Spanish advanced</td>
-                <td>Music performance, creative writing</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">9</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">14–15</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Logic</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Algebra 2, Trigonometry</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Debate, SAT vocab</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Physics</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">World history (Revolution)</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Virgil, Spanish advanced</td>
             </tr>
             <tr>
-                <td>10</td><td>15–16</td><td>Rhetoric</td>
-                <td>Pre-Calculus or Geometry</td>
-                <td>Great Books, college essays</td>
-                <td>Advanced Biology or Environmental Science</td>
-                <td>American Government, Civics</td>
-                <td>Latin advanced, Spanish Baccalaureate</td>
-                <td>Advanced art portfolio</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">10</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">15–16</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Rhetoric</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Pre-Calculus</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Great Books</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Advanced Biology</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">American Government</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Latin advanced</td>
             </tr>
             <tr>
-                <td>11</td><td>16–17</td><td>Rhetoric</td>
-                <td>Calculus or Statistics</td>
-                <td>Great Books, oratory, writing portfolio</td>
-                <td>Advanced Chemistry or Physics</td>
-                <td>European History, Philosophy intro</td>
-                <td>Latin (composition), Spanish literature</td>
-                <td>Music ensemble, film/drama</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">11</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">16–17</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Rhetoric</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Calculus</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Oratory, writing portfolio</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Advanced Chemistry</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">European History</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Latin composition</td>
             </tr>
             <tr>
-                <td>12</td><td>17–18</td><td>Rhetoric</td>
-                <td>Multivariable Calculus or AP Stats</td>
-                <td>Senior thesis, college applications</td>
-                <td>Senior Thesis / Independent Research</td>
-                <td>Philosophy and Ethics seminar</td>
-                <td>Classical Civilization seminar</td>
-                <td>College portfolio or music recital</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">12</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">17–18</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Rhetoric</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Multivariable Calculus</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Senior thesis</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Senior Thesis</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Philosophy and Ethics</td>
+                <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Classical Civilization</td>
             </tr>
         </tbody>
     </table>
     </div>
-
-    <h3>Optional Subjects by Stage</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Subject</th>
-                <th>When to Add</th>
-                <th>How to Integrate</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Computer Science</td>
-                <td>Grade 5+</td>
-                <td>Scratch (Grades 5–6), Python (Grades 7–9), web dev / coding projects (Grades 10–12)</td>
-            </tr>
-            <tr>
-                <td>Third Foreign Language</td>
-                <td>Grade 9+</td>
-                <td>French, German, Greek, or Mandarin — optional, based on interest</td>
-            </tr>
-            <tr>
-                <td>Economics / Finance</td>
-                <td>Grade 10+</td>
-                <td>Personal finance, budgeting, investing basics, supply/demand concepts</td>
-            </tr>
-            <tr>
-                <td>Psychology / Sociology</td>
-                <td>Grade 11+</td>
-                <td>Human behavior, social dynamics, mental health awareness</td>
-            </tr>
-            <tr>
-                <td>Public Speaking / Debate</td>
-                <td>Grade 7+</td>
-                <td>Toastmasters Youth, school debate clubs, mock trial competitions</td>
-            </tr>
-            <tr>
-                <td>Volunteering / Service Learning</td>
-                <td>Grade 9+</td>
-                <td>Community service projects, mentorship, civic engagement</td>
-            </tr>
-        </tbody>
-    </table>
 </section>
 
-<section id="schedule">
-    <h2>8. Sample Weekly Schedule</h2>
-    <p>A typical weekly schedule for a Grammar Stage child (Grades 3–6). Adjust times and subjects based on the child's age and stage.</p>
-    <div class="weekly-schedule">
-    <table class="schedule-table">
-        <thead>
-            <tr>
-                <th>Time</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>8:00–8:30</strong></td>
-                <td>Morning Meeting (devotion, calendar, review)</td>
-                <td>Morning Meeting</td>
-                <td>Morning Meeting</td>
-                <td>Morning Meeting</td>
-                <td>Morning Meeting</td>
-            </tr>
-            <tr>
-                <td><strong>8:30–9:30</strong></td>
-                <td>Math (focus time)</td>
-                <td>Math</td>
-                <td>Math</td>
-                <td>Math</td>
-                <td>Math Review / Games</td>
-            </tr>
-            <tr>
-                <td><strong>9:30–9:45</strong></td>
-                <td colspan="5" style="text-align:center;">Break</td>
-            </tr>
-            <tr>
-                <td><strong>9:45–10:45</strong></td>
-                <td>Language Arts (grammar, reading, writing)</td>
-                <td>Language Arts</td>
-                <td>Language Arts</td>
-                <td>Language Arts</td>
-                <td>Language Arts / Reading</td>
-            </tr>
-            <tr>
-                <td><strong>10:45–11:00</strong></td>
-                <td colspan="5" style="text-align:center;">Break</td>
-            </tr>
-            <tr>
-                <td><strong>11:00–12:00</strong></td>
-                <td>Science (hands-on experiment)</td>
-                <td>History / Geography</td>
-                <td>Latin / Spanish</td>
-                <td>Science (read & discuss)</td>
-                <td>History / Geography</td>
-            </tr>
-            <tr>
-                <td><strong>12:00–1:00</strong></td>
-                <td colspan="5" style="text-align:center;">Lunch & Outdoor Play</td>
-            </tr>
-            <tr>
-                <td><strong>1:00–1:30</strong></td>
-                <td>Arts (drawing, painting, crafts)</td>
-                <td>Music / Instrument Practice</td>
-                <td>Arts (music theory or art)</td>
-                <td>Music / Instrument Practice</td>
-                <td>Free Creative Time</td>
-            </tr>
-            <tr>
-                <td><strong>1:30–2:00</strong></td>
-                <td>Physical Education / Outdoor Activity</td>
-                <td>Physical Education</td>
-                <td>Physical Education</td>
-                <td>Physical Education</td>
-                <td>Family Activity / Field Trip</td>
-            </tr>
-            <tr>
-                <td><strong>2:00–2:30</strong></td>
-                <td>Reading (free choice) / Nap Quiet Time</td>
-                <td>Reading / Nap Quiet Time</td>
-                <td>Reading / Nap Quiet Time</td>
-                <td>Reading / Nap Quiet Time</td>
-                <td>Family Reading Time</td>
-            </tr>
-        </tbody>
+<section id="resources">
+    <h2>Resources & Next Steps</h2>
+    <h3>Math Curriculum</h3>
+    <ul>
+        <li><strong>Beast Academy</strong> — beastacademy.com (grades 2–5, gifted-focused)</li>
+        <li><strong>Art of Problem Solving</strong> — artofproblemsolving.com (grades 5+, competition math)</li>
+        <li><strong>Saxon Math</strong> — saxon.com (mastery-based, can be accelerated)</li>
+        <li><strong>Singapore Math</strong> — singaporemath.com (deep conceptual understanding)</li>
+    </ul>
+    <h3>Science Curriculum</h3>
+    <ul>
+        <li><strong>Teaching Textbooks</strong> — teachingtextbooks.com (online math and science)</li>
+        <li><strong>Apologia</strong> — apologia.com (Christian-based science)</li>
+        <li><strong>Elements of Science</strong> — elements of science curriculum</li>
+        <li><strong>Hands-on labs</strong> — Amazon, educational supply stores</li>
+    </ul>
+    <h3>Language Arts Curriculum</h3>
+    <ul>
+        <li><strong>All About Reading</strong> — allaboutreading.com (phonics-based)</li>
+        <li><strong>Pathways to Writing</strong> — pathways to writing curriculum</li>
+        <li><strong>Good and Beautiful</strong> — goodandbeautiful.com (classical curriculum)</li>
+        <li><strong>Classical Reading and Literature</strong> — classical reading and literature</li>
+    </ul>
+    <h3>History Curriculum</h3>
+    <ul>
+        <li><strong>Story of the World</strong> — storyoftheworld.com (narrative history)</li>
+        <li><strong>Ancient History</strong> — ancient history curriculum</li>
+        <li><strong>American History</strong> — american history curriculum</li>
+        <li><strong>World History</strong> — world history curriculum</li>
+    </ul>
+    <h3>Latin & Languages</h3>
+    <ul>
+        <li><strong>Teach Yourself Latin</strong> — teach yourself latin book</li>
+        <li><strong>Lingua Latina</strong> — per se illustrata (Hans Orberg)</li>
+        <li><strong>Spanish by yourself</strong> — spanish by yourself book</li>
+        <li><strong>Duolingo</strong> — duolingo.com (supplemental)</li>
+    </ul>
+    <h3>Adult Learning</h3>
+    <ul>
+        <li><strong>Adult Learning Guide</strong> — see adult-learning.html in this folder</li>
+        <li><strong>Classical Education</strong> — douglas wilson, well-trained mind</li>
+        <li><strong>Jeffersonian Education</strong> — jefferson's educational philosophy</li>
+    </ul>
+    
+    <h3>The Education of the American Founders</h3>
+    <p>The Founding Fathers were products of classical education. Understanding what they studied reveals why we teach what we teach.</p>
+    
+    <h4>What They Studied</h4>
+    <table style="width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem;">
+        <tr>
+            <th style="background: var(--navy); color: white; padding: 0.5rem; text-align: left; border-bottom: 2px solid var(--gold);">Age/Stage</th>
+            <th style="background: var(--navy); color: white; padding: 0.5rem; text-align: left; border-bottom: 2px solid var(--gold);">Curriculum</th>
+        </tr>
+        <tr>
+            <td style="padding: 0.5rem; border-bottom: 1px solid #eee; background: var(--cream-light);"><strong>Age 7–10</strong></td>
+            <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Reading (Bible, primers), writing, arithmetic, English grammar, spelling</td>
+        </tr>
+        <tr>
+            <td style="padding: 0.5rem; border-bottom: 1px solid #eee; background: var(--cream-light);"><strong>Age 11–14</strong></td>
+            <td style="padding: 0.5rem; border-bottom: 1px solid #eee;"><strong>Latin</strong> (Cicero, Virgil, Ovid), <strong>Greek</strong>, <strong>geometry</strong>, <strong>logic</strong>, <strong>ethics</strong>, <strong>history</strong>, <strong>oratory</strong></td>
+        </tr>
+        <tr>
+            <td style="padding: 0.5rem; border-bottom: 1px solid #eee; background: var(--cream-light);"><strong>Age 15–18</strong></td>
+            <td style="padding: 0.5rem; border-bottom: 1px solid #eee;">Harvard/Yale/Princeton: <strong>Classics</strong>, <strong>philosophy</strong> (Locke, Aristotle), <strong>mathematics</strong> (Euclid), <strong>theology</strong>, <strong>rhetoric</strong>, <strong>political science</strong></td>
+        </tr>
     </table>
-    </div>
-
-    <h3>Jeffersonian Additions (Integrated Throughout the Week)</h3>
+    
+    <h4>Why This Matters for Our Plan</h4>
     <ul>
-        <li><strong>Weekly:</strong> Geometry puzzle or navigation exercise (30 minutes)</li>
-        <li><strong>Monthly:</strong> "Practical Science" project — build something, measure something, conduct an experiment</li>
-        <li><strong>Seasonal:</strong> Nature journal update, moon phase tracking, weather log analysis</li>
-        <li><strong>Quarterly:</strong> Family debate or presentation on a topic of study</li>
+        <li><strong>Latin is essential</strong> — Every founder studied Latin for years. Jefferson, Adams, Washington, Hamilton all read Latin classics in the original.</li>
+        <li><strong>Logic and rhetoric matter</strong> — The founders were trained in formal logic and persuasive speech.</li>
+        <li><strong>Bible is foundational</strong> — The founders cited Scripture constantly. Education was inseparable from moral formation.</li>
+        <li><strong>Civics and government</strong> — Founders studied political philosophy (Locke, Montesquieu) to design government.</li>
     </ul>
-
-    <h3>Logic Stage Schedule Adjustments (Grades 7–9)</h3>
+    
+    <h4>Read What They Read</h4>
     <ul>
-        <li>Longer math blocks (60–90 minutes) for problem-solving and proofs</li>
-        <li>Science labs replace passive reading (2–3 hours per week)</li>
-        <li>Debate/discussion integrated into History and Language Arts</li>
-        <li>Independent study time added for research projects</li>
+        <li><strong>The Bible</strong> (KJV/ESV) — Primary text for all founders</li>
+        <li><strong>Cicero</strong> (On Duties) — Jefferson's favorite</li>
+        <li><strong>Plato & Aristotle</strong> (Republic, Nicomachean Ethics)</li>
+        <li><strong>John Locke</strong> (Two Treatises of Government)</li>
+        <li><strong>The Federalist Papers</strong> — Hamilton, Madison, Jay</li>
+        <li><strong>The Declaration of Independence</strong> — Jefferson's masterwork</li>
+        <li><strong>Milton</strong> (Paradise Lost)</li>
     </ul>
-
-    <h3>Rhetoric Stage Schedule Adjustments (Grades 10–12)</h3>
-    <ul>
-        <li>Block scheduling (90–120 minute sessions) for advanced subjects</li>
-        <li>College prep time (SAT/ACT prep, applications) in Grade 11–12</li>
-        <li>Independent research project time (Grades 11–12)</li>
-        <li>Internships, service learning, and community engagement (Grade 10+)</li>
-    </ul>
+    <h3>Next Steps</h3>
+    <ol>
+        <li><strong>Choose curricula</strong> — Select 1–2 options per subject based on your child's needs</li>
+        <li><strong>Order materials</strong> — Purchase books, supplies, online subscriptions</li>
+        <li><strong>Set up schedule</strong> — Create a daily/weekly schedule using the templates</li>
+        <li><strong>Start small</strong> — Begin with 2–3 subjects, add more as you gain confidence</li>
+        <li><strong>Join community</strong> — Find local homeschool groups or online forums</li>
+    </ol>
 </section>
 
 <footer>
-    <p>This plan was created using the <strong>Classical Education</strong> model with <strong>Jeffersonian principles</strong> integrated throughout.<br>
-    Based on the Trivium (Grammar, Logic, Rhetoric) stages and Thomas Jefferson's educational philosophy.<br>
-    Created for Micah Falde's homeschooling journey.</p>
-    <p style="margin-top: 1rem; font-size: 0.75rem; color: #aaa;">Generated: July 2, 2026</p>
+    <p>This plan was created using the <strong>Classical Education</strong> model with <strong>Jeffersonian principles</strong> integrated throughout.</p>
+    <p style="margin-top: 1rem; font-size: 0.75rem; color: #888;">Generated: July 2, 2026</p>
 </footer>
 </main>
 </body>
