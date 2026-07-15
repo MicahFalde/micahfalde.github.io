@@ -4,21 +4,168 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Micah Falde</title>
-  <meta http-equiv="refresh" content="0; url=/resume/" />
-  <link rel="canonical" href="https://micahfalde.com/resume/" />
-  <style>
-    html,body{height:100%;margin:0}
-    body{display:grid;place-items:center;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-      background:#0c0f12;color:#eef1f3}
-    a{color:#2dd4bf}
-    .b{text-align:center}
-    .dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:#2dd4bf;margin-right:.5rem;vertical-align:middle}
-  </style>
-  <script>location.replace('/resume/');</script>
+  <meta name="description" content="Micah Falde: engineer and defender. An index of everything published at micahfalde.com, starting with the résumé." />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#0b0907" />
+  <link rel="canonical" href="https://micahfalde.com/" />
+  <meta property="og:title" content="Micah Falde" />
+  <meta property="og:description" content="An engineer who defends. Everything I've built and published, indexed." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://micahfalde.com/" />
+  <!-- Same mark as /resume/ — one site, one identity. -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230b0907'/><path d='M22 30 L44 50 L22 70' fill='none' stroke='%23dfa04a' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/><path d='M52 70 L78 70' stroke='%23dfa04a' stroke-width='9' stroke-linecap='round'/></svg>" />
+  <!-- Bump ?v= on every deploy touching CSS. GitHub Pages sends max-age=14400
+       with no filename fingerprinting; without this a returning visitor pairs
+       fresh HTML with a stale stylesheet and the page renders broken. -->
+  <link rel="stylesheet" href="/styles.css?v=20260715a" />
 </head>
 <body>
-  <div class="b">
-    <p><span class="dot"></span>Redirecting to <a href="/resume/">micahfalde.com/resume</a>&hellip;</p>
-  </div>
+  <div class="atmos" aria-hidden="true"></div>
+  <a class="skip-link" href="#contents">Skip to contents</a>
+
+  <header class="top">
+    <div class="wrap">
+      <a href="/" class="brand" aria-label="Micah Falde, home">
+        <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 6 L11 12 L4 18" /><path d="M14 18 L20 18" />
+        </svg>
+        MICAH FALDE
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ MASTHEAD ============
+         Deliberately NOT the default hero stack: no eyebrow, no button pair.
+         The contents ledger below IS the page's action. -->
+    <section class="mast">
+      <div class="wrap">
+        <h1 class="mast-name">Micah Falde</h1>
+        <p class="mast-line">An engineer who <em>defends</em>.</p>
+        <p class="mast-sub">Everything I've built and published is indexed below. The résumé is the place to start.</p>
+      </div>
+    </section>
+
+    <!-- ============ CONTENTS ============
+         The signature: a real printed table of contents. Leader dots run from
+         each title to its path — the modern stand-in for a page number.
+         Numbering is continuous across groups, as in a book. -->
+    <section id="contents" class="contents">
+      <div class="wrap">
+        <h2 class="sr">Contents</h2>
+
+        <h3 class="c-group">Start here</h3>
+        <ul class="c-list">
+          <li>
+            <a class="entry entry-lead" href="/resume/">
+              <span class="e-num">01</span>
+              <span class="e-main">
+                <span class="e-row">
+                  <span class="e-name">Résumé</span>
+                  <span class="e-leader" aria-hidden="true"></span>
+                  <span class="e-path">/resume/</span>
+                </span>
+                <span class="e-desc">Eight years, 15+ products shipped, architecture through deployment.</span>
+              </span>
+            </a>
+          </li>
+        </ul>
+
+        <h3 class="c-group">Also published</h3>
+        <ul class="c-list">
+          <li>
+            <a class="entry" href="/LHBC/">
+              <span class="e-num">02</span>
+              <span class="e-main">
+                <span class="e-row">
+                  <span class="e-name">Software Previews</span>
+                  <span class="e-leader" aria-hidden="true"></span>
+                  <span class="e-path">/LHBC/</span>
+                </span>
+                <span class="e-desc">Six tools built for a church: check-in, attendance, dashboard, reporting.</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a class="entry" href="/homeschooling-plan/">
+              <span class="e-num">03</span>
+              <span class="e-main">
+                <span class="e-row">
+                  <span class="e-name">Family Homeschooling Plan</span>
+                  <span class="e-leader" aria-hidden="true"></span>
+                  <span class="e-path">/homeschooling-plan/</span>
+                </span>
+                <span class="e-desc">Classical education, early childhood through high school.</span>
+              </span>
+            </a>
+          </li>
+        </ul>
+
+        <h3 class="c-group">Password required</h3>
+        <ul class="c-list">
+          <li>
+            <a class="entry" href="/jadonsmath/">
+              <span class="e-num">04</span>
+              <span class="e-main">
+                <span class="e-row">
+                  <span class="e-name">Jadon's Math</span>
+                  <span class="e-leader" aria-hidden="true"></span>
+                  <span class="e-path">/jadonsmath/</span>
+                </span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a class="entry" href="/landline/">
+              <span class="e-num">05</span>
+              <span class="e-main">
+                <span class="e-row">
+                  <span class="e-name">LandLine</span>
+                  <span class="e-leader" aria-hidden="true"></span>
+                  <span class="e-path">/landline/</span>
+                </span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a class="entry" href="/projects/EOGLeaseMap/">
+              <span class="e-num">06</span>
+              <span class="e-main">
+                <span class="e-row">
+                  <span class="e-name">EOG Lease Map</span>
+                  <span class="e-leader" aria-hidden="true"></span>
+                  <span class="e-path">/projects/EOGLeaseMap/</span>
+                </span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a class="entry" href="/provenance">
+              <span class="e-num">07</span>
+              <span class="e-main">
+                <span class="e-row">
+                  <span class="e-name">Provenance</span>
+                  <span class="e-leader" aria-hidden="true"></span>
+                  <span class="e-path">/provenance</span>
+                </span>
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <ul class="foot-links">
+        <li><a href="mailto:micahfalde@protonmail.com">micahfalde@protonmail.com</a></li>
+        <li><a href="https://github.com/micahfalde">github.com/micahfalde</a></li>
+      </ul>
+    </div>
+    <!-- Bottom-anchored, bleeding past the edge on purpose; padding-top on
+         .sig-word clears the cut so the caps are never shaved. -->
+    <div class="sig" aria-hidden="true"><span class="sig-word">FALDE</span></div>
+  </footer>
 </body>
 </html>

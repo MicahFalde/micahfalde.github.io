@@ -1,0 +1,386 @@
+/* ==========================================================================
+   micahfalde.com — the index.
+   Same world as /resume/: Gambarino display, warm near-black, amber phosphor,
+   one chamfer. Tokens are copied verbatim from ~/projects/resume/styles.css.
+   If you change a token there, change it here — the two pages must not drift.
+
+   AIDEV-NOTE: The signature is the table-of-contents conceit: real leader dots
+   running from each title to its path. That IS the design. Don't bolt cards,
+   tiles or icons onto it.
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Gambarino';
+  src: url('fonts/Gambarino-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap; /* never hide text waiting on the font */
+}
+
+:root {
+  /* Warm near-black. Deliberately NOT the #0c0e15 slate-indigo default. */
+  --ink:        #0b0907;
+  --ink-2:      #1a1712;
+
+  /* AIDEV-NOTE: Ratios are measured, not guessed. --bone-faint carries small
+     text (.e-path, .e-desc, .c-group) so it must clear 4.5:1 on --ink. The
+     quieter #7d7365 measured 4.27 and failed AA. Don't darken it back down. */
+  --bone:       #f2ece2;  /* 16.8:1 on ink */
+  --bone-dim:   #b5aa99;  /*  8.1:1 on ink */
+  --bone-faint: #948a7a;  /*  5.9:1 on ink */
+
+  /* Amber phosphor. Tonal and sparing: one accent, nothing sprayed. */
+  --amber:      #dfa04a;
+
+  /* The leader dots. Structural, not ornament — they carry the eye from a
+     title to its path exactly as in a printed contents page. */
+  --dot:        rgba(242, 236, 226, .22);
+  --dot-lit:    rgba(223, 160, 74, .55);
+
+  --edge:       rgba(242, 236, 226, .09);
+
+  --font-display: 'Gambarino', Georgia, 'Times New Roman', serif;
+  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --maxw: 1140px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+
+  --step--1: clamp(.78rem, .76rem + .1vw, .84rem);
+  --step-0:  clamp(.97rem, .94rem + .15vw, 1.05rem);
+  --step-1:  clamp(1.15rem, 1.06rem + .4vw, 1.4rem);
+  --step-2:  clamp(1.6rem, 1.3rem + 1.2vw, 2.4rem);
+  --step-3:  clamp(2.2rem, 1.6rem + 2.6vw, 3.8rem);
+  --step-4:  clamp(3.1rem, 1.7rem + 6vw, 7.5rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  background: var(--ink);
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  /* Footer sits at the bottom even on a short viewport, so the FALDE watermark
+     is never left floating with dead space under it. */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main { flex: 1 0 auto; }
+
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 100;
+  background: var(--amber); color: var(--ink);
+  padding: .7rem 1.1rem; font-weight: 700;
+}
+.skip-link:focus { left: 1rem; top: 1rem; }
+
+/* Screen-reader-only, still focusable */
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* ==========================================================================
+   Atmosphere — a warm rake of light from upper-left with grain over it but
+   BEHIND all content. Directional, not a centered radial halo. Verbatim
+   from /resume/ so the two pages share one surface.
+   ========================================================================== */
+.atmos {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 8% -10%, rgba(223, 160, 74, .13) 0%,
+                                          rgba(223, 160, 74, .05) 28%,
+                                          rgba(223, 160, 74, .015) 48%,
+                                          transparent 70%),
+    linear-gradient(180deg, #100d0a 0%, var(--ink) 55%);
+}
+.atmos::after {
+  content: '';
+  position: absolute; inset: 0;
+  opacity: .5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.42'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+}
+
+/* ==========================================================================
+   Top — brand only. This page IS the navigation; a nav bar pointing elsewhere
+   would be redundant. No CTA here, so the resume's nav-specificity trap
+   (.nav-links a beating .btn-primary on colour) can't recur.
+   ========================================================================== */
+.top { padding-top: 1.6rem; }
+
+.brand {
+  display: inline-flex; align-items: center; gap: .6rem;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: .04em;
+  text-decoration: none;
+  color: var(--bone);
+  white-space: nowrap;
+}
+.mark { width: 14px; height: 14px; flex: none; color: var(--amber); }
+
+/* ==========================================================================
+   Masthead
+   ========================================================================== */
+.mast { padding: clamp(3rem, 9vw, 6.5rem) 0 clamp(2.5rem, 6vw, 4rem); }
+
+.mast-name {
+  font-family: var(--font-display);
+  font-size: var(--step-4);
+  line-height: .92;
+  letter-spacing: -.005em;
+  margin: 0;
+  color: var(--bone);
+}
+
+/* AIDEV-NOTE: Deliberately quieter than /resume/'s .hero-line (step-3). Both
+   pages open with the name + this same tagline, so at equal scale they read as
+   the same page and clicking through to the résumé feels like nothing happened.
+   The résumé owns the pitch; this page is a directory and defers to it. Keep
+   this subordinate — don't scale it back up. */
+.mast-line {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.2;
+  margin: .8rem 0 .5rem;
+  color: var(--bone);
+}
+/* Gambarino ships Regular only — a synthesised oblique would look broken, so
+   emphasis is carried by colour instead of a faux italic. Same rule as /resume/. */
+.mast-line em { font-style: normal; color: var(--amber); }
+
+.mast-sub {
+  max-width: 48ch;
+  margin: 0;
+  color: var(--bone-dim);
+  font-size: var(--step-0);
+  line-height: 1.55;
+}
+
+/* ==========================================================================
+   Contents — the ledger.
+   ========================================================================== */
+.contents { padding-bottom: clamp(3rem, 8vw, 5.5rem); }
+
+.c-group {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 400;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--bone-faint);
+  margin: 2.6rem 0 .4rem;
+  padding-bottom: .7rem;
+  border-bottom: 1px solid var(--edge);
+}
+.c-group:first-of-type { margin-top: 0; }
+
+.c-list { list-style: none; margin: 0; padding: 0; }
+
+/* AIDEV-NOTE: align-items: baseline is load-bearing, not cosmetic. It sits the
+   folio number on the title's own baseline the way a printed contents page sets
+   it. .e-main's first baseline resolves through .e-row to .e-name, so this holds
+   at every title size — including the much larger lead entry — with no
+   per-size padding nudges. Don't swap it back to `start`. */
+.entry {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.1rem;
+  align-items: baseline;
+  text-decoration: none;
+  color: inherit;
+  padding: 1.05rem 0;
+  /* AIDEV-NOTE: No rule between entries, deliberately. A printed contents page
+     rules its part headings, never its rows — the leader dots are what carry the
+     eye across, so a row border is redundant linework that turns the ledger into
+     a spreadsheet. Only .c-group is ruled. */
+}
+
+.e-num {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--bone-faint);
+  transition: color .18s ease;
+}
+
+.e-main { min-width: 0; }
+
+/* The leader row: title …………… path. Baseline-aligned so the dots sit on the
+   title's baseline the way a printed contents page sets them. */
+.e-row {
+  display: flex;
+  align-items: baseline;
+  gap: .75rem;
+}
+
+.e-name {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.2;
+  color: var(--bone);
+  transition: color .18s ease;
+}
+
+/* Leader dots. An empty inline-block baseline-aligns by its bottom margin
+   edge, so the dot band sits just above the baseline — correct for a leader.
+   Round dots, structural, never a hard hairline rule. */
+.e-leader {
+  flex: 1 1 auto;
+  min-width: 1.5rem;
+  height: .4em;
+  background-image: radial-gradient(circle at center, var(--dot) 1px, transparent 1.4px);
+  background-size: 7px 100%;
+  background-repeat: repeat-x;
+  background-position: left center;
+  transition: background-image .18s ease;
+}
+
+.e-path {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--bone-faint);
+  white-space: nowrap;
+  transition: color .18s ease;
+}
+
+.e-desc {
+  display: block;
+  margin-top: .3rem;
+  max-width: 58ch;
+  color: var(--bone-dim);
+  font-size: var(--step-0);
+  line-height: 1.5;
+}
+
+/* The lead entry — the résumé. Hierarchy by type scale and one amber accent,
+   not by wrapping it in a card. */
+.entry-lead { padding: 1.5rem 0 1.7rem; }
+.entry-lead .e-name {
+  font-size: var(--step-3);
+  line-height: 1.05;
+  color: var(--amber);
+}
+.entry-lead .e-num { color: var(--amber); }
+.entry-lead .e-desc { font-size: var(--step-1); margin-top: .5rem; }
+
+/* The leader marches toward the path on hover — the eye travelling to the
+   destination, which is the one thing a leader dot is for. The translation is
+   exactly one dot period (7px, matching background-size), so the loop is
+   seamless: no visible restart, no partial fill, no caps to round off. */
+@keyframes leader-march { to { background-position-x: 7px; } }
+
+/* Hover/focus: a clean tonal shift. No lift, no boop, no growing underline. */
+.entry:hover .e-name,
+.entry:focus-visible .e-name { color: var(--amber); }
+.entry:hover .e-path,
+.entry:focus-visible .e-path { color: var(--bone-dim); }
+.entry:hover .e-num,
+.entry:focus-visible .e-num { color: var(--bone-dim); }
+.entry:hover .e-leader,
+.entry:focus-visible .e-leader {
+  background-image: radial-gradient(circle at center, var(--dot-lit) 1px, transparent 1.4px);
+  animation: leader-march 1.1s linear infinite;
+}
+.entry-lead:hover .e-name { color: var(--bone); }
+
+.entry:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 4px;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.foot { flex: none; padding-top: 2rem; }
+
+.foot-links {
+  list-style: none;
+  margin: 0 0 2.5rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem 2rem;
+}
+.foot-links a {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--bone-dim);
+  text-decoration: none;
+  transition: color .18s ease;
+}
+.foot-links a:hover,
+.foot-links a:focus-visible { color: var(--amber); }
+
+/* The signature wordmark. Anchored flush to the bottom edge with no gap, the
+   descender bleeding past it on purpose, on top of the atmosphere. */
+.sig { overflow: hidden; line-height: 0; }
+.sig-word {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 19vw, 17rem);
+  line-height: .78;
+  letter-spacing: .02em;
+  text-align: center;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(242, 236, 226, .13);
+  margin: 0;
+  padding-top: .1em;            /* clear the cut — caps are never shaved */
+  transform: translateY(.14em); /* bleed past the edge, on purpose */
+  user-select: none;
+}
+
+/* ==========================================================================
+   Narrow — the path drops under the title so a long one
+   (/projects/EOGLeaseMap/) can't squeeze the leader to nothing.
+   ========================================================================== */
+@media (max-width: 34rem) {
+  .entry { gap: .8rem; }
+  .e-row { flex-wrap: wrap; gap: .35rem; }
+  .e-leader { display: none; }
+  .e-path { flex-basis: 100%; }
+  .entry-lead .e-name { font-size: var(--step-2); }
+}
+
+/* Kill the march outright rather than crushing its duration — an infinite
+   animation at ~0s duration flickers instead of stopping. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: .01ms !important;
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   Print — the index as a real contents page on paper.
+   ========================================================================== */
+@media print {
+  .atmos, .sig, .skip-link { display: none !important; }
+  body { background: #fff; color: #000; }
+  .mast-name, .mast-line, .e-name { color: #000 !important; }
+  .mast-line em { color: #000 !important; }
+  .e-path, .e-num, .e-desc, .c-group, .mast-sub { color: #333 !important; }
+  .entry, .c-group { border-bottom: 1px solid #ccc; }
+  .e-leader { background-image: radial-gradient(circle at center, #999 1px, transparent 1.4px); }
+  .brand { color: #000; }
+}
