@@ -264,6 +264,16 @@ main { flex: 1 0 auto; }
   transition: color .18s ease;
 }
 
+/* The same diagonal arrow the résumé's action button uses — one arrow in the
+   system, not a second one invented here. Marks a destination off the domain;
+   internal entries are rooted paths (/resume/) and get none. */
+.e-ext {
+  width: .72em; height: .72em;
+  margin-left: .3em;
+  vertical-align: -.02em;
+  flex: none;
+}
+
 .e-desc {
   display: block;
   margin-top: .3rem;
