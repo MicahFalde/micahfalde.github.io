@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="robots" content="noindex, nofollow" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LHBC · Software Analysis</title>
@@ -133,6 +132,7 @@
     <button class="tab" data-tab="ccli">CCLI &amp; Licensing</button>
     <button class="tab" data-tab="est">💰 Cost Estimator</button>
     <button class="tab" data-tab="stacks">Stack Options</button>
+    <button class="tab" data-tab="email">Email &amp; Domain</button>
   </div>
 
   <!-- REQUIREMENTS -->
@@ -172,6 +172,20 @@
         <tr><td><b>ChurchInfo</b></td><td class="n">Unlicensed</td><td>PHP (dead 2023)</td><td class="n">Min.</td><td class="n">No</td><td>Abandoned — skip</td></tr>
       </table></div>
       <p class="csub" style="margin-top:14px;margin-bottom:0"><b>How to choose:</b> if you want to move fast with minimal ops, building on <b>Planning Center's free API</b> lets you customize at the integration layer (your own dashboards, kiosks, attendance tools) without owning a server or security patching. If you want full data ownership and have a developer, a self-hosted base (<b>ChurchCRM</b> — MIT, or Rock) is the path — accept owning the server and patching. ChurchCRM is also worth standing up as a parallel data-sovereignty experiment. Full detail in <code>docs/chms-comparison.md</code>.</p>
+    </div>
+    <div class="card">
+      <h2>Church Center <span style="font-size:.8rem;font-weight:400;color:var(--ink-soft)">— Planning Center's member app (the one FBCNP uses)</span></h2>
+      <p class="csub">The congregation-facing app for Planning Center — <b>it is not a standalone product</b>. A church "using Church Center" is running Planning Center behind it, so adopting it <b>is</b> choosing PCO as the data backbone. It's what satisfies <b>R14</b> (member self-service) and would be the "app" lane in our multi-modal attendance design.</p>
+      <div class="tablewrap"><table style="min-width:520px">
+        <tr><th>What members get</th><th>Powered by (module)</th><th>Cost</th></tr>
+        <tr><td><b>Giving</b> — card / ACH / Apple Pay, recurring, statements</td><td>Giving</td><td class="y">Free module (~2–3% processing fees)</td></tr>
+        <tr><td><b>Kids check-in</b> — pre-check from the car</td><td>Check-Ins</td><td>~$15/mo @100</td></tr>
+        <tr><td><b>Groups</b> — find/join, group chat, leader attendance</td><td>Groups</td><td>~$14/mo @100</td></tr>
+        <tr><td><b>Event registration</b> + payment</td><td>Registrations</td><td>Per-module</td></tr>
+        <tr><td><b>Volunteer schedules</b> — accept/decline serving</td><td>Services</td><td>~$14/mo @100</td></tr>
+        <tr><td><b>Directory, profile self-service, prayer requests</b></td><td>People</td><td class="y">Free</td></tr>
+      </table></div>
+      <p class="csub" style="margin-top:14px;margin-bottom:0"><b>The app itself is free</b> — no setup or per-app fee; you only pay for the PCO modules behind each feature (see the Cost Estimator). There's also a <b>web version</b> (<code>ourchurch.churchcenter.com</code>) so people who won't install an app get the same features in a browser. <b>Trade-offs:</b> it's a <i>container app</i> (members open "Church Center" and pick our church — no custom-branded app store listing), layouts aren't customizable, and every feature assumes the member installs it and has email — which is why the attendance design keeps the app as <i>one lane, never the only lane</i>. No Bible/devotional content — it's logistics, not discipleship. <b>Fits you if:</b> the backbone is Planning Center and you want giving, check-in, groups, and sign-ups in members' pockets at no extra software cost.</p>
     </div>
   </section>
 
@@ -279,7 +293,44 @@
     </div>
   </section>
 
-  <div class="draftbar"><span class="tag">Draft</span><span>Pricing is current-approximate (2026-06) — verify at vendor checkout before budgeting. Mirrors <code>docs/software-requirements.md</code> &amp; <code>docs/chms-comparison.md</code>.</span></div>
+  <!-- EMAIL & DOMAIN -->
+  <section id="email" class="hidden">
+    <p class="lead">Professional church email (<b>pastor@ / office@ our-own-domain</b>) needs two things: a
+      <b>domain name</b> and an <b>email platform</b>. Both major platforms are <b>free for verified
+      501(c)(3) nonprofits</b> — so cost isn't the differentiator; pick by which tools the office will
+      live in. The real timeline driver is <b>nonprofit verification</b> — and email doesn't have to
+      wait for it.</p>
+
+    <div class="card">
+      <h2>The two platforms</h2>
+      <p class="csub">Note: in July 2025 Microsoft ended its free Business Premium grant — but <b>Business Basic stayed free</b> (up to 300 users). The old "Google is free, Microsoft costs money" framing is out of date.</p>
+      <div class="tablewrap"><table>
+        <tr><th>Platform</th><th>Free nonprofit tier</th><th>Included</th><th>Desktop Office apps</th><th>Bridge plan (before approval)</th><th>Converting once verified</th></tr>
+        <tr><td><b>Google Workspace for Nonprofits</b></td><td class="y">Free (verified 501c3)</td><td>Gmail @domain, Drive, Docs/Sheets/Slides, Meet, Calendar</td><td class="n">n/a (web-first)</td><td>Business Starter ~$8/user/mo — <b>pick the Flexible monthly plan</b>, not Annual</td><td>Support form (must be on Starter), ~5 days; same account, nothing moves</td></tr>
+        <tr><td><b>Microsoft 365 Business Basic grant</b></td><td class="y">Free, up to 300 users</td><td>Exchange @domain, OneDrive, Teams, <b>web/mobile</b> Word · Excel · PowerPoint</td><td class="m">Not included — Business Standard ~75% off if truly needed</td><td>Business Basic ~$7/user/mo — <b>pick monthly term</b>, not annual (annual locks you in)</td><td>Self-service license swap in admin center; <b>verify the same tenant</b> you're using</td></tr>
+      </table></div>
+      <p class="csub" style="margin-top:14px;margin-bottom:0"><b>Fits you if:</b> <b>Google</b> — you want the simplest admin surface and everyone already knows Gmail; Docs/Sheets cover office needs. <b>Microsoft</b> — the office genuinely lives in Word/Excel/Teams and wants OneDrive. Either works with any ChMS on this page.</p>
+    </div>
+
+    <div class="card">
+      <h2>Order of operations</h2>
+      <p class="csub">The paperwork is the long pole — everything else is days, not months. Start email on a paid "bridge" and convert to free later; it's a billing change, not a migration.</p>
+      <div class="reqrow"><span class="reqid">1</span><span class="pri must">Now</span><div class="rb"><b>Buy the domain (~$12/yr)</b><p>Used for both website and email. Registrar account owned by the <b>church</b> (board-accessible credentials), never a volunteer's personal account.</p></div></div>
+      <div class="reqrow"><span class="reqid">2</span><span class="pri must">Now</span><div class="rb"><b>Put the website live on the domain</b><p>Already built — About / Beliefs / Service Times / Contact satisfies Google's "live 5-page site with HTTPS" review bar. No "under construction" text.</p></div></div>
+      <div class="reqrow"><span class="reqid">3</span><span class="pri must">Now</span><div class="rb"><b>Start bridge email — 2–3 seats (~$15–25/mo)</b><p>pastor@ and office@ working immediately on the paid plan. Email does not wait on the 501(c)(3) paperwork.</p></div></div>
+      <div class="reqrow"><span class="reqid">4</span><span class="pri should">Slow</span><div class="rb"><b>501(c)(3) documentation — the long pole</b><p>Churches are auto-exempt but usually <b>not in the IRS database</b> that verifiers (Goodstack for Google; Microsoft's own check) query. As an independent church there's no denominational group exemption to lean on → own EIN + voluntary Form 1023/1023-EZ for a determination letter. Months, not the "2–14 days" often quoted — and it helps well beyond email (donor confidence, vendor discounts).</p></div></div>
+      <div class="reqrow"><span class="reqid">5</span><span class="pri nice">Later</span><div class="rb"><b>Convert to the free nonprofit tier</b><p>Same mailboxes, same files, same domain — you just stop paying. Google: conversion form from the Starter plan. Microsoft: swap licenses in the admin center, cancel the paid subscription.</p></div></div>
+    </div>
+
+    <div class="card">
+      <h2>Digital-identity ground rules <span style="font-size:.8rem;font-weight:400;color:var(--ink-soft)">— whichever platform is picked</span></h2>
+      <div class="reqrow"><span class="reqid">A</span><span class="pri must">Must</span><div class="rb"><b>Role-based addresses, not personal names</b><p>pastor@, office@, hello@ — when people transition, the successor takes over the inbox and all history/contacts stay intact.</p></div></div>
+      <div class="reqrow"><span class="reqid">B</span><span class="pri should">Should</span><div class="rb"><b>Aliases for routing, not extra inboxes</b><p>prayer@, giving@ route into office@ — no extra seats, no extra logins, everything centralized.</p></div></div>
+      <div class="reqrow"><span class="reqid">C</span><span class="pri must">Must</span><div class="rb"><b>Church-owned ownership</b><p>The Super Admin account <i>and</i> the domain registrar belong to the church, recovery contacts with the elders/board — never tied to one volunteer's personal email.</p></div></div>
+    </div>
+  </section>
+
+  <div class="draftbar"><span class="tag">Draft</span><span>Pricing is current-approximate (2026-06; email pricing 2026-07) — verify at vendor checkout before budgeting. Mirrors <code>docs/software-requirements.md</code>, <code>docs/chms-comparison.md</code> &amp; <code>docs/email-domain.md</code>.</span></div>
 </div>
 
 <script>
@@ -386,7 +437,7 @@ document.querySelectorAll('#sizeSeg button').forEach(b=>b.onclick=()=>{
 // ===== tabs =====
 document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');
-  ['req','chms','worship','ccli','est','stacks'].forEach(id=>document.getElementById(id).classList.add('hidden'));
+  ['req','chms','worship','ccli','est','stacks','email'].forEach(id=>document.getElementById(id).classList.add('hidden'));
   document.getElementById(t.dataset.tab).classList.remove('hidden');
 });
 renderInputs();
