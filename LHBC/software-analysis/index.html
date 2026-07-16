@@ -478,7 +478,7 @@ const LAUNCH=[
  {ph:'2 · Digital identity',note:'Cheap, fast, and mostly independent of the paperwork — the email plan (Email & Domain tab) lives here.',items:[
   {t:'Buy the domain',d:'Registrar account church-owned, board-accessible. Used for website + email.',cost:'~$12/yr',lead:'Minutes',st:'next'},
   {t:'Website live on the domain',d:'Site is built (mockup done) — deploy un-gated to the real domain. Satisfies Google’s 5-page live-site bar for nonprofit verification.',cost:'$0 (Pages)',lead:'Days',st:'blocked',dep:'Domain'},
-  {t:'Bridge email — pastor@ / office@',d:'2–3 paid seats, monthly term (see Email & Domain tab). Convert to the free nonprofit tier when the determination letter exists.',cost:'~$15–25/mo bridge → $0',lead:'Days',st:'blocked',dep:'Domain'},
+  {t:'Bridge email — pastor@ / office@',d:'2–3 paid seats, monthly term (see Email & Domain tab). Set SPF/DKIM/DMARC at the registrar so church mail actually lands in inboxes. Convert to the free nonprofit tier when the determination letter exists.',cost:'~$15–25/mo bridge → $0',lead:'Days',st:'blocked',dep:'Domain'},
   {t:'Church-owned password manager',d:'Bitwarden (or similar) holding registrar, email admin, ChMS admin, bank, socials — elder-accessible recovery. Kills the bus-factor.',cost:'$0–4/mo',lead:'Days',st:'next'},
   {t:'Church phone number',d:'Google Voice (free) so the public number isn’t a personal cell.',cost:'Free',lead:'Minutes',st:'later'},
   {t:'Google Business Profile',d:'The highest-ROI item on this list — "church near me" hits Maps before any website. Needs the physical address.',cost:'Free',lead:'1–2 wks verify',st:'blocked',dep:'Venue address'},
@@ -491,6 +491,10 @@ const LAUNCH=[
   {t:'Child protection policy + background checks',d:'Written policy (insurers require it) + checks for every children’s worker — Checkr integrates into PCO People.',cost:'~$10–25/check',lead:'1–2 wks',st:'later',dep:'ChMS decision'},
   {t:'Check-in hardware',d:'iPad(s) + Brother label printer + stand for Little Lambs check-in (mockup done).',cost:'~$500–800 one-time',lead:'Days',st:'later',dep:'ChMS decision'},
   {t:'Mass communication plan',d:'Snow-day problem: PCO People email lists cover most of it; add texting (e.g. Text In Church) only if needed.',cost:'$0–20/mo',lead:'Days',st:'later',dep:'ChMS decision'},
+  {t:'Initial people database entry',d:'Populate the ChMS with the ~100 people/households — the database is only as good as day-one data. Assign one owner for accuracy; import from a spreadsheet if one exists.',cost:'Volunteer time',lead:'1–2 wks',st:'later',dep:'ChMS decision'},
+  {t:'Online giving live',d:'Configure the giving module, connect the church bank account, decide who covers processing fees (most platforms offer donor-covers), and test end-to-end with a real gift before announcing.',cost:'~2–3% fees',lead:'~1 wk',st:'blocked',dep:'Bank account + ChMS'},
+  {t:'Children’s check-in: build vs buy',d:'Standing decision from the mockup work — hinges on the vendor module cost (PCO Check-Ins ~$15/mo likely beats building). Configure + train volunteers either way.',cost:'—',lead:'—',st:'later',dep:'ChMS decision'},
+  {t:'Church Center rollout & adoption',d:'Enabling the member app is the easy part — adoption is the work: announce it, QR cards in the pews, help table after service. Feeds giving, check-in, groups, and the attendance "app lane."',cost:'$0',lead:'Ongoing',st:'later',dep:'ChMS decision'},
  ]},
  {ph:'4 · Venue & physical tech',note:'Everything Sunday-morning-one physically runs on (sound excluded by design).',items:[
   {t:'Venue internet',d:'Check-in, giving, PCO sync, and streaming all assume connectivity. Speed-test any venue before signing (streaming needs ~10 Mbps up); fallback = cellular router.',cost:'~$300 + $30–50/mo if cellular',lead:'1–2 wks',st:'later',dep:'Venue'},
@@ -498,7 +502,14 @@ const LAUNCH=[
   {t:'Livestream / recording stack',d:'Camera (PTZ or iPhone to start) + OBS (free) + YouTube. Requires the CCLI Streaming License once worship is in the stream.',cost:'~$0–1.5k one-time',lead:'2–4 wks',st:'later',dep:'Venue internet'},
   {t:'Sermon audio → podcast',d:'Cheaper on-ramp than video: record audio, publish via Spotify for Creators (free). How shut-ins and visitors sample a church.',cost:'Free',lead:'Days',st:'later'},
  ]},
- {ph:'5 · Ongoing disciplines',note:'Not launch blockers — habits to start early so they exist before they’re needed.',items:[
+ {ph:'5 · Custom tools — mockup → production',note:'The five mockups are built and live (staging hub). Turning them real is its own track, gated on the ChMS decision and its API.',items:[
+  {t:'API access & dev setup',d:'Church-owned developer account + Personal Access Token (not tied to a personal login), webhook endpoint, rate-limit review. The foundation every custom tool reads/writes through.',cost:'Free (PCO API)',lead:'Days',st:'later',dep:'ChMS decision'},
+  {t:'Attendance capture v1',d:'The genuinely novel build: multi-modal named attendance (free-write line as the universal lane + opt-in tap/QR + app) writing to one DB. Mockup done — production needs the write path into the ChMS.',cost:'Dev time',lead:'Wks',st:'later',dep:'API access'},
+  {t:'Pastor dashboard v1',d:'Mockup done with synthetic data — production swaps in live API reads. Ship after attendance capture so it has real data to show.',cost:'Dev time',lead:'Wks',st:'later',dep:'API access'},
+  {t:'Annual report v1',d:'Mockup done. Deadline is the first year-end, not launch day — generate from twelve months of real data.',cost:'Dev time',lead:'—',st:'later',dep:'Dashboard v1'},
+  {t:'Real hosting + auth before real data',d:'Hard rule: the current client-side password gate protects nothing — fine for synthetic mockups on GitHub Pages, never for real member data. Any tool showing real people moves to hosting with real auth (e.g. Cloudflare Access) first.',cost:'$0–5/mo',lead:'Days',st:'later',dep:'Custom tools going live'},
+ ]},
+ {ph:'6 · Ongoing disciplines',note:'Not launch blockers — habits to start early so they exist before they’re needed.',items:[
   {t:'Data export / backup routine',d:'Periodic ChMS + giving export to church-owned storage (R12 "own our data", operationalized).',cost:'Free',lead:'—',st:'later',dep:'ChMS decision'},
   {t:'CVLI video license',d:'Only if movie/video clips are ever shown — CCLI doesn’t cover video.',cost:'~$100–200/yr',lead:'Days',st:'later'},
   {t:'Credential & role handoff doc',d:'One page: who holds what admin role, where recovery lives. Reviewed annually by the elders.',cost:'Free',lead:'—',st:'later',dep:'Password manager'},
