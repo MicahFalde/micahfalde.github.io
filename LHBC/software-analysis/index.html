@@ -106,6 +106,20 @@
   .stack h3{font-size:1.12rem} .stack .li{font-size:.85rem;color:var(--ink-soft);padding:7px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:8px}
   .stack .tot{font-family:var(--head);font-size:1.5rem;font-weight:900;margin-top:12px} .stack .tot span{font-size:.8rem;color:var(--ink-soft);font-weight:400}
 
+  /* launch checklist */
+  .phase{margin-bottom:16px}
+  .phead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:2px}
+  .phead h2{font-size:1.25rem}
+  .phead .pmeta{font-size:.78rem;color:var(--ink-soft)}
+  .pbar{height:5px;background:#e4e9f1;border-radius:99px;overflow:hidden;margin:8px 0 4px}
+  .pbar i{display:block;height:100%;background:var(--hi);border-radius:99px}
+  .st{font-size:.64rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:4px 9px;border-radius:999px;flex-shrink:0;min-width:74px;text-align:center}
+  .st.done{background:var(--hi-bg);color:var(--hi)} .st.active{background:var(--mid-bg);color:var(--mid)}
+  .st.next{background:#e8eefb;color:var(--navy)} .st.blocked{background:var(--red-soft);color:var(--red)}
+  .st.later{background:#eef1f6;color:var(--ink-soft)}
+  .lrow .rb .meta{display:flex;gap:14px;flex-wrap:wrap;font-size:.74rem;color:var(--ink-soft);margin-top:5px}
+  .lrow .rb .meta b{color:var(--ink);font-weight:600}
+
   .draftbar{margin-top:20px;font-size:.76rem;color:var(--ink-soft);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
   .tag{background:var(--gold);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:5px}
 </style>
@@ -133,6 +147,7 @@
     <button class="tab" data-tab="est">💰 Cost Estimator</button>
     <button class="tab" data-tab="stacks">Stack Options</button>
     <button class="tab" data-tab="email">Email &amp; Domain</button>
+    <button class="tab" data-tab="launch">🚀 Launch Checklist</button>
   </div>
 
   <!-- REQUIREMENTS -->
@@ -330,7 +345,21 @@
     </div>
   </section>
 
-  <div class="draftbar"><span class="tag">Draft</span><span>Pricing is current-approximate (2026-06; email pricing 2026-07) — verify at vendor checkout before budgeting. Mirrors <code>docs/software-requirements.md</code>, <code>docs/chms-comparison.md</code> &amp; <code>docs/email-domain.md</code>.</span></div>
+  <!-- LAUNCH CHECKLIST -->
+  <section id="launch" class="hidden">
+    <p class="lead">Everything the plant needs to run <b>beyond the software decisions</b> on the other
+      tabs — legal, financial, venue, and public-facing, in dependency order. Status legend:
+      <span class="st done" style="min-width:0">Done</span>
+      <span class="st active" style="min-width:0">Active</span>
+      <span class="st next" style="min-width:0">Next up</span>
+      <span class="st blocked" style="min-width:0">Blocked</span>
+      <span class="st later" style="min-width:0">Later</span> ·
+      Statuses are maintained by hand — <b>tell Micah and he'll update the list.</b> Sound equipment is
+      tracked separately and intentionally not here.</p>
+    <div id="launchList"></div>
+  </section>
+
+  <div class="draftbar"><span class="tag">Draft</span><span>Pricing is current-approximate (2026-06; email pricing 2026-07) — verify at vendor checkout before budgeting. Mirrors <code>docs/software-requirements.md</code>, <code>docs/chms-comparison.md</code>, <code>docs/email-domain.md</code> &amp; <code>docs/launch-checklist.md</code>.</span></div>
 </div>
 
 <script>
@@ -434,10 +463,64 @@ function renderBill(){
 document.querySelectorAll('#sizeSeg button').forEach(b=>b.onclick=()=>{
   document.querySelectorAll('#sizeSeg button').forEach(x=>x.classList.remove('on'));b.classList.add('on');size=+b.dataset.i;renderInputs();});
 
+// ===== launch checklist =====
+// status: done | active | next | blocked | later.  Edit here (+ docs/launch-checklist.md) — page is read-only.
+const LAUNCH=[
+ {ph:'1 · Legal & financial foundation',note:'The longest lead times live here — most of the digital plan is blocked behind the EIN → 501(c)(3) chain.',items:[
+  {t:'Ohio nonprofit incorporation',d:'Articles of incorporation + statutory agent + bylaws/constitution. The legal entity everything else attaches to.',cost:'~$99 filing',lead:'1–2 wks',st:'next'},
+  {t:'EIN from the IRS',d:'Free, online, near-instant once incorporated. Unlocks the bank account and the 501(c)(3) filing.',cost:'Free',lead:'Days',st:'next',dep:'Incorporation'},
+  {t:'501(c)(3) determination letter (Form 1023/1023-EZ)',d:'Churches are auto-exempt but verifiers (Google, Microsoft, some vendors) need the letter. Independent church = no group exemption shortcut.',cost:'$275–600 IRS fee',lead:'2–8 months',st:'blocked',dep:'EIN'},
+  {t:'Church bank account',d:'Church-owned, dual-signer policy. Needed before giving can deposit anywhere.',cost:'Free–$15/mo',lead:'Days',st:'blocked',dep:'EIN + org docs'},
+  {t:'Fund accounting',d:'Giving records ≠ bookkeeping. Fund accounting (Aplos is church-standard; QuickBooks works with discipline) + annual budget.',cost:'~$80/mo (Aplos)',lead:'1–2 wks',st:'later'},
+  {t:'Payroll with clergy housing allowance',d:'Pastor pay is tax-weird (dual status, housing allowance must be board-designated in advance). Use a clergy-aware payroll (MinistryWorks) or accountant.',cost:'~$50–75/mo',lead:'2–4 wks',st:'later',dep:'Bank account'},
+  {t:'Liability insurance',d:'General liability + child-safety rider. Insurers will ask for the child-protection policy (Phase 3).',cost:'~$1–3k/yr',lead:'2–4 wks',st:'later',dep:'Incorporation'},
+ ]},
+ {ph:'2 · Digital identity',note:'Cheap, fast, and mostly independent of the paperwork — the email plan (Email & Domain tab) lives here.',items:[
+  {t:'Buy the domain',d:'Registrar account church-owned, board-accessible. Used for website + email.',cost:'~$12/yr',lead:'Minutes',st:'next'},
+  {t:'Website live on the domain',d:'Site is built (mockup done) — deploy un-gated to the real domain. Satisfies Google’s 5-page live-site bar for nonprofit verification.',cost:'$0 (Pages)',lead:'Days',st:'blocked',dep:'Domain'},
+  {t:'Bridge email — pastor@ / office@',d:'2–3 paid seats, monthly term (see Email & Domain tab). Convert to the free nonprofit tier when the determination letter exists.',cost:'~$15–25/mo bridge → $0',lead:'Days',st:'blocked',dep:'Domain'},
+  {t:'Church-owned password manager',d:'Bitwarden (or similar) holding registrar, email admin, ChMS admin, bank, socials — elder-accessible recovery. Kills the bus-factor.',cost:'$0–4/mo',lead:'Days',st:'next'},
+  {t:'Church phone number',d:'Google Voice (free) so the public number isn’t a personal cell.',cost:'Free',lead:'Minutes',st:'later'},
+  {t:'Google Business Profile',d:'The highest-ROI item on this list — "church near me" hits Maps before any website. Needs the physical address.',cost:'Free',lead:'1–2 wks verify',st:'blocked',dep:'Venue address'},
+  {t:'Facebook page + YouTube channel',d:'Where local church discovery actually happens; YouTube is the streaming/sermon home.',cost:'Free',lead:'Days',st:'later'},
+ ]},
+ {ph:'3 · Ministry software & safety',note:'The decisions the rest of this page exists for, plus the people-safety layer.',items:[
+  {t:'ChMS decision',d:'Leadership deciding — comparison on the ChMS tab. Ed’s Church Center interest (via FBCNP) points at Planning Center; choosing Church Center is choosing PCO.',cost:'$0–40/mo @100',lead:'—',st:'active'},
+  {t:'CCLI Copyright License',d:'The legal floor the moment lyrics are projected. Streaming License added when livestreaming starts.',cost:'~$246/yr (+$175 streaming)',lead:'Days',st:'later'},
+  {t:'Worship presentation software',d:'Options on the Worship tab (ProPresenter / FreeShow / OpenLP…). Pick follows the ChMS decision.',cost:'$0–289/yr',lead:'—',st:'later',dep:'ChMS decision'},
+  {t:'Child protection policy + background checks',d:'Written policy (insurers require it) + checks for every children’s worker — Checkr integrates into PCO People.',cost:'~$10–25/check',lead:'1–2 wks',st:'later',dep:'ChMS decision'},
+  {t:'Check-in hardware',d:'iPad(s) + Brother label printer + stand for Little Lambs check-in (mockup done).',cost:'~$500–800 one-time',lead:'Days',st:'later',dep:'ChMS decision'},
+  {t:'Mass communication plan',d:'Snow-day problem: PCO People email lists cover most of it; add texting (e.g. Text In Church) only if needed.',cost:'$0–20/mo',lead:'Days',st:'later',dep:'ChMS decision'},
+ ]},
+ {ph:'4 · Venue & physical tech',note:'Everything Sunday-morning-one physically runs on (sound excluded by design).',items:[
+  {t:'Venue internet',d:'Check-in, giving, PCO sync, and streaming all assume connectivity. Speed-test any venue before signing (streaming needs ~10 Mbps up); fallback = cellular router.',cost:'~$300 + $30–50/mo if cellular',lead:'1–2 wks',st:'later',dep:'Venue'},
+  {t:'Projection hardware',d:'Projector or TVs + presentation computer + cabling; portable "church in a box" cart if the space is rented/shared.',cost:'~$1–3k one-time',lead:'2–4 wks',st:'later',dep:'Venue'},
+  {t:'Livestream / recording stack',d:'Camera (PTZ or iPhone to start) + OBS (free) + YouTube. Requires the CCLI Streaming License once worship is in the stream.',cost:'~$0–1.5k one-time',lead:'2–4 wks',st:'later',dep:'Venue internet'},
+  {t:'Sermon audio → podcast',d:'Cheaper on-ramp than video: record audio, publish via Spotify for Creators (free). How shut-ins and visitors sample a church.',cost:'Free',lead:'Days',st:'later'},
+ ]},
+ {ph:'5 · Ongoing disciplines',note:'Not launch blockers — habits to start early so they exist before they’re needed.',items:[
+  {t:'Data export / backup routine',d:'Periodic ChMS + giving export to church-owned storage (R12 "own our data", operationalized).',cost:'Free',lead:'—',st:'later',dep:'ChMS decision'},
+  {t:'CVLI video license',d:'Only if movie/video clips are ever shown — CCLI doesn’t cover video.',cost:'~$100–200/yr',lead:'Days',st:'later'},
+  {t:'Credential & role handoff doc',d:'One page: who holds what admin role, where recovery lives. Reviewed annually by the elders.',cost:'Free',lead:'—',st:'later',dep:'Password manager'},
+ ]},
+];
+const STLABEL={done:'Done',active:'Active',next:'Next up',blocked:'Blocked',later:'Later'};
+document.getElementById('launchList').innerHTML=LAUNCH.map(p=>{
+  const done=p.items.filter(i=>i.st==='done').length;
+  return `<div class="card phase">
+    <div class="phead"><h2>${p.ph}</h2><span class="pmeta">${done}/${p.items.length} done</span></div>
+    <div class="pbar"><i style="width:${p.items.length?Math.round(done/p.items.length*100):0}%"></i></div>
+    <p class="csub">${p.note}</p>
+    ${p.items.map(i=>`<div class="reqrow lrow"><span class="st ${i.st}">${STLABEL[i.st]}</span>
+      <div class="rb"><b>${i.t}</b><p>${i.d}</p>
+      <div class="meta"><span>💵 <b>${i.cost}</b></span><span>⏱ <b>${i.lead}</b></span>${i.dep?`<span>⛓ needs <b>${i.dep}</b></span>`:''}</div>
+    </div></div>`).join('')}
+  </div>`;}).join('');
+
 // ===== tabs =====
 document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');
-  ['req','chms','worship','ccli','est','stacks','email'].forEach(id=>document.getElementById(id).classList.add('hidden'));
+  ['req','chms','worship','ccli','est','stacks','email','launch'].forEach(id=>document.getElementById(id).classList.add('hidden'));
   document.getElementById(t.dataset.tab).classList.remove('hidden');
 });
 renderInputs();
