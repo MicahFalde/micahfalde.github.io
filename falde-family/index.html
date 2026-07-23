@@ -58,83 +58,96 @@
 
 <main class="sheet" style="padding-top:0">
 
+  <form class="search" role="search" hidden>
+    <span class="tab">Search the box</span>
+    <div>
+      <label class="search__field" for="q">
+        <input id="q" type="search" autocomplete="off" spellcheck="false"
+               placeholder="cardamom, Christmas, sour cream, Mrs. J…"
+               aria-describedby="search-status">
+        <button type="button" class="search__clear">clear</button>
+      </label>
+      <span class="search__status" id="search-status" role="status" aria-live="polite"></span>
+    </div>
+  </form>
+
   <section class="group">
     <span class="tab">Cakes &amp; tortes</span>
     <div>
       <div class="box">
-        <a class="card" href="recipes/devils-food.html">
+        <a class="card" href="recipes/devils-food.html" data-slug="devils-food">
           <img class="card__paper" src="assets/recipes/devils-food-card.jpg"
                width="1200" height="707" loading="lazy" alt="An index card for Devil's Food.">
           <span class="card__name">Devil’s Food</span>
           <span class="card__meta">in her hand, from Ruth Eaton</span>
         </a>
-        <a class="card" href="recipes/spice-cake.html">
+        <a class="card" href="recipes/spice-cake.html" data-slug="spice-cake">
           <img class="card__paper" src="assets/recipes/spice-cake-card.jpg"
                width="1200" height="726" loading="lazy" alt="An index card for Sour Cream Spice Cakes.">
           <span class="card__name">Sour Cream Spice Cakes</span>
           <span class="card__meta">makes 20, iced while warm</span>
         </a>
-        <a class="card" href="recipes/brown-sugar-cake.html">
+        <a class="card" href="recipes/brown-sugar-cake.html" data-slug="brown-sugar-cake">
           <img class="card__paper" src="assets/recipes/brown-sugar-cake-card.jpg"
                width="1200" height="718" loading="lazy" alt="An index card for Brown Sugar Cake.">
           <span class="card__name">Brown Sugar Cake</span>
           <span class="card__meta">a crumb topping, from Mrs. J.</span>
         </a>
-        <a class="card" href="recipes/raw-apple-cake.html">
+        <a class="card" href="recipes/raw-apple-cake.html" data-slug="raw-apple-cake">
           <img class="card__paper" src="assets/recipes/raw-apple-cake-card.jpg"
                width="1200" height="731" loading="lazy" alt="An index card for Raw Apple Cake.">
           <span class="card__name">Raw Apple Cake</span>
           <span class="card__meta">in pencil, 350° for an hour</span>
         </a>
-        <a class="card" href="recipes/strawberry-jam-cake.html">
+        <a class="card" href="recipes/strawberry-jam-cake.html" data-slug="strawberry-jam-cake">
           <img class="card__paper" src="assets/recipes/strawberry-jam-cake-card.jpg"
                width="1200" height="740" loading="lazy" alt="An index card for Strawberry Jam Cake.">
           <span class="card__name">Strawberry Jam Cake</span>
           <span class="card__meta">two layers, from Mrs. J.</span>
         </a>
-        <a class="card" href="recipes/red-devil-s-food-large-cake.html">
+        <a class="card" href="recipes/red-devil-s-food-large-cake.html" data-slug="red-devil-s-food-large-cake">
           <img class="card__paper" src="assets/recipes/red-devil-s-food-large-cake-card.jpg"
                width="1200" height="761" loading="lazy" alt="An index card for Red Devil's Food.">
           <span class="card__name">Red Devil’s Food</span>
           <span class="card__meta">her large cake, badly faded</span>
         </a>
-        <a class="card" href="recipes/chocolate-chip-torte.html">
+        <a class="card" href="recipes/chocolate-chip-torte.html" data-slug="chocolate-chip-torte">
           <img class="card__paper" src="assets/recipes/chocolate-chip-torte-card.jpg"
                width="960" height="1200" loading="lazy" alt="An index card for Chocolate Chip Torte.">
           <span class="card__name">Chocolate Chip Torte</span>
           <span class="card__meta">dates and chocolate, 9×13</span>
         </a>
-        <a class="card" href="recipes/peach-torte.html">
+        <a class="card" href="recipes/peach-torte.html" data-slug="peach-torte">
           <img class="card__paper" src="assets/recipes/peach-torte-card.jpg"
                width="590" height="1200" loading="lazy" alt="An index card for Peach Torte.">
           <span class="card__name">Peach Torte</span>
           <span class="card__meta">a sour-cream crust, fresh peaches</span>
         </a>
-        <a class="card" href="recipes/kuchen.html">
+        <a class="card" href="recipes/kuchen.html" data-slug="kuchen">
           <img class="card__paper" src="assets/recipes/kuchen-card.jpg"
                width="847" height="1200" loading="lazy" alt="An index card for Kuchen.">
           <span class="card__name">Kuchen</span>
           <span class="card__meta">a custard coffee cake, with peaches</span>
         </a>
-        <a class="card" href="recipes/strawberry-shortcake.html">
+        <a class="card" href="recipes/strawberry-shortcake.html" data-slug="strawberry-shortcake">
           <img class="card__paper" src="assets/recipes/strawberry-shortcake-card.jpg"
                width="1200" height="726" loading="lazy" alt="An index card for Strawberry Shortcake.">
           <span class="card__name">Strawberry Shortcake</span>
           <span class="card__meta">a biscuit shortcake, from Mrs. J.</span>
         </a>
-        <a class="card" href="recipes/devils-food-cake.html">
+        <a class="card" href="recipes/devils-food-cake.html" data-slug="devils-food-cake">
           <img class="card__paper" src="assets/recipes/devils-food-cake-card.jpg"
                width="1200" height="742" loading="lazy" alt="An index card for Devil's Food Cake.">
           <span class="card__name">Devil’s Food Cake</span>
           <span class="card__meta">a sour-milk layer cake, from Mrs. S.</span>
         </a>
-        <a class="card" href="recipes/harvest-moon-cake.html">
+        <a class="card" href="recipes/harvest-moon-cake.html" data-slug="harvest-moon-cake">
           <img class="card__paper" src="assets/recipes/harvest-moon-cake-card.jpg"
                width="1200" height="765" loading="lazy" alt="An index card for Harvest Moon Cake.">
           <span class="card__name">Harvest Moon Cake</span>
           <span class="card__meta">spice cake, brown-sugar frosting</span>
         </a>
-        <a class="card" href="recipes/lard-cake.html">
+        <a class="card" href="recipes/lard-cake.html" data-slug="lard-cake">
           <img class="card__paper" src="assets/recipes/lard-cake-card.jpg"
                width="1200" height="735" loading="lazy" alt="An index card for Lard Cake.">
           <span class="card__name">Lard Cake</span>
@@ -147,61 +160,61 @@
     <span class="tab">Cookies &amp; bars</span>
     <div>
       <div class="box">
-        <a class="card" href="recipes/fork-cookies.html">
+        <a class="card" href="recipes/fork-cookies.html" data-slug="fork-cookies">
           <img class="card__paper" src="assets/recipes/fork-cookies-card.jpg"
                width="1200" height="700" loading="lazy" alt="An index card for Fork Cookies.">
           <span class="card__name">Fork Cookies</span>
           <span class="card__meta">5 dozen, pressed flat with a fork</span>
         </a>
-        <a class="card" href="recipes/brown-cookies.html">
+        <a class="card" href="recipes/brown-cookies.html" data-slug="brown-cookies">
           <img class="card__paper" src="assets/recipes/brown-cookies-card.jpg"
                width="1200" height="727" loading="lazy" alt="An index card for Brown Cookies.">
           <span class="card__name">Brown Cookies</span>
           <span class="card__meta">molasses, rolled and cut</span>
         </a>
-        <a class="card" href="recipes/ginger-cookies.html">
+        <a class="card" href="recipes/ginger-cookies.html" data-slug="ginger-cookies">
           <img class="card__paper" src="assets/recipes/ginger-cookies-card.jpg"
                width="1200" height="727" loading="lazy" alt="An index card for Grandmother's Ginger Cookies.">
           <span class="card__name">Grandmother’s Ginger Cookies</span>
           <span class="card__meta">molasses and sour milk, 50 cookies</span>
         </a>
-        <a class="card" href="recipes/fruit-cookies.html">
+        <a class="card" href="recipes/fruit-cookies.html" data-slug="fruit-cookies">
           <img class="card__paper" src="assets/recipes/fruit-cookies-card.jpg"
                width="1200" height="710" loading="lazy" alt="An index card for Fruit Cookies.">
           <span class="card__name">Fruit Cookies</span>
           <span class="card__meta">candied fruit, chilled in the ice box</span>
         </a>
-        <a class="card" href="recipes/jumbo-rasin-cookies.html">
+        <a class="card" href="recipes/jumbo-rasin-cookies.html" data-slug="jumbo-rasin-cookies">
           <img class="card__paper" src="assets/recipes/jumbo-rasin-cookies-card.jpg"
                width="1200" height="688" loading="lazy" alt="An index card for Jumbo Raisin Cookies.">
           <span class="card__name">Jumbo Raisin Cookies</span>
           <span class="card__meta">a clipping, 6 dozen soft ones</span>
         </a>
-        <a class="card" href="recipes/wheatie-cookies.html">
+        <a class="card" href="recipes/wheatie-cookies.html" data-slug="wheatie-cookies">
           <img class="card__paper" src="assets/recipes/wheatie-cookies-card.jpg"
                width="1200" height="717" loading="lazy" alt="An index card for Wheatie Cookies.">
           <span class="card__name">Wheatie Cookies</span>
           <span class="card__meta">walnut-sized, pressed with a fork</span>
         </a>
-        <a class="card" href="recipes/oatmeal-ice-box-cookies.html">
+        <a class="card" href="recipes/oatmeal-ice-box-cookies.html" data-slug="oatmeal-ice-box-cookies">
           <img class="card__paper" src="assets/recipes/oatmeal-ice-box-cookies-card.jpg"
                width="1200" height="758" loading="lazy" alt="An index card for Oatmeal Ice Box Cookies.">
           <span class="card__name">Oatmeal Ice Box Cookies</span>
           <span class="card__meta">on floral stationery, in pencil</span>
         </a>
-        <a class="card" href="recipes/pin-wheel-date-cookies.html">
+        <a class="card" href="recipes/pin-wheel-date-cookies.html" data-slug="pin-wheel-date-cookies">
           <img class="card__paper" src="assets/recipes/pin-wheel-date-cookies-card.jpg"
                width="1200" height="722" loading="lazy" alt="An index card for Pin-wheel Date Cookies.">
           <span class="card__name">Pin-wheel Date Cookies</span>
           <span class="card__meta">rolled around a date filling</span>
         </a>
-        <a class="card" href="recipes/chocolate-bits-with-oatmeal.html">
+        <a class="card" href="recipes/chocolate-bits-with-oatmeal.html" data-slug="chocolate-bits-with-oatmeal">
           <img class="card__paper" src="assets/recipes/chocolate-bits-with-oatmeal-card.jpg"
                width="1200" height="719" loading="lazy" alt="An index card for Chocolate Bits with Oatmeal.">
           <span class="card__name">Chocolate Bits with Oatmeal</span>
           <span class="card__meta">100 cookies, chips and oats</span>
         </a>
-        <a class="card" href="recipes/merry-mint-brownies.html">
+        <a class="card" href="recipes/merry-mint-brownies.html" data-slug="merry-mint-brownies">
           <img class="card__paper" src="assets/recipes/merry-mint-brownies-card.jpg"
                width="1200" height="694" loading="lazy" alt="An index card for Merry Mint Brownies.">
           <span class="card__name">Merry Mint Brownies</span>
@@ -214,19 +227,19 @@
     <span class="tab">From the old country</span>
     <div>
       <div class="box">
-        <a class="card" href="recipes/norwegian-bread.html">
+        <a class="card" href="recipes/norwegian-bread.html" data-slug="norwegian-bread">
           <img class="card__paper" src="assets/recipes/norwegian-bread-card.jpg"
                width="1200" height="706" loading="lazy" alt="An index card for Norwegian Bread.">
           <span class="card__name">Norwegian Bread</span>
           <span class="card__meta">Julekake, with cardamom and citron</span>
         </a>
-        <a class="card" href="recipes/smaa-brod.html">
+        <a class="card" href="recipes/smaa-brod.html" data-slug="smaa-brod">
           <img class="card__paper" src="assets/recipes/smaa-brod-card.jpg"
                width="1200" height="722" loading="lazy" alt="An index card for Smaa Brød.">
           <span class="card__name">Smaa Brød</span>
           <span class="card__meta">from Inga Beate Falde, 1955</span>
         </a>
-        <a class="card" href="recipes/fatiman.html">
+        <a class="card" href="recipes/fatiman.html" data-slug="fatiman">
           <img class="card__paper" src="assets/recipes/fatiman-card.jpg"
                width="1200" height="734" loading="lazy" alt="An index card for Fatiman.">
           <span class="card__name">Fatiman</span>
@@ -239,49 +252,49 @@
     <span class="tab">Pickles &amp; preserves</span>
     <div>
       <div class="box">
-        <a class="card" href="recipes/icebox-pickles.html">
+        <a class="card" href="recipes/icebox-pickles.html" data-slug="icebox-pickles">
           <img class="card__paper" src="assets/recipes/icebox-pickles-card.jpg"
                width="1200" height="718" loading="lazy" alt="An index card for Icebox Pickles.">
           <span class="card__name">Icebox Pickles</span>
           <span class="card__meta">a cold vinegar syrup, then sealed</span>
         </a>
-        <a class="card" href="recipes/delicious-pickles.html">
+        <a class="card" href="recipes/delicious-pickles.html" data-slug="delicious-pickles">
           <img class="card__paper" src="assets/recipes/delicious-pickles-card.jpg"
                width="730" height="1200" loading="lazy" alt="An index card for Delicious Pickles.">
           <span class="card__name">Delicious Pickles</span>
           <span class="card__meta">with a dill batch, from Belva Wall</span>
         </a>
-        <a class="card" href="recipes/sliced-hamburger-pickles.html">
+        <a class="card" href="recipes/sliced-hamburger-pickles.html" data-slug="sliced-hamburger-pickles">
           <img class="card__paper" src="assets/recipes/sliced-hamburger-pickles-card.jpg"
                width="1200" height="726" loading="lazy" alt="An index card for Sliced and Hamburger Pickles.">
           <span class="card__name">Sliced &amp; Hamburger Pickles</span>
           <span class="card__meta">two batches, one per side</span>
         </a>
-        <a class="card" href="recipes/ripe-cucumber-pickles.html">
+        <a class="card" href="recipes/ripe-cucumber-pickles.html" data-slug="ripe-cucumber-pickles">
           <img class="card__paper" src="assets/recipes/ripe-cucumber-pickles-card.jpg"
                width="1200" height="728" loading="lazy" alt="An index card for Ripe Cucumber Pickles.">
           <span class="card__name">Ripe Cucumber Pickles</span>
           <span class="card__meta">kept firm with a little alum</span>
         </a>
-        <a class="card" href="recipes/pickled-beets.html">
+        <a class="card" href="recipes/pickled-beets.html" data-slug="pickled-beets">
           <img class="card__paper" src="assets/recipes/pickled-beets-card.jpg"
                width="1200" height="725" loading="lazy" alt="An index card for Pickled Beets.">
           <span class="card__name">Pickled Beets</span>
           <span class="card__meta">spiced with a sliced lemon</span>
         </a>
-        <a class="card" href="recipes/apples-for-pie.html">
+        <a class="card" href="recipes/apples-for-pie.html" data-slug="apples-for-pie">
           <img class="card__paper" src="assets/recipes/apples-for-pie-card.jpg"
                width="1200" height="468" loading="lazy" alt="An index card for Apples for Pie.">
           <span class="card__name">Apples for Pie</span>
           <span class="card__meta">a clipping, put up for pies</span>
         </a>
-        <a class="card" href="recipes/wild-strawberry-preserves.html">
+        <a class="card" href="recipes/wild-strawberry-preserves.html" data-slug="wild-strawberry-preserves">
           <img class="card__paper" src="assets/recipes/wild-strawberry-preserves-card.jpg"
                width="1200" height="727" loading="lazy" alt="An index card for Wild Strawberry Preserves.">
           <span class="card__name">Wild Strawberry Preserves</span>
           <span class="card__meta">berries left unwashed, boiled twice</span>
         </a>
-        <a class="card" href="recipes/sweet-cherry-conserve.html">
+        <a class="card" href="recipes/sweet-cherry-conserve.html" data-slug="sweet-cherry-conserve">
           <img class="card__paper" src="assets/recipes/sweet-cherry-conserve-card.jpg"
                width="1200" height="722" loading="lazy" alt="An index card for Sweet Cherry Conserve.">
           <span class="card__name">Sweet Cherry Conserve</span>
@@ -294,31 +307,31 @@
     <span class="tab">Suppers &amp; the pantry</span>
     <div>
       <div class="box">
-        <a class="card" href="recipes/escalloped-corn-and-green-peppers.html">
+        <a class="card" href="recipes/escalloped-corn-and-green-peppers.html" data-slug="escalloped-corn-and-green-peppers">
           <img class="card__paper" src="assets/recipes/escalloped-corn-and-green-peppers-card.jpg"
                width="1200" height="1128" loading="lazy" alt="An index card for Escalloped Corn and Green Peppers.">
           <span class="card__name">Escalloped Corn &amp; Green Peppers</span>
           <span class="card__meta">a printed card, under potato chips</span>
         </a>
-        <a class="card" href="recipes/mexicali-salad.html">
+        <a class="card" href="recipes/mexicali-salad.html" data-slug="mexicali-salad">
           <img class="card__paper" src="assets/recipes/mexicali-salad-card.jpg"
                width="1200" height="710" loading="lazy" alt="An index card for Mexicali Salad.">
           <span class="card__name">Mexicali Salad</span>
           <span class="card__meta">a 1970s taco salad, on a Quaker card</span>
         </a>
-        <a class="card" href="recipes/ann-landers-meatloaf.html">
+        <a class="card" href="recipes/ann-landers-meatloaf.html" data-slug="ann-landers-meatloaf">
           <img class="card__paper" src="assets/recipes/ann-landers-meatloaf-card.jpg"
                width="1200" height="716" loading="lazy" alt="An index card for Ann Landers Meat Loaf.">
           <span class="card__name">Ann Landers Meat Loaf</span>
           <span class="card__meta">the famous one, with onion soup mix</span>
         </a>
-        <a class="card" href="recipes/tomato-soup.html">
+        <a class="card" href="recipes/tomato-soup.html" data-slug="tomato-soup">
           <img class="card__paper" src="assets/recipes/tomato-soup-card.jpg"
                width="830" height="1200" loading="lazy" alt="An index card for Tomato Soup.">
           <span class="card__name">Tomato Soup</span>
           <span class="card__meta">canned by the peck, 9 or 10 pints</span>
         </a>
-        <a class="card" href="recipes/salt-pork.html">
+        <a class="card" href="recipes/salt-pork.html" data-slug="salt-pork">
           <img class="card__paper" src="assets/recipes/salt-pork-card.jpg"
                width="811" height="1200" loading="lazy" alt="An index card for Salt Pork.">
           <span class="card__name">Salt Pork</span>
@@ -331,13 +344,13 @@
     <span class="tab">Sweets &amp; treats</span>
     <div>
       <div class="box">
-        <a class="card" href="recipes/ice-cream-dessert.html">
+        <a class="card" href="recipes/ice-cream-dessert.html" data-slug="ice-cream-dessert">
           <img class="card__paper" src="assets/recipes/ice-cream-dessert-card.jpg"
                width="1200" height="707" loading="lazy" alt="An index card for Ice Cream Dessert.">
           <span class="card__name">Ice Cream Dessert</span>
           <span class="card__meta">toasted Rice Krispies, frozen in a 9×9</span>
         </a>
-        <a class="card" href="recipes/pop-corn-balls.html">
+        <a class="card" href="recipes/pop-corn-balls.html" data-slug="pop-corn-balls">
           <img class="card__paper" src="assets/recipes/pop-corn-balls-card.jpg"
                width="1200" height="723" loading="lazy" alt="An index card for Pop Corn Balls.">
           <span class="card__name">Pop Corn Balls</span>
@@ -350,19 +363,19 @@
     <span class="tab">Loose in the box</span>
     <div>
       <div class="box">
-        <a class="card" href="recipes/substitutions.html">
+        <a class="card" href="recipes/substitutions.html" data-slug="substitutions">
           <img class="card__paper" src="assets/recipes/substitutions-card.jpg"
                width="834" height="1200" loading="lazy" alt="An index card for Substitutions.">
           <span class="card__name">Substitutions</span>
           <span class="card__meta">a clipping of baking swaps, from J.B.</span>
         </a>
-        <a class="card" href="recipes/mystery-2.html">
+        <a class="card" href="recipes/mystery-2.html" data-slug="mystery-2">
           <img class="card__paper" src="assets/recipes/mystery-2-card.jpg"
                width="1200" height="1001" loading="lazy" alt="An index card for An Unlabeled Dough.">
           <span class="card__name">An Unlabeled Dough</span>
           <span class="card__meta">a cream dough, figured out</span>
         </a>
-        <a class="card" href="recipes/mystery-1.html">
+        <a class="card" href="recipes/mystery-1.html" data-slug="mystery-1">
           <img class="card__paper" src="assets/recipes/mystery-1-card.jpg"
                width="1200" height="806" loading="lazy" alt="An index card for A Crystal Garden.">
           <span class="card__name">A Crystal Garden</span>
@@ -398,6 +411,9 @@
   </div>
   <p class="signature"><span>FALDE</span></p>
 </footer>
+
+<script src="assets/search-index.js?v=3" defer></script>
+<script src="assets/search.js?v=3" defer></script>
 
 </body>
 </html>
