@@ -404,8 +404,11 @@ a { color: inherit; }
 }
 .ingredients li {
   display: grid;
-  grid-template-columns: 3.6rem 1fr;
-  gap: 0.5rem;
+  /* Short amounts (1 c, ½ t) all align on a 3.4rem column; the occasional long
+     one (14 lbs, ¼ teacup) grows its own column instead of colliding with the
+     name, which the column-gap always keeps clear. */
+  grid-template-columns: minmax(3.4rem, auto) 1fr;
+  column-gap: 0.7rem;
   padding: 0.42rem 0;
   font-size: 1rem;
 }
