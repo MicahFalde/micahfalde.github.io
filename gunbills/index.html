@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Firearms Register</title>
+<meta name="description" content="Every firearms bill moving in all 50 state legislatures and Congress, with a plain-English summary and where it sits in the process. Updated daily from LegiScan.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0b0907">
+<meta name="robots" content="noindex, nofollow">
+<!-- Same mark as the site index — one site, one identity. -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230b0907'/><path d='M22 30 L44 50 L22 70' fill='none' stroke='%23dfa04a' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/><path d='M52 70 L78 70' stroke='%23dfa04a' stroke-width='9' stroke-linecap='round'/></svg>">
+<!-- Bump ?v= on every deploy touching CSS. GitHub Pages sends a long max-age with
+     no filename fingerprinting; without this a returning visitor pairs fresh HTML
+     with a stale stylesheet and the page renders broken. -->
+<link rel="stylesheet" href="assets/register.css?v=1">
+</head>
+<body>
+<div class="atmos" aria-hidden="true"></div>
+<a class="skip-link" href="#register">Skip to the register</a>
+
+<header class="top">
+  <div class="wrap">
+    <a href="/" class="brand" aria-label="Micah Falde, home">
+      <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M4 6 L11 12 L4 18" /><path d="M14 18 L20 18" />
+      </svg>
+      MICAH FALDE
+    </a>
+  </div>
+</header>
+
+<main>
+  <!-- ============ NAMEPLATE ============
+       Deliberately NOT the default hero stack: no eyebrow, no subtext paragraph,
+       no button pair. A register's nameplate is its title and its standing —
+       so the counts ARE the hero content, and they are real data, not decoration.
+       Every figure renders as an em-dash placeholder until data.json loads; the
+       text is never hidden, so a failed fetch degrades to a readable page. -->
+  <section class="plate">
+    <div class="wrap">
+      <h1 class="plate-title">The Firearms<br>Register</h1>
+      <dl class="standing">
+        <div class="stand">
+          <dt>Bills tracked</dt>
+          <dd><span id="statTotal" class="fig">—</span></dd>
+        </div>
+        <div class="stand">
+          <dt>Moved this week</dt>
+          <dd><span id="statMoved" class="fig">—</span></dd>
+        </div>
+        <div class="stand">
+          <dt>Jurisdictions</dt>
+          <dd><span id="statStates" class="fig">—</span></dd>
+        </div>
+        <div class="stand">
+          <dt>Last synced</dt>
+          <dd><span id="statSynced" class="fig fig-sm">—</span></dd>
+        </div>
+      </dl>
+      <p class="plate-note">Every bill touching firearms in all fifty state legislatures and Congress,
+        summarised in plain English and placed in the process. Compiled daily; nothing here is legal advice.</p>
+    </div>
+  </section>
+
+  <!-- ============ CONTROLS ============
+       Real controls, all of them wired. Nothing here is a prop. -->
+  <section class="controls" aria-label="Filter the register">
+    <div class="wrap">
+      <div class="ctl-row">
+        <div class="ctl ctl-dir">
+          <span class="ctl-label" id="dirLabel">Direction</span>
+          <div class="seg" role="group" aria-labelledby="dirLabel">
+            <button type="button" class="seg-btn is-on" data-dir="all" aria-pressed="true">All</button>
+            <button type="button" class="seg-btn" data-dir="expands" aria-pressed="false">Expands</button>
+            <button type="button" class="seg-btn" data-dir="restricts" aria-pressed="false">Restricts</button>
+            <button type="button" class="seg-btn" data-dir="mixed" aria-pressed="false">Mixed</button>
+          </div>
+        </div>
+
+        <div class="ctl">
+          <label class="ctl-label" for="stateSel">Jurisdiction</label>
+          <select id="stateSel" class="field">
+            <option value="all">All fifty &amp; Congress</option>
+          </select>
+        </div>
+
+        <div class="ctl ctl-grow">
+          <label class="ctl-label" for="q">Search</label>
+          <input id="q" class="field" type="search" placeholder="bill number, title or subject" autocomplete="off">
+        </div>
+      </div>
+      <p class="ctl-count" id="resultCount" role="status">Loading the register&hellip;</p>
+    </div>
+  </section>
+
+  <!-- ============ THE REGISTER ============
+       The signature: each entry carries a stage track drawn to its own status.
+       See register.css → "the stage track" for the geometry. -->
+  <section id="register" class="register">
+    <div class="wrap">
+      <h2 class="sr">Bills</h2>
+      <ol class="entries" id="entries"></ol>
+
+      <!-- Visible by default and replaced only once data resolves. If the fetch
+           never returns, THIS is what the visitor sees — never a blank page. -->
+      <div class="state-msg" id="stateMsg">
+        <p class="state-head">The register has not been compiled yet.</p>
+        <p class="state-body">The daily sync needs a LegiScan API key before it can run.
+          Once the key is in place this page fills with live bills.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <!-- AIDEV-NOTE: Attribution is swapped by register.js to match data.json's
+         `source` field. The markup default names Open States because that is the
+         source the pipeline runs on; if a run is ever published from LegiScan
+         instead, the script substitutes LegiScan's required CC BY 4.0 credit.
+         Never leave this crediting a source that did not produce the data. -->
+    <p class="colophon">
+      <span id="srcAttr">Compiled from <a href="https://openstates.org" rel="noopener noreferrer" target="_blank">Open States</a>,
+      an open-source project tracking legislation in all fifty states, DC and Puerto Rico.</span>
+      Summaries and the expands/restricts reading are generated automatically and can be wrong &mdash;
+      follow the link on any entry to the bill itself before relying on it.
+    </p>
+    <p class="colophon colophon-back"><a href="/">Return to micahfalde.com</a></p>
+  </div>
+</footer>
+
+<script src="assets/register.js?v=1"></script>
+</body>
+</html>

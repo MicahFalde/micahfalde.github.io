@@ -1,0 +1,445 @@
+/* ==========================================================================
+   micahfalde.com/gunbills — The Firearms Register.
+
+   Same world as / and /resume/: Gambarino display, warm near-black, amber
+   phosphor. Tokens are copied verbatim from ~/micahfalde.github.io/styles.css.
+   If you change a token there, change it here — the pages must not drift.
+
+   AIDEV-NOTE: The signature is the STAGE TRACK — a bill's passage through the
+   legislature drawn as a ruled bar with station ticks and a chamfered leading
+   edge (see "the stage track" below). That IS the design. Don't bolt cards,
+   tiles, chips or icons onto it. Direction (expands/restricts) is carried by a
+   drawn CHEVRON, never by colour, so the page never editorialises with hue.
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Gambarino';
+  src: url('/fonts/Gambarino-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap; /* never hide text waiting on the font */
+}
+
+:root {
+  --ink:        #0b0907;
+  --ink-2:      #1a1712;
+
+  /* Ratios are measured, not guessed. --bone-faint carries small text so it
+     must clear 4.5:1 on --ink; #7d7365 measured 4.27 and failed AA. */
+  --bone:       #f2ece2;  /* 16.8:1 on ink */
+  --bone-dim:   #b5aa99;  /*  8.1:1 on ink */
+  --bone-faint: #948a7a;  /*  5.9:1 on ink */
+
+  --amber:      #dfa04a;
+
+  --edge:       rgba(242, 236, 226, .09);
+  --edge-lit:   rgba(242, 236, 226, .18);
+
+  --font-display: 'Gambarino', Georgia, 'Times New Roman', serif;
+  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --maxw: 1140px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+
+  /* AIDEV-NOTE: One height for every control in the filter row. The segmented
+     buttons and the fields must occupy identical boxes, otherwise aligning the
+     row's bottoms drops the taller control's LABEL out of line with its
+     neighbours. Both are pinned to this token — don't set a height on either
+     one directly. */
+  --ctl-h: 2.7rem;
+
+  --step--1: clamp(.78rem, .76rem + .1vw, .84rem);
+  --step-0:  clamp(.97rem, .94rem + .15vw, 1.05rem);
+  --step-1:  clamp(1.15rem, 1.06rem + .4vw, 1.4rem);
+  --step-2:  clamp(1.6rem, 1.3rem + 1.2vw, 2.4rem);
+  --step-3:  clamp(2.2rem, 1.6rem + 2.6vw, 3.8rem);
+  --step-4:  clamp(3.1rem, 1.7rem + 6vw, 7.5rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; background: var(--ink); }
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main { flex: 1 0 auto; }
+
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 100;
+  background: var(--amber); color: var(--ink);
+  padding: .7rem 1.1rem; font-weight: 700;
+}
+.skip-link:focus { left: 1rem; top: 1rem; }
+
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* ==========================================================================
+   Atmosphere — a warm rake of light from upper-left with grain over it but
+   BEHIND all content. Directional, not a centred radial halo. Verbatim from
+   the site index so every page shares one surface.
+   ========================================================================== */
+.atmos {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 8% -10%, rgba(223, 160, 74, .13) 0%,
+                                          rgba(223, 160, 74, .05) 28%,
+                                          rgba(223, 160, 74, .015) 48%,
+                                          transparent 70%),
+    linear-gradient(180deg, #100d0a 0%, var(--ink) 55%);
+}
+.atmos::after {
+  content: '';
+  position: absolute; inset: 0;
+  opacity: .5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.42'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+}
+
+/* ========================================================================== */
+.top { padding-top: 1.6rem; }
+
+.brand {
+  display: inline-flex; align-items: center; gap: .6rem;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: .04em;
+  text-decoration: none;
+  color: var(--bone);
+  white-space: nowrap;
+  transition: color .18s ease;
+}
+.brand:hover, .brand:focus-visible { color: var(--amber); }
+.mark { width: 14px; height: 14px; flex: none; color: var(--amber); }
+
+/* ==========================================================================
+   Nameplate
+   ========================================================================== */
+.plate { padding: clamp(2.6rem, 7vw, 5rem) 0 clamp(1.8rem, 4vw, 2.6rem); }
+
+.plate-title {
+  font-family: var(--font-display);
+  font-size: var(--step-4);
+  line-height: .9;
+  letter-spacing: -.005em;
+  margin: 0;
+  color: var(--bone);
+}
+
+/* AIDEV-NOTE: The standing is a real four-column grid, not flex-wrapped pairs.
+   Equal columns mean the labels sit on one baseline and the figures sit on
+   another across all four, whatever the string lengths — the parallel-column
+   alignment rule. Don't swap this for flex with gaps. */
+.standing {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.4rem 1.6rem;
+  margin: clamp(2rem, 5vw, 3rem) 0 0;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--edge);
+}
+.stand { min-width: 0; }
+.standing dt {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--bone-faint);
+  margin: 0 0 .35rem;
+}
+.standing dd { margin: 0; }
+
+/* Big figures need air — tracking is loosened, never crushed. */
+.fig {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.05;
+  letter-spacing: .01em;
+  color: var(--amber);
+  display: block;
+}
+.fig-sm {
+  font-family: var(--font-mono);
+  font-size: var(--step-0);
+  letter-spacing: 0;
+  color: var(--bone-dim);
+  line-height: 1.5;
+}
+
+.plate-note {
+  max-width: 58ch;
+  margin: 2rem 0 0;
+  color: var(--bone-dim);
+  font-size: var(--step-0);
+  line-height: 1.55;
+}
+
+/* ==========================================================================
+   Controls — real, wired, no props.
+   ========================================================================== */
+.controls { padding: clamp(1.4rem, 3vw, 2rem) 0 .4rem; }
+
+.ctl-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1.1rem 1.8rem;
+}
+.ctl { min-width: 0; }
+.ctl-grow { flex: 1 1 16rem; }
+
+.ctl-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--bone-faint);
+  margin-bottom: .5rem;
+}
+
+/* The segmented filter. A ruled row of words with the active one marked by a
+   solid amber underscore — no pills, no fills, no growing underline. The
+   marker is drawn at full width from the start and only its colour changes,
+   so nothing animates its length. */
+.seg { display: flex; align-items: flex-end; gap: 1.3rem; min-height: var(--ctl-h); }
+.seg-btn {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0 0 .45rem;
+  margin: 0;
+  font: inherit;
+  font-size: var(--step-0);
+  color: var(--bone-faint);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color .18s ease, border-color .18s ease;
+}
+.seg-btn:hover { color: var(--bone-dim); }
+.seg-btn.is-on { color: var(--bone); border-bottom-color: var(--amber); }
+.seg-btn:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
+.field {
+  appearance: none;
+  width: 100%;
+  height: var(--ctl-h);
+  background: var(--ink-2);
+  color: var(--bone);
+  border: 1px solid var(--edge-lit);
+  border-radius: 0;
+  padding: 0 .7rem;
+  font: inherit;
+  font-size: var(--step-0);
+  line-height: 1.4;
+  transition: border-color .18s ease;
+}
+.field::placeholder { color: var(--bone-faint); }
+.field:hover { border-color: rgba(242, 236, 226, .28); }
+.field:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; border-color: var(--amber); }
+select.field { padding-right: 2rem; }
+
+.ctl-count {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--bone-faint);
+  margin: 1.4rem 0 0;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--edge);
+}
+
+/* ==========================================================================
+   The register
+   ========================================================================== */
+.register { padding-bottom: clamp(3rem, 8vw, 5rem); }
+
+.entries { list-style: none; margin: 0; padding: 0; }
+
+/* AIDEV-NOTE: One grid for every entry, so the jurisdiction, the title and the
+   stage track each hold their own column across all rows no matter how long a
+   title runs. This is the parallel-alignment rule — a title that wraps to three
+   lines must not shove its neighbour's track out of line. Don't make the track
+   column `auto`. */
+.entry {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr) 15rem;
+  gap: 1.6rem;
+  align-items: start;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--edge);
+}
+.entry:last-child { border-bottom: 0; }
+
+.e-juris { min-width: 0; }
+.e-state {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--bone-faint);
+  display: block;
+}
+.e-num {
+  font-family: var(--font-mono);
+  font-size: var(--step-0);
+  color: var(--bone-dim);
+  display: block;
+  margin-top: .15rem;
+}
+
+.e-body { min-width: 0; }
+.e-title {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.25;
+  margin: -.15rem 0 0;
+  color: var(--bone);
+}
+.e-title a { color: inherit; text-decoration: none; transition: color .18s ease; }
+.e-title a:hover, .e-title a:focus-visible { color: var(--amber); }
+.e-title a:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
+.e-sum {
+  margin: .5rem 0 0;
+  max-width: 62ch;
+  color: var(--bone-dim);
+  font-size: var(--step-0);
+  line-height: 1.5;
+}
+
+.e-meta {
+  margin: .7rem 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--bone-faint);
+  line-height: 1.6;
+}
+.e-meta .sep { opacity: .5; padding: 0 .45rem; }
+
+/* Direction — carried by a drawn chevron, never by hue, so the register never
+   editorialises with colour. Both readings sit at the same value. */
+.e-dir {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  color: var(--bone-dim);
+  white-space: nowrap;
+}
+.e-dir svg { width: 15px; height: 10px; flex: none; }
+
+/* ==========================================================================
+   The stage track — the signature.
+
+   A ruled bar carrying four station ticks (Introduced · Engrossed · Enrolled ·
+   Law). The travelled span is drawn as a polygon whose leading edge is cut at
+   45°, so the bar reads as a chamfered rule rather than a rounded progress
+   pill. A bill that died is drawn at its dim tone with a struck cross at the
+   point it stopped. Geometry lives in register.js.
+   ========================================================================== */
+.e-track { min-width: 0; }
+.track-svg { display: block; width: 100%; height: auto; }
+.track-status {
+  display: block;
+  margin-top: .5rem;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+}
+.track-status.is-dead { color: var(--bone-faint); }
+
+/* ==========================================================================
+   States — visible by default, never gated on script.
+   ========================================================================== */
+.state-msg { padding: clamp(2.5rem, 7vw, 4.5rem) 0; max-width: 54ch; }
+.state-head {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.15;
+  margin: 0;
+  color: var(--bone);
+}
+.state-body { margin: .9rem 0 0; color: var(--bone-dim); line-height: 1.55; }
+.state-msg[hidden] { display: none; }
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.foot {
+  flex: none;
+  padding: 2.2rem 0 clamp(2.5rem, 5vw, 3.5rem);
+  border-top: 1px solid var(--edge);
+}
+.colophon {
+  margin: 0;
+  max-width: 72ch;
+  font-size: var(--step--1);
+  line-height: 1.7;
+  color: var(--bone-faint);
+}
+.colophon a { color: var(--bone-dim); text-decoration: none; border-bottom: 1px solid var(--edge-lit); transition: color .18s ease, border-color .18s ease; }
+.colophon a:hover, .colophon a:focus-visible { color: var(--amber); border-bottom-color: var(--amber); }
+.colophon-back { margin-top: 1.1rem; }
+
+/* ==========================================================================
+   Narrow
+   ========================================================================== */
+@media (max-width: 60rem) {
+  .entry { grid-template-columns: 7rem minmax(0, 1fr); }
+  /* The track moves under the body copy and stays on the body's column, so it
+     never sits orphaned beneath the jurisdiction. */
+  .e-track { grid-column: 2; }
+  .standing { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 34rem) {
+  .entry { grid-template-columns: minmax(0, 1fr); gap: .9rem; }
+  .e-track { grid-column: 1; }
+  .e-juris { display: flex; align-items: baseline; gap: .6rem; }
+  .ctl-row { gap: 1.2rem; }
+  .ctl, .ctl-grow { flex: 1 1 100%; }
+  .seg { flex-wrap: wrap; gap: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: .01ms !important;
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   Print — the register as a filed document.
+   ========================================================================== */
+@media print {
+  .atmos, .skip-link, .controls { display: none !important; }
+  body { background: #fff; color: #000; }
+  .plate-title, .e-title, .state-head { color: #000 !important; }
+  .fig { color: #000 !important; }
+  .e-sum, .e-meta, .e-num, .e-state, .standing dt, .colophon { color: #333 !important; }
+  .entry { border-bottom: 1px solid #ccc; break-inside: avoid; }
+}
