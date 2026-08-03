@@ -117,8 +117,29 @@
   .st.done{background:var(--hi-bg);color:var(--hi)} .st.active{background:var(--mid-bg);color:var(--mid)}
   .st.next{background:#e8eefb;color:var(--navy)} .st.blocked{background:var(--red-soft);color:var(--red)}
   .st.later{background:#eef1f6;color:var(--ink-soft)}
+
   .lrow .rb .meta{display:flex;gap:14px;flex-wrap:wrap;font-size:.74rem;color:var(--ink-soft);margin-top:5px}
   .lrow .rb .meta b{color:var(--ink);font-weight:600}
+
+  /* launch checkable rows */
+  .lrow{align-items:flex-start;transition:opacity .15s ease}
+  .lrow.lc{opacity:.45}
+  .lrow.lc .rb b{color:var(--ink-soft)}
+  .lrow .lb{display:inline-flex;align-items:center;gap:10px;cursor:pointer;flex-shrink:0;min-width:110px;align-self:center}
+  .lrow .lb:focus-within{outline:2px solid var(--navy);outline-offset:4px;border-radius:4px}
+  /* no margin nudges here — align-items:center does the centering; competing offsets misalign the box against the pill */
+  .lrow .lcbox{width:18px;height:18px;accent-color:var(--hi);cursor:pointer;flex-shrink:0}
+  .lrow .lcbox:focus-visible{outline:2px solid var(--navy);outline-offset:2px;border-radius:3px}
+  .lrow .ltoggle{cursor:pointer;transition:color .12s}
+  .lrow .ltoggle:hover{color:var(--navy)}
+  .phase.overall h2{font-size:1.1rem}
+  .phase.overall{margin-bottom:18px}
+
+  /* reset control */
+  #resetBtn{border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);
+    font:600 .78rem var(--body);padding:6px 14px;border-radius:6px;cursor:pointer;transition:color .15s,border-color .15s}
+  #resetBtn:hover{color:var(--navy);border-color:var(--navy)}
+  #resetBtn:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
 
   .draftbar{margin-top:20px;font-size:.76rem;color:var(--ink-soft);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
   .tag{background:var(--gold);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:5px}
@@ -171,7 +192,7 @@
       <h2>Commercial ChMS</h2>
       <div class="tablewrap"><table>
         <tr><th>Platform</th><th>Two-way API</th><th>Webhooks</th><th>Check-in</th><th>~Price @100</th><th>Best for</th></tr>
-        <tr><td><b>Planning Center</b></td><td class="y">Full (People); free on all tiers, PAT auth</td><td class="y">Yes</td><td><b>~$15/mo</b>, iPad+Brother</td><td><b>$0–40/mo</b></td><td>Strong API at low cost; ship fast</td></tr>
+        <tr><td><b>Planning Center</b></td><td class="y">Full (People); free on all tiers, PAT auth</td><td class="y">Yes</td><td><b>~$15/mo</b>, iPad+Brother</td><td><b>~$15–65/mo</b> (Giving free yr 1)</td><td>Strong API at low cost; ship fast</td></tr>
         <tr><td><b>Breeze / Tithely</b></td><td class="m">Full CRUD, but frozen since 2020</td><td class="n">No (poll)</td><td>Included</td><td><b>$72/mo flat</b></td><td>Simplest turnkey, light API use</td></tr>
         <tr><td><b>ChurchTrac</b></td><td class="n">None (closed)</td><td class="n">No</td><td>Excellent</td><td>$18–36/mo</td><td>Cheap — but ✗ for building on</td></tr>
         <tr><td><b>Pushpay / CCB</b></td><td class="m">Yes, legacy XML</td><td class="n">No</td><td>Good</td><td>$200–1,500/mo</td><td>Big churches; over-budget here</td></tr>
@@ -353,13 +374,15 @@
       <span class="st active" style="min-width:0">Active</span>
       <span class="st next" style="min-width:0">Next up</span>
       <span class="st blocked" style="min-width:0">Blocked</span>
-      <span class="st later" style="min-width:0">Later</span> ·
-      Statuses are maintained by hand — <b>tell Micah and he'll update the list.</b> Sound equipment is
-      tracked separately and intentionally not here.</p>
+      <span class="st later" style="min-width:0">Later</span>.
+      The tick boxes below are a <b>personal working view</b> — they're saved in <b>this browser only</b>
+      and never leave this device. The <b>canonical status</b> still lives in
+      <code>docs/launch-checklist.md</code> and the LAUNCH array; ask Micah to update that for everyone.
+      Sound equipment is tracked separately and intentionally not here.</p>
     <div id="launchList"></div>
   </section>
 
-  <div class="draftbar"><span class="tag">Draft</span><span>Pricing is current-approximate (2026-06; email pricing 2026-07) — verify at vendor checkout before budgeting. Mirrors <code>docs/software-requirements.md</code>, <code>docs/chms-comparison.md</code>, <code>docs/email-domain.md</code> &amp; <code>docs/launch-checklist.md</code>.</span></div>
+  <div class="draftbar"><span class="tag">Draft</span><span>Pricing current-approximate — PCO ladder verified at planningcenter.com/pricing 2026-07; email pricing 2026-07. Verify at vendor checkout before budgeting. Mirrors <code>docs/software-requirements.md</code>, <code>docs/chms-comparison.md</code>, <code>docs/servant-keeper-vs-pco.md</code>, <code>docs/email-domain.md</code> &amp; <code>docs/launch-checklist.md</code>.</span></div>
 </div>
 
 <script>
@@ -380,6 +403,7 @@ const REQ=[
   {id:'R13',pri:'should',title:'Service planning + volunteer scheduling',desc:'Streamline scheduling and sign-ups so no one has to chase people down — service rosters, meal trains, harvest and outreach, evangelism, ministry and mission-trip sign-ups, all centralized and easy. (Pastor Ed: a high-value time-saver.) PCO Services is strong here.'},
   {id:'R14',pri:'nice',title:'Member self-service app',desc:'Where members give, register for events, find their group, check in, and update their info — the everyday "side door" for people who already attend (vs. R6, the public site for visitors). E.g. PCO Church Center, free.'},
   {id:'R15',pri:'should',title:'SongSelect (song library + chord charts)',desc:'CCLI’s catalog — lyrics, chord charts, and lead sheets that feed ProPresenter and Planning Center. A big convenience for the worship team, but (unlike R8) not legally required.'},
+  {id:'R16',pri:'must',title:'Unlimited giving designations (funds/codes)',desc:'Every line on the offering envelope has to be codeable, plus special offerings and each individual missionary — the office runs many codes today (including Mis. Record Keeping, Refund, Camp) and needs at least parity. Also needs per-user permissions so only the counter sees individual amounts. Raised by Terri Fraumann, July 2026.'},
 ];
 const PRANK={must:0,should:1,nice:2};
 document.getElementById('reqList').innerHTML=REQ.slice().sort((a,b)=>(PRANK[a.pri]??9)-(PRANK[b.pri]??9)).map(r=>`<div class="reqrow">
@@ -391,19 +415,24 @@ let size=1; // index into [50,100,200,400]
 // ChMS options: cost function by size index returns {annual, label, includes:[]}
 const CHMS={
   pco:{name:'Planning Center',desc:'Free People + per-module; best API',modules:true},
+  sk:{name:'Servant Keeper',desc:'$80/mo Core · $160/mo Complete (flat rate)',annual:[960,960,1920,1920],modules:false,note:'check-in is a +$199 add-on and its two-way API (R1) is limited — the main strike against it'},
   breeze:{name:'Breeze / Tithely',desc:'$72/mo flat, all included',annual:[864,864,864,864],modules:false},
   rock:{name:'Rock RMS (self-host)',desc:'Free software + ~$50/mo hosting',annual:[600,600,600,600],modules:false,note:'+ developer time'},
   churchcrm:{name:'ChurchCRM (self-host)',desc:'MIT; ~$10/mo hosting (build giving+checkin)',annual:[120,120,120,120],modules:false,note:'+ build missing features'},
 };
 let chms='pco';
-// PCO module annual costs by size index
+// PCO prices EVERY product on one shared monthly ladder — Free / $15 / $32 / $69 / $115 / $179 / $239 —
+// each product just reads its tier off its own metric (verified at planningcenter.com/pricing, 2026-07).
+// mo[] = assumed monthly price at ~[50,100,200,400] avg attendance; tier[] = the usage tier that assumes.
+// The tiers are estimates (PCO bills by usage, not attendance) — the bill shows them so they're checkable.
 const PCOMOD={
-  checkins:{name:'Check-Ins',c:[0,170,360,720]},
-  giving:{name:'Giving',c:[0,0,0,0]},
-  groups:{name:'Groups',c:[0,170,350,590]},
-  services:{name:'Services (planning)',c:[0,170,350,710]},
+  checkins:{name:'Check-Ins',metric:'kids checked in, busiest Sun',tier:['≤30/day','≤30/day','≤75/day','≤200/day'],mo:[15,15,32,69]},
+  giving:{name:'Giving',metric:'donations received / month',tier:['≤75/mo','≤200/mo','≤200/mo','≤500/mo'],mo:[15,32,32,69],free:'church planters get year 1 free — apply'},
+  groups:{name:'Groups',metric:'people in groups',tier:['≤75','≤75','≤200','≤500'],mo:[15,15,32,69]},
+  services:{name:'Services (planning + scheduling)',metric:'team members scheduled',tier:['≤20','≤50','≤150','≤150'],mo:[15,32,69,69]},
+  calendar:{name:'Calendar (room booking)',metric:'rooms managed',tier:['1 (free)','≤5','≤5','≤15'],mo:[0,15,15,32]},
 };
-let mods={checkins:true,giving:true,groups:false,services:false};
+let mods={checkins:true,giving:true,groups:false,services:false,calendar:false};
 const PRES={
   propresenter:{name:'ProPresenter',annual:289},
   proclaim:{name:'Proclaim',annual:225},
@@ -427,8 +456,8 @@ function renderInputs(){
       <div class="ot"><b>${v.name}</b><span>${v.desc}</span></div><div class="oc">${cost}</div></label>`;}).join('');
   document.getElementById('modField').style.display=CHMS[chms].modules?'block':'none';
   document.getElementById('modChk').innerHTML=Object.entries(PCOMOD).map(([k,v])=>{
-    const lock=k==='giving';const c=v.c[size];
-    return `<label class="${mods[k]?'sel':''}" data-mod="${k}"><input type="checkbox" ${mods[k]?'checked':''}> ${v.name} ${c?'('+money(c)+')':'(free)'}</label>`;}).join('');
+    const m=v.mo[size];
+    return `<label class="${mods[k]?'sel':''}" data-mod="${k}"><input type="checkbox" ${mods[k]?'checked':''}> ${v.name} (${m?money(m)+'/mo':'free'} · ${v.tier[size]})</label>`;}).join('');
   document.getElementById('presOpts').innerHTML=Object.entries(PRES).map(([k,v])=>
     `<label class="opt ${pres===k?'sel':''}" data-pres="${k}"><input type="radio" ${pres===k?'checked':''}>
       <div class="ot"><b>${v.name}</b></div><div class="oc">${v.annual?money(v.annual)+'/yr':'$0'}</div></label>`).join('');
@@ -439,14 +468,14 @@ function renderInputs(){
 function wire(){
   document.querySelectorAll('[data-chms]').forEach(el=>el.onclick=()=>{chms=el.dataset.chms;renderInputs();});
   document.querySelectorAll('[data-pres]').forEach(el=>el.onclick=()=>{pres=el.dataset.pres;renderInputs();});
-  document.querySelectorAll('[data-mod]').forEach(el=>el.onclick=e=>{if(el.dataset.mod==='giving'){e.preventDefault();return;}mods[el.dataset.mod]=!mods[el.dataset.mod];renderInputs();});
+  document.querySelectorAll('[data-mod]').forEach(el=>el.onclick=()=>{mods[el.dataset.mod]=!mods[el.dataset.mod];renderInputs();});
   document.querySelectorAll('[data-ccli]').forEach(el=>el.onclick=()=>{ccli[el.dataset.ccli]=!ccli[el.dataset.ccli];renderInputs();});
 }
 function renderBill(){
-  let items=[];
+  let items=[],pcoNote='';
   if(CHMS[chms].modules){
     items.push([CHMS[chms].name+' · People','free']);
-    Object.entries(PCOMOD).forEach(([k,v])=>{if(mods[k]){const c=v.c[size];items.push([CHMS[chms].name+' · '+v.name,c]);}});
+    Object.entries(PCOMOD).forEach(([k,v])=>{if(mods[k]){const a=v.mo[size]*12;items.push([CHMS[chms].name+' · '+v.name+' ('+v.tier[size]+')',a]);if(v.free)pcoNote=v.free;}});
   }else{items.push([CHMS[chms].name,CHMS[chms].annual[size]]);}
   if(PRES[pres].annual>=0 && pres!=='none')items.push([PRES[pres].name,PRES[pres].annual]);
   Object.entries(CCLI).forEach(([k,v])=>{if(ccli[k])items.push([v.name,v.c[size]]);});
@@ -458,44 +487,49 @@ function renderBill(){
       <div class="mo num">≈ ${money(total/12)}/mo</div>
       <div class="sm">at ~${[50,100,200,400][size]} avg attendance</div></div>
     ${note}
-    <div class="billnote">+ ~2–3% card fees on giving. Software prices current-approximate — verify before budgeting.</div>`;
+    ${pcoNote?`<div class="billnote">💡 ${pcoNote}.</div>`:''}
+    <div class="billnote">+ giving processing fees (US): 2.15% + $0.30 per card gift, 0% + $0.30 per ACH. PCO bills each module by usage, not attendance — the tier shown per line is an estimate; verify at checkout before budgeting.</div>`;
 }
 document.querySelectorAll('#sizeSeg button').forEach(b=>b.onclick=()=>{
   document.querySelectorAll('#sizeSeg button').forEach(x=>x.classList.remove('on'));b.classList.add('on');size=+b.dataset.i;renderInputs();});
 
 // ===== launch checklist =====
-// status: done | active | next | blocked | later.  Edit here (+ docs/launch-checklist.md) — page is read-only.
+// status: done | active | next | blocked | later.  Edit here (+ docs/launch-checklist.md).
+// Launch checks (st:'done' defaults) are rendered as checkboxes; tick state is user-driven
+// and persisted to localStorage under "lhbc_launch_checks".
 const LAUNCH=[
  {ph:'1 · Legal & financial foundation',note:'The longest lead times live here — most of the digital plan is blocked behind the EIN → 501(c)(3) chain.',items:[
-  {t:'Ohio nonprofit incorporation',d:'Articles of incorporation + statutory agent + bylaws/constitution. The legal entity everything else attaches to.',cost:'~$99 filing',lead:'1–2 wks',st:'next'},
+  {t:'Nonprofit incorporation',d:'Articles of incorporation + statutory agent + bylaws/constitution — creates the legal entity everything else attaches to (this is NOT a tax filing). GOTCHA: the standard state form omits the IRS-required purpose + dissolution clauses; draft them IN or the 1023 bounces and you re-file. Worth an hour of a lawyer to review that language.',cost:'~$99 filing',lead:'1–2 wks',st:'next'},
   {t:'EIN from the IRS',d:'Free, online, near-instant once incorporated. Unlocks the bank account and the 501(c)(3) filing.',cost:'Free',lead:'Days',st:'next',dep:'Incorporation'},
-  {t:'501(c)(3) determination letter (Form 1023/1023-EZ)',d:'Churches are auto-exempt but verifiers (Google, Microsoft, some vendors) need the letter. Independent church = no group exemption shortcut.',cost:'$275–600 IRS fee',lead:'2–8 months',st:'blocked',dep:'EIN'},
+  {t:'501(c)(3) exemption + downstream state exemptions',d:'Federal determination letter (Form 1023/1023-EZ) is the exemption — churches are auto-exempt but verifiers (Google, Microsoft, banks, grantmakers) query databases that only list orgs with the letter. Rolled in, since the letter unlocks them: state SALES-TAX exemption (hand vendors a signed certificate — no separate application/wait), PROPERTY-TAX exemption (only once the church owns real property, via the county), and confirming the state charitable-registration exemption for religious orgs. No separate state 501(c)(3) application exists — the state piggybacks on the federal letter.',cost:'$275–600 IRS fee',lead:'2–8 months',st:'blocked',dep:'EIN'},
   {t:'Church bank account',d:'Church-owned, dual-signer policy. Needed before giving can deposit anywhere.',cost:'Free–$15/mo',lead:'Days',st:'blocked',dep:'EIN + org docs'},
   {t:'Fund accounting',d:'Giving records ≠ bookkeeping. Fund accounting (Aplos is church-standard; QuickBooks works with discipline) + annual budget.',cost:'~$80/mo (Aplos)',lead:'1–2 wks',st:'later'},
   {t:'Payroll with clergy housing allowance',d:'Pastor pay is tax-weird (dual status, housing allowance must be board-designated in advance). Use a clergy-aware payroll (MinistryWorks) or accountant.',cost:'~$50–75/mo',lead:'2–4 wks',st:'later',dep:'Bank account'},
   {t:'Liability insurance',d:'General liability + child-safety rider. Insurers will ask for the child-protection policy (Phase 3).',cost:'~$1–3k/yr',lead:'2–4 wks',st:'later',dep:'Incorporation'},
  ]},
  {ph:'2 · Digital identity',note:'Cheap, fast, and mostly independent of the paperwork — the email plan (Email & Domain tab) lives here.',items:[
-  {t:'Choose & buy the domain',d:'Pick the name deliberately (it becomes every email address and the site URL — hard to change later), grab the .org (+ .com variant if cheap, redirected). Registrar account church-owned and board-accessible, WHOIS privacy on, auto-renew ON, transfer-lock on — lapsed church domains get sniped.',cost:'~$12–25/yr',lead:'Minutes',st:'next'},
-  {t:'DNS host & records',d:'Point the domain at a proper DNS host — Cloudflare free tier is the natural pick since it future-proofs the custom-tools track (Pages, Access, Workers). Records: A/CNAME for the site, MX for email, SPF/DKIM/DMARC. HTTPS comes automatic.',cost:'Free',lead:'Hours',st:'blocked',dep:'Domain'},
-  {t:'Website live on the domain',d:'Site is built (mockup done) — deploy un-gated to the real domain. Satisfies Google’s 5-page live-site bar for nonprofit verification.',cost:'$0 (Pages)',lead:'Days',st:'blocked',dep:'Domain'},
-  {t:'Bridge email — pastor@ / office@',d:'2–3 paid seats, monthly term (see Email & Domain tab). Set SPF/DKIM/DMARC at the registrar so church mail actually lands in inboxes. Convert to the free nonprofit tier when the determination letter exists.',cost:'~$15–25/mo bridge → $0',lead:'Days',st:'blocked',dep:'Domain'},
-  {t:'Church-owned password manager',d:'Bitwarden (or similar) holding registrar, email admin, ChMS admin, bank, socials — elder-accessible recovery. Kills the bus-factor.',cost:'$0–4/mo',lead:'Days',st:'next'},
-  {t:'Vendor accounts under church email',d:'Every service account (ChMS, CCLI, registrar, YouTube, Cloudflare…) gets created with office@ — never a personal email — and goes straight into the password manager. Cheap to do from day one, painful to untangle later.',cost:'Free',lead:'Ongoing habit',st:'blocked',dep:'Bridge email'},
+  {t:'Choose & buy the domain',d:'DONE — registered at Porkbun. WHOIS privacy is free and on by default there. Still confirm at the registrar: auto-renew ON and transfer-lock ON (lapsed church domains get sniped), and move the Porkbun login into the password manager so it is not tied to one person.',cost:'~$12–25/yr',lead:'Minutes',st:'done'},
+  {t:'Receive-only email forwarding — office@',d:'The unblocker: forwarding office@ to an existing inbox is free and takes minutes, and receiving is all that vendor signup verification needs. Porkbun does this natively (keeps its own nameservers); Cloudflare Email Routing is the equivalent once DNS moves there. Receive-only — it cannot send as office@.',cost:'Free',lead:'Minutes',st:'active',dep:'Domain'},
+  {t:'Anti-spoof DNS records (SPF + DMARC)',d:'While the domain sends no mail, publish TXT records saying exactly that so nobody can spoof the church: SPF "v=spf1 -all" at the root and DMARC "p=reject" at _dmarc. REVISIT the moment anything legitimately sends (the ChMS mailing giving receipts needs its own SPF entry — a forgotten -all silently bins them).',cost:'Free',lead:'Minutes',st:'next',dep:'Domain'},
+  {t:'DNS host & records',d:'Currently on Porkbun nameservers (required for its native forwarding). Move to Cloudflare free tier when the website goes live — it future-proofs the custom-tools track (Pages, Access, Workers). NOTE: moving nameservers breaks Porkbun forwarding, so re-create it as Cloudflare Email Routing in the same sitting.',cost:'Free',lead:'Hours',st:'next',dep:'Domain'},
+  {t:'Website live on the domain',d:'Site is built (mockup done) — deploy un-gated to the real domain. Satisfies Google’s 5-page live-site bar for nonprofit verification.',cost:'$0 (Pages)',lead:'Days',st:'next',dep:'Domain'},
+  {t:'Bridge email — pastor@ / office@',d:'Real mailboxes that can SEND as the church — needed the first time you reply to a landlord, insurer or visitor, not for signups. 2–3 paid seats, monthly term (see Email & Domain tab). Convert to the free nonprofit tier when the determination letter exists.',cost:'~$15–25/mo bridge → $0',lead:'Days',st:'later',dep:'Domain'},
+  {t:'Church-owned password manager',d:'Bitwarden (or similar) holding registrar, email admin, ChMS admin, bank, socials — elder-accessible recovery. Kills the bus-factor. Now urgent: vendor signups start here, and every credential created before this exists is one someone has to chase down later.',cost:'$0–4/mo',lead:'Days',st:'next'},
+  {t:'Vendor accounts under church email',d:'Every service account (ChMS, CCLI, registrar, YouTube, Cloudflare…) gets created with office@ — never a personal email — and goes straight into the password manager. The forward is a delivery route and is trivial to repoint; a personal address saved as a vendor RECOVERY email is what is painful to untangle, so never set one.',cost:'Free',lead:'Ongoing habit',st:'next',dep:'Email forwarding'},
   {t:'Church-owned GitHub organization',d:'The website + custom tools currently live in Micah’s personal repos — move them to a church-owned GitHub org (free) so the code survives any one person, same principle as the registrar and Super Admin.',cost:'Free',lead:'Hours',st:'later',dep:'Church email'},
   {t:'Church phone number',d:'Google Voice (free) so the public number isn’t a personal cell.',cost:'Free',lead:'Minutes',st:'later'},
   {t:'Google Business Profile',d:'The highest-ROI item on this list — "church near me" hits Maps before any website. Needs the physical address.',cost:'Free',lead:'1–2 wks verify',st:'blocked',dep:'Venue address'},
   {t:'Facebook page + YouTube channel',d:'Where local church discovery actually happens; YouTube is the streaming/sermon home.',cost:'Free',lead:'Days',st:'later'},
  ]},
  {ph:'3 · Ministry software & safety',note:'The decisions the rest of this page exists for, plus the people-safety layer.',items:[
-  {t:'ChMS decision',d:'Leadership deciding — comparison on the ChMS tab. Ed’s Church Center interest (via FBCNP) points at Planning Center; choosing Church Center is choosing PCO.',cost:'$0–40/mo @100',lead:'—',st:'active'},
+  {t:'ChMS decision',d:'Leadership deciding — comparison on the ChMS tab. Ed’s Church Center interest (via FBCNP) points at Planning Center; choosing Church Center is choosing PCO. A full Servant Keeper vs PCO parity + cost analysis is done (docs/servant-keeper-vs-pco.md) and recommends PCO — the working direction. PCO ≈ $15/mo yr 1 (planter free Giving) → $45–65/mo @100 with Check-Ins + Giving; Servant Keeper is $80–160/mo flat with a weaker API.',cost:'~$15–65/mo @100',lead:'—',st:'active'},
   {t:'CCLI Copyright License',d:'The legal floor the moment lyrics are projected. Streaming License added when livestreaming starts.',cost:'~$246/yr (+$175 streaming)',lead:'Days',st:'later'},
   {t:'Worship presentation software',d:'Options on the Worship tab (ProPresenter / FreeShow / OpenLP…). Pick follows the ChMS decision.',cost:'$0–289/yr',lead:'—',st:'later',dep:'ChMS decision'},
   {t:'Child protection policy + background checks',d:'Written policy (insurers require it) + checks for every children’s worker — Checkr integrates into PCO People.',cost:'~$10–25/check',lead:'1–2 wks',st:'later',dep:'ChMS decision'},
-  {t:'Check-in hardware',d:'iPad(s) + Brother label printer + stand for Little Lambs check-in (mockup done).',cost:'~$500–800 one-time',lead:'Days',st:'later',dep:'ChMS decision'},
+  {t:'Check-in hardware',d:'One lane = iPad + Brother QL-820NWB label printer + DK-2205 thermal roll + a stand for Little Lambs check-in (mockup done). GOTCHA: it must be a network-capable Brother QL (the "NWB" models) — a plain USB printer or a DYMO won\'t talk to the iPad station. Same printer prints the child tag AND the guardian pickup label; needs venue Wi-Fi at the table.',cost:'~$200–650/lane',lead:'Days',st:'later',dep:'ChMS decision'},
   {t:'Mass communication plan',d:'Snow-day problem: PCO People email lists cover most of it; add texting (e.g. Text In Church) only if needed.',cost:'$0–20/mo',lead:'Days',st:'later',dep:'ChMS decision'},
   {t:'Initial people database entry',d:'Populate the ChMS with the ~100 people/households — the database is only as good as day-one data. Assign one owner for accuracy; import from a spreadsheet if one exists.',cost:'Volunteer time',lead:'1–2 wks',st:'later',dep:'ChMS decision'},
-  {t:'Online giving live',d:'Configure the giving module, connect the church bank account, decide who covers processing fees (most platforms offer donor-covers), and test end-to-end with a real gift before announcing.',cost:'~2–3% fees',lead:'~1 wk',st:'blocked',dep:'Bank account + ChMS'},
+  {t:'Online giving live',d:'Configure the giving module, connect the church bank account, decide who covers processing fees (donor-covers is common), and test end-to-end with a real gift before announcing. Church planters get PCO Giving free for year 1. US fees: 2.15% + $0.30 per card gift, 0% + $0.30 per ACH — steer donors to ACH.',cost:'free yr 1; ~2.15%+',lead:'~1 wk',st:'blocked',dep:'Bank account + ChMS'},
   {t:'Children’s check-in: build vs buy',d:'Standing decision from the mockup work — hinges on the vendor module cost (PCO Check-Ins ~$15/mo likely beats building). Configure + train volunteers either way.',cost:'—',lead:'—',st:'later',dep:'ChMS decision'},
   {t:'Church Center rollout & adoption',d:'Enabling the member app is the easy part — adoption is the work: announce it, QR cards in the pews, help table after service. Feeds giving, check-in, groups, and the attendance "app lane."',cost:'$0',lead:'Ongoing',st:'later',dep:'ChMS decision'},
  ]},
@@ -520,17 +554,109 @@ const LAUNCH=[
  ]},
 ];
 const STLABEL={done:'Done',active:'Active',next:'Next up',blocked:'Blocked',later:'Later'};
-document.getElementById('launchList').innerHTML=LAUNCH.map(p=>{
-  const done=p.items.filter(i=>i.st==='done').length;
-  return `<div class="card phase">
+const CHECK_KEY='lhbc_launch_checks';
+
+function slug(s){return String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
+
+function loadTicks(){
+  try{
+    const raw=localStorage.getItem(CHECK_KEY);
+    if(!raw) return {};
+    const o=JSON.parse(raw);
+    if(o && typeof o==='object' && !Array.isArray(o)) return o;
+    return {};
+  }catch(e){ return {}; }
+}
+
+function saveTicks(t){ try{ localStorage.setItem(CHECK_KEY, JSON.stringify(t)); }catch(e){} }
+
+// resolvedOn(slug, item): single source of truth.
+// Returns true if (a) the slug is stored as true, OR
+// (b) the slug is not in storage AND the item's st is 'done' (the default).
+function resolvedOn(slugKey, item){
+  const t=ticks;
+  if(slugKey in t) return !!t[slugKey];
+  return item.st==='done';
+}
+
+function toggleItem(slugKey){
+  const t=loadTicks();
+  // Default must come from the item's own st, not false — otherwise the first click on an
+  // st:'done' item writes back the state it already had and appears to do nothing.
+  const item=LAUNCH.flatMap(p=>p.items).find(i=>slug(i.t)===slugKey);
+  const cur=slugKey in t ? !!t[slugKey] : (item?item.st==='done':false);
+  t[slugKey]=!cur;
+  saveTicks(t);
+  ticks=t;
+  renderLaunchList();
+}
+
+function resetAllTicks(){
+  localStorage.removeItem(CHECK_KEY);
+  ticks={};
+  renderLaunchList();
+}
+
+let ticks={}; // cached for this render pass
+
+function renderLaunchList(){
+  const el=document.getElementById('launchList');
+  if(!el) return;
+
+  ticks=loadTicks(); // load once per render, reused by resolvedOn + counters
+
+  // Overall summary line
+  let totalAll=0, doneAll=0;
+  const phaseBlocks=LAUNCH.map(p=>{
+    const done=p.items.filter(i=>resolvedOn(slug(i.t),i)).length;
+    totalAll+=p.items.length; doneAll+=done;
+    return {p,done};
+  });
+
+  const pctAll=totalAll?Math.round(doneAll/totalAll*100):0;
+
+  let html=`<div class="card phase overall">
+    <div class="phead"><h2>All phases</h2>
+      <span class="pmeta">${doneAll}/${totalAll} items done (${pctAll}%)</span></div>
+    <div class="pbar"><i style="width:${pctAll}%"></i></div>
+    <div class="draftbar"><button id="resetBtn" type="button">Reset ticks</button>
+      <span>Clears saved ticks and returns every item to its default status.</span></div>
+  </div>`;
+
+  phaseBlocks.forEach(({p,done})=>{
+    const pct=p.items.length?Math.round(done/p.items.length*100):0;
+    html+=`<div class="card phase">
     <div class="phead"><h2>${p.ph}</h2><span class="pmeta">${done}/${p.items.length} done</span></div>
-    <div class="pbar"><i style="width:${p.items.length?Math.round(done/p.items.length*100):0}%"></i></div>
+    <div class="pbar"><i style="width:${pct}%"></i></div>
     <p class="csub">${p.note}</p>
-    ${p.items.map(i=>`<div class="reqrow lrow"><span class="st ${i.st}">${STLABEL[i.st]}</span>
-      <div class="rb"><b>${i.t}</b><p>${i.d}</p>
+    ${p.items.map(i=>{
+      const sl=slug(i.t);
+      const on=resolvedOn(sl,i);
+      return `<div class="reqrow lrow ${on?'lc':''}"><label class="lb"><input type="checkbox" class="lcbox" data-sl="${sl}"${on?' checked':''}><span class="st ${i.st}">${STLABEL[i.st]}</span></label>
+      <div class="rb"><b class="ltoggle" data-sl="${sl}">${i.t}</b><p>${i.d}</p>
       <div class="meta"><span>💵 <b>${i.cost}</b></span><span>⏱ <b>${i.lead}</b></span>${i.dep?`<span>⛓ needs <b>${i.dep}</b></span>`:''}</div>
-    </div></div>`).join('')}
-  </div>`;}).join('');
+    </div></div>`;
+    }).join('')}
+  </div>`;
+  });
+
+  el.innerHTML=html;
+
+  // Attach tick handlers (change = native input, click-title = programmatic tick)
+  el.querySelectorAll('.lcbox').forEach(cb=>{
+    cb.addEventListener('change',()=>toggleItem(cb.dataset.sl));
+  });
+  el.querySelectorAll('.ltoggle').forEach(tog=>{
+    tog.addEventListener('click',()=>{
+      const cb=el.querySelector(`.lcbox[data-sl="${tog.dataset.sl}"]`);
+      if(cb){cb.checked=!cb.checked;cb.dispatchEvent(new Event('change'));}
+    });
+  });
+  const rbtn=document.getElementById('resetBtn');
+  if(rbtn) rbtn.addEventListener('click',resetAllTicks);
+}
+
+renderLaunchList();
 
 // ===== tabs =====
 document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
