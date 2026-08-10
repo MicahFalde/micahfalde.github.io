@@ -392,6 +392,36 @@
     display:flex;gap:3cqw;font-size:1.7cqw;color:#6a6f96
   }
 
+
+  /* ============ ROUND FIVE: real photographs, and the no-picture set ============ */
+  .rp .scene{position:absolute;inset:0;overflow:hidden}
+  .rp .scene img{width:100%;height:100%;object-fit:cover;display:block}
+  .rp .scrim{
+    position:absolute;inset:0;
+    background:radial-gradient(72% 60% at 50% 48%,rgba(14,18,34,.68),rgba(14,18,34,.34) 62%,transparent 90%)
+  }
+  .m.rp .stage{position:relative;z-index:2;text-shadow:0 .12cqw .55cqw rgba(10,14,28,.7)}
+  .m.rp .who{color:#fdfbf5;font-size:2.62cqw;white-space:nowrap;letter-spacing:.055em}
+  .m.rp .town{
+    margin:0;font-size:1.62cqw;letter-spacing:.24em;color:var(--tan);
+    font-weight:700;text-transform:uppercase
+  }
+  .m.rp .times{display:flex;gap:0;width:100%;max-width:62cqw}
+  .m.rp .times div{
+    flex:1;display:grid;gap:.3cqw;justify-items:center;padding:0 .6cqw;
+    border-left:1px solid rgba(243,238,224,.3)
+  }
+  .m.rp .times div:first-child{border-left:0}
+  .m.rp .times dt{font-size:1.34cqw;letter-spacing:.13em;text-transform:uppercase;color:#e8e3d2;font-weight:700}
+  .m.rp .times dd{margin:0;font-family:var(--display);font-size:3.1cqw;color:#fffdf7;font-variant-numeric:tabular-nums}
+  .m.rp .btn{background:var(--cream);color:var(--navy)}
+  .m.rp .mono svg{width:5.6cqw;height:auto;display:block}
+  .m.rp .mono rect{fill:#fdfbf5}
+  .credit{
+    margin:10px 0 0;font-size:13px;line-height:1.5;color:var(--text-faint)
+  }
+  .credit a{color:var(--text-faint)}
+
   /* ================= ROUND FOUR: four more pictures ================= */
 
   /* --- The barn --- */
@@ -853,11 +883,11 @@
 <header class="top">
   <div class="wrap">
     <p class="eyebrow">Lincoln Highway Baptist Church &middot; website direction</p>
-    <h1>Eight pictures, one lockup, the town up front.</h1>
+    <h1>Real photographs, and the three that need none.</h1>
     <p class="standfirst">
-      Kerri&rsquo;s sharpest note was not about looks. She keeps searching a church name and landing on a
-      church in another state, so <strong>the town has to be visible the second the page loads</strong>.
-      Every mockup below states Dalton before you have read anything else.
+      You did not like the invented pictures, and you were right: they looked invented. So the top of
+      this page is now <strong>actual photographs of rural Ohio</strong>, public domain, two of the three
+      taken standing on Route 30. Underneath are the three you picked that need no photograph at all.
     </p>
     <p class="standfirst">
       The rest follows her other notes: a picture behind the centred lockup, the name on <strong>one
@@ -1305,6 +1335,153 @@
       Same four rules in all of them, so what you are choosing between is the arrangement. The risk with
       centred and minimal is that it turns into the layout every template ships, so each of these is
       centred on a different thing: an object, a panel, a band, and the times themselves.
+    </p>
+  </div>
+
+
+  <div class="groupbreak">
+    <h2>Round five: real photographs</h2>
+    <p>
+      You were right that the invented pictures looked invented. These are actual photographs of rural
+      Ohio, all in the public domain, and two of the three were taken standing on Route 30, which is the
+      Lincoln Highway. Nothing here is a drawing. This is roughly what a real shot would look like
+      behind the lockup you already picked.
+    </p>
+  </div>
+
+  <div class="plates">
+
+    <article class="plate">
+      <div class="board">
+        <div class="m c rp ">
+          <div class="scene"><img src="img/field.jpg" alt="Harvested cornfield and farm buildings under a deep blue sky, Old Route 30, Ohio" loading="lazy"></div>
+          <div class="scrim" aria-hidden="true"></div>
+          <div class="nav" style="color:#fdfbf5;position:relative;z-index:2">
+            <span>Beliefs</span><span>Ministries</span><span>Messages</span>
+            <span class="sp">Giving</span>
+          </div>
+          <div class="stage">
+            <span class="mono" aria-hidden="true">
+              <svg viewBox="0 0 100 110">
+                <rect x="46" y="35" width="10" height="60"/><rect x="46" y="85" width="35" height="10"/>
+                <rect x="30" y="19" width="10" height="55"/><rect x="18" y="39" width="35" height="10"/>
+              </svg>
+            </span>
+            <p class="who">LINCOLN HIGHWAY BAPTIST CHURCH</p>
+            <p class="town">Dalton, Ohio</p>
+            <dl class="times">
+              <div><dt>Sunday School</dt><dd>9:00</dd></div>
+              <div><dt>Worship</dt><dd>10:15</dd></div>
+              <div><dt>Wednesday</dt><dd>6:30</dd></div>
+            </dl>
+            <div class="btnrow">
+              <span class="btn">Plan a visit</span>
+              <span class="btn">What we believe</span>
+              <span class="btn">Give</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="caption"><h3>Harvest field</h3><span class="tag">Best of the three</span></div>
+      <p class="thesis">A cut cornfield in October under a hard blue sky, taken from Old Route 30. The gold and the deep blue sit naturally beside navy and cream, and the empty sky gives the name and times somewhere clean to sit.</p>
+      <dl class="facts">
+        <div><dt>Reads as</dt><dd>Local, plain, unmistakably Ohio in autumn.</dd></div>
+        <div><dt>Light</dt><dd>Bright midday. Strong colour, no mood.</dd></div>
+        <div><dt>Watch</dt><dd>Autumn-specific. Looks wrong in a spring photo swap.</dd></div>
+      </dl>
+      <p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Eden_Township_cellphone_tower_and_farm_on_Old_30.jpg">Eden Township farm on Old 30</a>, Nyttend, public domain.</p>
+    </article>
+
+    <article class="plate">
+      <div class="board">
+        <div class="m c rp ">
+          <div class="scene"><img src="img/dusk.jpg" alt="Grain bins lit at dusk beside a harvested field" loading="lazy"></div>
+          <div class="scrim" aria-hidden="true"></div>
+          <div class="nav" style="color:#fdfbf5;position:relative;z-index:2">
+            <span>Beliefs</span><span>Ministries</span><span>Messages</span>
+            <span class="sp">Giving</span>
+          </div>
+          <div class="stage">
+            <span class="mono" aria-hidden="true">
+              <svg viewBox="0 0 100 110">
+                <rect x="46" y="35" width="10" height="60"/><rect x="46" y="85" width="35" height="10"/>
+                <rect x="30" y="19" width="10" height="55"/><rect x="18" y="39" width="35" height="10"/>
+              </svg>
+            </span>
+            <p class="who">LINCOLN HIGHWAY BAPTIST CHURCH</p>
+            <p class="town">Dalton, Ohio</p>
+            <dl class="times">
+              <div><dt>Sunday School</dt><dd>9:00</dd></div>
+              <div><dt>Worship</dt><dd>10:15</dd></div>
+              <div><dt>Wednesday</dt><dd>6:30</dd></div>
+            </dl>
+            <div class="btnrow">
+              <span class="btn">Plan a visit</span>
+              <span class="btn">What we believe</span>
+              <span class="btn">Give</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="caption"><h3>Grain bins at dusk</h3><span class="tag">Warmest</span></div>
+      <p class="thesis">Grain bins lit against a fading sky. This is the honest version of the dark option Kerri did not like as a flat navy panel: the same darkness, but with real depth and one warm light in it.</p>
+      <dl class="facts">
+        <div><dt>Reads as</dt><dd>Quiet, end of day, small town at work.</dd></div>
+        <div><dt>Light</dt><dd>Dusk. Soft, low contrast, moody.</dd></div>
+        <div><dt>Watch</dt><dd>Dark photos hide detail on phones in sunlight.</dd></div>
+      </dl>
+      <p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Muhlenberg_Township_farm_at_dusk.jpg">Muhlenberg Township farm at dusk</a>, Nyttend, public domain.</p>
+    </article>
+
+    <article class="plate">
+      <div class="board">
+        <div class="m c rp ">
+          <div class="scene"><img src="img/sky.jpg" alt="Farmsteads and open fields under a wide clear blue sky seen from US 30" loading="lazy"></div>
+          <div class="scrim" aria-hidden="true"></div>
+          <div class="nav" style="color:#fdfbf5;position:relative;z-index:2">
+            <span>Beliefs</span><span>Ministries</span><span>Messages</span>
+            <span class="sp">Giving</span>
+          </div>
+          <div class="stage">
+            <span class="mono" aria-hidden="true">
+              <svg viewBox="0 0 100 110">
+                <rect x="46" y="35" width="10" height="60"/><rect x="46" y="85" width="35" height="10"/>
+                <rect x="30" y="19" width="10" height="55"/><rect x="18" y="39" width="35" height="10"/>
+              </svg>
+            </span>
+            <p class="who">LINCOLN HIGHWAY BAPTIST CHURCH</p>
+            <p class="town">Dalton, Ohio</p>
+            <dl class="times">
+              <div><dt>Sunday School</dt><dd>9:00</dd></div>
+              <div><dt>Worship</dt><dd>10:15</dd></div>
+              <div><dt>Wednesday</dt><dd>6:30</dd></div>
+            </dl>
+            <div class="btnrow">
+              <span class="btn">Plan a visit</span>
+              <span class="btn">What we believe</span>
+              <span class="btn">Give</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="caption"><h3>Open sky</h3><span class="tag">Most room for type</span></div>
+      <p class="thesis">Farmsteads across open ground, shot from US 30. Two thirds of the frame is clean sky, which is the single most useful property a hero photograph can have when the lockup has to sit in the middle of it.</p>
+      <dl class="facts">
+        <div><dt>Reads as</dt><dd>Wide, calm, plenty of breathing room.</dd></div>
+        <div><dt>Light</dt><dd>Clear midday. Big empty blue.</dd></div>
+        <div><dt>Watch</dt><dd>Slight motion blur along the bottom edge.</dd></div>
+      </dl>
+      <p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Holmes_Township_farmsteads_from_US_30.jpg">Holmes Township farmsteads from US 30</a>, Nyttend, public domain.</p>
+    </article>
+
+  </div>
+
+  <div class="groupbreak">
+    <h2>And the three with no picture at all</h2>
+    <p>
+      The ones you all landed on independently: Kerri said The Post and The Band; Ed said cream paper,
+      The Post and The Band. They are further down the page in full, and they still work with no
+      photograph, no weather and no waiting.
     </p>
   </div>
 
