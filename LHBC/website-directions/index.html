@@ -883,6 +883,109 @@
   .m.paper2 .scrim{
     background:radial-gradient(78% 66% at 50% 50%,rgba(255,253,246,.5),transparent 88%)
   }
+
+  /* ================= ROUND SIX: plain, per Micah + Kerri's rejects =================
+     Declared last on purpose: compound .m.<x> selectors so nothing earlier wins. */
+  .m.pl{align-items:center;text-align:center}
+  .m.pl .stage{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    width:100%;padding:0 5cqw 3.4cqw;gap:2.4cqw
+  }
+  .m.pl .mono svg{width:6cqw;height:auto;display:block}
+  .m.pl .who{
+    font-family:var(--display);font-size:2.72cqw;line-height:1.1;letter-spacing:.055em;
+    text-transform:uppercase;margin:0;white-space:nowrap;color:var(--navy)
+  }
+  .m.pl .town{
+    margin:0;font-size:1.55cqw;letter-spacing:.26em;text-transform:uppercase;
+    font-weight:700;color:var(--oxblood)
+  }
+  .m.pl .times{display:flex;width:100%;max-width:60cqw;margin:0}
+  .m.pl .times div{
+    flex:1;display:grid;gap:.3cqw;justify-items:center;padding:0 .6cqw;
+    border-left:1px solid rgba(37,42,85,.2)
+  }
+  .m.pl .times div:first-child{border-left:0}
+  .m.pl .times dt{font-size:1.32cqw;letter-spacing:.13em;text-transform:uppercase;color:#7a7fa3;font-weight:700}
+  .m.pl .times dd{margin:0;font-family:var(--display);font-size:3cqw;color:var(--navy);font-variant-numeric:tabular-nums}
+  .m.pl .mono rect{fill:var(--navy)}
+
+  /* 1. Cream paper, refined */
+  .m.paper3{background:
+     radial-gradient(64% 54% at 30% 22%,#fffdf7,transparent 76%),
+     linear-gradient(158deg,#f7f2e4 0%,#efe8d6 54%,#e4dbc4 100%)}
+  .m.paper3 .nav{color:var(--navy)}
+
+  /* 2. The Band, refined */
+  .m.band4{background:var(--paper)}
+  .m.band4 .nav{color:var(--navy)}
+  .m.band4 .stage{gap:0;padding:0}
+  .m.band4 .head{padding:5cqw 5cqw 3.6cqw;display:grid;gap:1.2cqw;justify-items:center}
+  .m.band4 .tri{display:flex;width:100%;height:1cqw}
+  .m.band4 .tri i{flex:1}
+  .m.band4 .tri .r{background:var(--oxblood)}
+  .m.band4 .tri .w{background:var(--cream)}
+  .m.band4 .tri .b{background:var(--navy)}
+  .m.band4 .row{display:flex;width:100%;border-bottom:1px solid var(--cream-edge)}
+  .m.band4 .row div{
+    flex:1;padding:2.5cqw 1cqw;display:grid;gap:.4cqw;justify-items:center;
+    border-left:1px solid var(--cream-edge)
+  }
+  .m.band4 .row div:first-child{border-left:0}
+  .m.band4 .row dt{font-size:1.34cqw;letter-spacing:.14em;text-transform:uppercase;color:#7a7fa3;font-weight:700}
+  .m.band4 .row dd{margin:0;font-family:var(--display);font-size:3.2cqw;color:var(--navy);font-variant-numeric:tabular-nums}
+  .m.band4 .acts{padding:3.4cqw 5cqw 0}
+
+  /* 3. The Post, refined */
+  .m.post2{background:var(--paper)}
+  .m.post2 .nav{color:var(--navy);border-bottom:1px solid var(--cream-edge)}
+  .m.post2 .obelisk{
+    width:10.5cqw;display:flex;flex-direction:column;
+    box-shadow:1px 2px 7px rgba(40,44,70,.14)
+  }
+  .m.post2 .obelisk .cap{background:var(--cream);height:2.4cqw}
+  .m.post2 .obelisk .st{height:1.2cqw}
+  .m.post2 .obelisk .st.r{background:var(--oxblood)}
+  .m.post2 .obelisk .st.b{background:var(--navy)}
+  .m.post2 .obelisk .lb{
+    background:var(--cream);font-family:var(--display);color:var(--navy);
+    font-size:6.4cqw;line-height:1;font-weight:700;padding:.6cqw 0 1cqw
+  }
+  .m.post2 .obelisk .ft{background:var(--cream);height:2cqw}
+
+  /* 4. Ink — warm dark, deliberately not navy */
+  .m.ink{background:linear-gradient(160deg,#241d19 0%,#1b1614 52%,#120f0e 100%)}
+  .m.ink .nav{color:#f0e9dc}
+  .m.ink .who{color:#f7f1e4}
+  .m.ink .town{color:var(--tan)}
+  .m.ink .mono rect{fill:#f7f1e4}
+  .m.ink .times div{border-left-color:rgba(247,241,228,.24)}
+  .m.ink .times dt{color:#c3bba9}
+  .m.ink .times dd{color:#fdf8ec}
+  .m.ink .btn{background:var(--cream);color:#231c18}
+
+  /* 5. The Window — plain page, one contained photograph */
+  .m.window{background:linear-gradient(#f8f4e8,#efe8d6)}
+  .m.window .nav{color:var(--navy)}
+  .m.window .frame{
+    width:60cqw;aspect-ratio:21/9;overflow:hidden;
+    border:1px solid rgba(37,42,85,.28);
+    box-shadow:0 2px 8px rgba(40,44,70,.16)
+  }
+  .m.window .frame img{width:100%;height:100%;object-fit:cover;object-position:50% 46%;display:block}
+
+  /* 6. The Horizon — plain above, photograph as the ground */
+  .m.horizon{background:var(--paper)}
+  .m.horizon .nav{color:var(--navy)}
+  .m.horizon .stage{flex:1 1 auto;min-height:0;justify-content:center;padding:2cqw 5cqw 2.4cqw;gap:2cqw}
+  /* Flex sibling, not absolute: the stage must reserve this space rather than
+     let the strip guillotine the buttons. */
+  .m.horizon .strip{
+    flex:0 0 34%;width:100%;overflow:hidden;
+    border-top:1px solid rgba(37,42,85,.22)
+  }
+  .m.horizon .strip img{width:100%;height:100%;object-fit:cover;object-position:50% 42%;display:block}
+
 </style>
 
 <div class="band" role="presentation" aria-hidden="true">
@@ -892,7 +995,7 @@
 <header class="top">
   <div class="wrap">
     <p class="eyebrow">Lincoln Highway Baptist Church &middot; website direction</p>
-    <h1>Ed&rsquo;s four, and everything else for comparison.</h1>
+    <h1>Six plain ones, built from what you said.</h1>
     <p class="standfirst">
       Ed&rsquo;s own photographs are at the top, and one of them settles it: <strong>a road running into a
       low sun</strong>. Everything under it, the public-domain Ohio set and the three no-picture layouts,
@@ -942,6 +1045,247 @@
       picture behind the lockup instead of a flat panel. No navy block. The marker identity and the
       centred layout carry over from round two, since those were already agreed.</p>
     </div>
+  </div>
+
+  <div class="groupbreak">
+    <h2>Round six: the plain ones</h2>
+    <p>
+      Built from what you all actually said. Four with no photograph at all and two where a picture
+      is contained rather than full-bleed. <b>Under the trees, grain bin, open sky and farmstead are
+      gone</b> per Kerri. Every one keeps the marker, the centred lockup, the one-line name and
+      Dalton stated on arrival.
+    </p>
+  </div>
+
+  <div class="plates">
+
+    <article class="plate">
+      <div class="board">
+        <div class="m pl paper3">
+          <div class="nav">
+            <span>Beliefs</span><span>Ministries</span><span>Messages</span>
+            <span class="sp">Giving</span>
+          </div>
+          <div class="stage">
+            <span class="mono" aria-hidden="true">
+              <svg viewBox="0 0 100 110">
+                <rect x="46" y="35" width="10" height="60"/><rect x="46" y="85" width="35" height="10"/>
+                <rect x="30" y="19" width="10" height="55"/><rect x="18" y="39" width="35" height="10"/>
+              </svg>
+            </span>
+            <p class="who">LINCOLN HIGHWAY BAPTIST CHURCH</p>
+            <p class="town">Dalton, Ohio</p>
+            <dl class="times">
+              <div><dt>Sunday School</dt><dd>9:00</dd></div>
+              <div><dt>Worship</dt><dd>10:15</dd></div>
+              <div><dt>Wednesday</dt><dd>6:30</dd></div>
+            </dl>
+            <div class="btnrow">
+              <span class="btn">Plan a visit</span>
+              <span class="btn">What we believe</span>
+              <span class="btn">Give</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="caption"><h3>Cream paper</h3><span class="tag">Ed named this one</span></div>
+      <p class="thesis">Printed cream, navy mark, oxblood town. No photograph, no panel, no scene. Everything is carried by the type and the spacing, which is what plain actually means.</p>
+      <dl class="facts">
+        <div><dt>Plain?</dt><dd><b>Completely.</b> Nothing but ink on paper.</dd></div>
+        <div><dt>Picture</dt><dd>None, ever.</dd></div>
+        <div><dt>Watch</dt><dd>Nothing to love if you want warmth.</dd></div>
+      </dl>
+    </article>
+
+    <article class="plate">
+      <div class="board">
+        <div class="m pl band4">
+          <div class="nav">
+            <span>Beliefs</span><span>Ministries</span><span>Messages</span>
+            <span class="sp">Giving</span>
+          </div>
+          <div class="stage">
+            <div class="head">
+            <span class="mono" aria-hidden="true">
+              <svg viewBox="0 0 100 110">
+                <rect x="46" y="35" width="10" height="60"/><rect x="46" y="85" width="35" height="10"/>
+                <rect x="30" y="19" width="10" height="55"/><rect x="18" y="39" width="35" height="10"/>
+              </svg>
+            </span>
+            <p class="who">LINCOLN HIGHWAY BAPTIST CHURCH</p>
+            <p class="town">Dalton, Ohio</p>
+            </div>
+            <div class="tri" aria-hidden="true"><i class="r"></i><i class="w"></i><i class="b"></i></div>
+            <dl class="row">
+              <div><dt>Sunday School</dt><dd>9:00</dd></div>
+              <div><dt>Worship</dt><dd>10:15</dd></div>
+              <div><dt>Wednesday</dt><dd>6:30</dd></div>
+            </dl>
+            <div class="acts">
+            <div class="btnrow">
+              <span class="btn">Plan a visit</span>
+              <span class="btn">What we believe</span>
+              <span class="btn">Give</span>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="caption"><h3>The Band</h3><span class="tag">Both of you named this one</span></div>
+      <p class="thesis">The marker's red, white and blue reduced to one thin rule, with the three times as equal cells beneath it. The rule is the only colour on the page and it is doing structural work, not decoration.</p>
+      <dl class="facts">
+        <div><dt>Plain?</dt><dd><b>Yes.</b> Rules and type only.</dd></div>
+        <div><dt>Picture</dt><dd>None needed.</dd></div>
+        <div><dt>Watch</dt><dd>Closest of the six to a template if it drifts.</dd></div>
+      </dl>
+    </article>
+
+    <article class="plate">
+      <div class="board">
+        <div class="m pl post2">
+          <div class="nav">
+            <span>Beliefs</span><span>Ministries</span><span>Messages</span>
+            <span class="sp">Giving</span>
+          </div>
+          <div class="stage">
+            <div class="obelisk" aria-hidden="true">
+              <div class="cap"></div><div class="st r"></div>
+              <div class="lb">L</div>
+              <div class="st b"></div><div class="ft"></div>
+            </div>
+            <p class="who">LINCOLN HIGHWAY BAPTIST CHURCH</p>
+            <p class="town">Dalton, Ohio</p>
+            <dl class="times">
+              <div><dt>Sunday School</dt><dd>9:00</dd></div>
+              <div><dt>Worship</dt><dd>10:15</dd></div>
+              <div><dt>Wednesday</dt><dd>6:30</dd></div>
+            </dl>
+            <div class="btnrow">
+              <span class="btn">Plan a visit</span>
+              <span class="btn">What we believe</span>
+              <span class="btn">Give</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="caption"><h3>The Post</h3><span class="tag">Both of you named this one</span></div>
+      <p class="thesis">The 1928 marker standing dead centre with everything hung beneath it. The page is centred because an object is holding the centre, not because the text was told to sit in the middle.</p>
+      <dl class="facts">
+        <div><dt>Plain?</dt><dd><b>Yes,</b> though the post is an illustration.</dd></div>
+        <div><dt>Picture</dt><dd>None needed.</dd></div>
+        <div><dt>Watch</dt><dd>Post and logo compete. Pick one.</dd></div>
+      </dl>
+    </article>
+
+    <article class="plate">
+      <div class="board">
+        <div class="m pl ink">
+          <div class="nav">
+            <span>Beliefs</span><span>Ministries</span><span>Messages</span>
+            <span class="sp">Giving</span>
+          </div>
+          <div class="stage">
+            <span class="mono" aria-hidden="true">
+              <svg viewBox="0 0 100 110">
+                <rect x="46" y="35" width="10" height="60"/><rect x="46" y="85" width="35" height="10"/>
+                <rect x="30" y="19" width="10" height="55"/><rect x="18" y="39" width="35" height="10"/>
+              </svg>
+            </span>
+            <p class="who">LINCOLN HIGHWAY BAPTIST CHURCH</p>
+            <p class="town">Dalton, Ohio</p>
+            <dl class="times">
+              <div><dt>Sunday School</dt><dd>9:00</dd></div>
+              <div><dt>Worship</dt><dd>10:15</dd></div>
+              <div><dt>Wednesday</dt><dd>6:30</dd></div>
+            </dl>
+            <div class="btnrow">
+              <span class="btn">Plan a visit</span>
+              <span class="btn">What we believe</span>
+              <span class="btn">Give</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="caption"><h3>Ink</h3><span class="tag">The dark one, done right</span></div>
+      <p class="thesis">A warm near-black, nothing like the navy panel Kerri compared to Microsoft Paint. Same plain layout, inverted. It gives the church a serious evening register without a photograph doing the work.</p>
+      <dl class="facts">
+        <div><dt>Plain?</dt><dd><b>Yes.</b> No scene, no gradient wash.</dd></div>
+        <div><dt>Picture</dt><dd>None needed.</dd></div>
+        <div><dt>Watch</dt><dd>Dark pages need care on a phone outdoors.</dd></div>
+      </dl>
+    </article>
+
+    <article class="plate">
+      <div class="board">
+        <div class="m pl window">
+          <div class="nav">
+            <span>Beliefs</span><span>Ministries</span><span>Messages</span>
+            <span class="sp">Giving</span>
+          </div>
+          <div class="stage">
+            <div class="frame"><img src="img/ed-road.jpg" alt="A road running into a low sun" loading="lazy"></div>
+            <p class="who">LINCOLN HIGHWAY BAPTIST CHURCH</p>
+            <p class="town">Dalton, Ohio</p>
+            <dl class="times">
+              <div><dt>Sunday School</dt><dd>9:00</dd></div>
+              <div><dt>Worship</dt><dd>10:15</dd></div>
+              <div><dt>Wednesday</dt><dd>6:30</dd></div>
+            </dl>
+            <div class="btnrow">
+              <span class="btn">Plan a visit</span>
+              <span class="btn">What we believe</span>
+              <span class="btn">Give</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="caption"><h3>The Window</h3><span class="tag">Plain, with one picture</span></div>
+      <p class="thesis">The plain page, with Ed's road held inside a single framed panel instead of flooding the screen. You get the Wayne County box ticked without the photograph taking over the page.</p>
+      <dl class="facts">
+        <div><dt>Plain?</dt><dd>Mostly. Type still leads.</dd></div>
+        <div><dt>Picture</dt><dd>Ed's road, contained.</dd></div>
+        <div><dt>Watch</dt><dd>One more element to keep aligned.</dd></div>
+      </dl>
+    </article>
+
+    <article class="plate">
+      <div class="board">
+        <div class="m pl horizon">
+          <div class="nav">
+            <span>Beliefs</span><span>Ministries</span><span>Messages</span>
+            <span class="sp">Giving</span>
+          </div>
+          <div class="stage">
+            <span class="mono" aria-hidden="true">
+              <svg viewBox="0 0 100 110">
+                <rect x="46" y="35" width="10" height="60"/><rect x="46" y="85" width="35" height="10"/>
+                <rect x="30" y="19" width="10" height="55"/><rect x="18" y="39" width="35" height="10"/>
+              </svg>
+            </span>
+            <p class="who">LINCOLN HIGHWAY BAPTIST CHURCH</p>
+            <p class="town">Dalton, Ohio</p>
+            <dl class="times">
+              <div><dt>Sunday School</dt><dd>9:00</dd></div>
+              <div><dt>Worship</dt><dd>10:15</dd></div>
+              <div><dt>Wednesday</dt><dd>6:30</dd></div>
+            </dl>
+            <div class="btnrow">
+              <span class="btn">Plan a visit</span>
+              <span class="btn">What we believe</span>
+              <span class="btn">Give</span>
+            </div>
+          </div>
+          <div class="strip" aria-hidden="true"><img src="img/ed-road.jpg" alt="" loading="lazy"></div>
+        </div>
+      </div>
+      <div class="caption"><h3>The Horizon</h3><span class="tag">Plain, with a ground</span></div>
+      <p class="thesis">Plain cream where the words are, with the photograph only as a band across the bottom third. The lockup never sits on the picture, so the type stays crisp and the image never has to be scrimmed.</p>
+      <dl class="facts">
+        <div><dt>Plain?</dt><dd>Above the line, entirely.</dd></div>
+        <div><dt>Picture</dt><dd>Ed's road as a strip.</dd></div>
+        <div><dt>Watch</dt><dd>The join has to be clean or it reads as pasted.</dd></div>
+      </dl>
+    </article>
   </div>
 
   <div class="groupbreak">
