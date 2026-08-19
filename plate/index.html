@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>The Train Station · NAGR knowledge architecture, Plate 01</title>
+<title>The Train Station · a knowledge architecture, Plates 01–03</title>
 <meta name="robots" content="noindex, nofollow" />
-<meta name="description" content="Plate 01: how NAGR's 2.4 TB becomes something its agents can ask, without a full-corpus graph and without fine-tuning a model." />
+<meta name="description" content="How two terabytes of files become something agents can ask: what to build, how new records keep landing in it, and whether a graph is the right answer at all." />
 <meta name="color-scheme" content="dark" />
 <meta name="theme-color" content="#0b0907" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230b0907'/><path d='M22 30 L44 50 L22 70' fill='none' stroke='%23dfa04a' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/><path d='M52 70 L78 70' stroke='%23dfa04a' stroke-width='9' stroke-linecap='round'/></svg>" />
@@ -258,6 +258,11 @@ a:hover{color:var(--bone);}
 .note p em{color:var(--bone);font-style:normal;font-weight:600;}
 .note:hover h3,.note[aria-pressed="true"] h3{color:var(--amber);}
 .note:hover .num,.note[aria-pressed="true"] .num{color:var(--bone);}
+/* AIDEV-NOTE: Plate 02's notes are prose, not controls. No pointer, no hover
+   state — a thing that lights up on hover is promising a click it cannot take. */
+.note-static{cursor:default;}
+.note-static:hover h3{color:var(--bone);}
+.note-static:hover .num{color:var(--amber);}
 .note:focus-visible{outline:2px solid var(--amber);outline-offset:6px;}
 
 /* ── void panel ─────────────────────────────────────────────────────── */
@@ -289,6 +294,7 @@ caption{text-align:left;color:var(--bone-faint);font-size:var(--step--2);font-fa
 th,td{text-align:left;padding:.85rem 1.2rem .85rem 0;border-bottom:1px solid var(--edge);vertical-align:top;}
 thead th{color:var(--bone-faint);font-family:var(--font-mono);font-size:var(--step--2);letter-spacing:.16em;text-transform:uppercase;font-weight:400;}
 tbody th{font-weight:600;color:var(--bone);}
+tbody th.g{white-space:nowrap;font-family:var(--font-mono);font-size:var(--step--2);letter-spacing:.08em;color:var(--amber);font-weight:400;}
 td.fig{font-family:var(--font-mono);color:var(--amber);white-space:nowrap;}
 td.fig.cold{color:var(--rust-ink);}
 td.why{color:var(--bone-dim);}
@@ -335,25 +341,25 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
     <div class="wrap">
       <div class="ticks">
         <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M0 .5H10M.5 0V10" stroke="#dfa04a" stroke-width="1"/></svg>
-        <span class="ticks-id">MICAH FALDE · DRAWING SET · NAGR</span>
+        <span class="ticks-id">MICAH FALDE · DRAWING SET · REFERENCE</span>
         <span class="ticks-rule"></span>
-        <span class="ticks-id">PLATE 01 / 01</span>
+        <span class="ticks-id">PLATES 01–03</span>
         <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M16 .5H6M15.5 0V10" stroke="#dfa04a" stroke-width="1"/></svg>
       </div>
 
       <div class="head">
         <div>
           <h1 class="title">The Train<br />Station</h1>
-          <p class="brief">Chris's word for it, and it is the right one. One place the records land, that every agent asks and no agent owns. Built to give a <strong>useful answer in weeks</strong>, not after a four-thousand-dollar read of the whole server, and built so <strong>no month's bill can surprise anyone</strong>.</p>
+          <p class="brief">One place the records land, that every agent asks and no agent owns. Built to give a <strong>useful answer in weeks</strong>, not after a four-thousand-dollar read of the whole server, and built so <strong>the bill never arrives as a surprise</strong>.</p>
         </div>
         <dl class="stamp">
-          <dt>Project</dt><dd>NAGR knowledge architecture</dd>
-          <dt>Sheet</dt><dd>Plate 01 · system overview</dd>
+          <dt>Project</dt><dd>Knowledge architecture</dd>
+          <dt>Sheet</dt><dd>01 system · 02 intake · 03 sequence</dd>
           <dt>Drawn</dt><dd>M. Falde</dd>
-          <dt>Date</dt><dd>18 Aug 2026</dd>
-          <dt>Revision</dt><dd class="hot">A · first pass</dd>
+          <dt>Date</dt><dd>19 Aug 2026</dd>
+          <dt>Revision</dt><dd class="hot">B · sequenced</dd>
           <dt>Status</dt><dd class="hot">For discussion</dd>
-          <dt>Basis</dt><dd>1:1 with C. Kuper, 18 Aug</dd>
+          <dt>Basis</dt><dd>A live engagement, Aug 2026</dd>
         </dl>
       </div>
 
@@ -374,7 +380,7 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
   <section class="plate" id="plate">
     <div class="wrap">
       <p class="plate-bar">
-        <span>Fig. 1 · system overview</span>
+        <span>Plate 01 · Fig. 1 · the system</span>
         <span><b>━</b> data path &nbsp;·&nbsp; <b>┄</b> metered or isolated &nbsp;·&nbsp; cut corner = a model runs here &nbsp;·&nbsp; square = it does not</span>
       </p>
 
@@ -418,13 +424,13 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
           </g>
           <g class="g-block" id="b-perf"><rect x="454" y="44" width="242" height="112" class="d-box"/>
             <text class="d-title" x="474" y="76">Performance record</text>
-            <text class="d-sub" x="474" y="99">blue books · mail history</text>
+            <text class="d-sub" x="474" y="99">send history, all channels</text>
             <text class="d-sub" x="474" y="117">sent, cost, replied, CPA</text>
             <text class="d-sub" x="474" y="135">already a table, not prose</text>
           </g>
           <g class="g-block" id="b-voice-src"><rect x="716" y="44" width="242" height="112" class="d-box"/>
             <text class="d-title" x="736" y="76">Voice &amp; doctrine</text>
-            <text class="d-sub" x="736" y="99">FACL lectures, a decade</text>
+            <text class="d-sub" x="736" y="99">founder talks, a decade</text>
             <text class="d-sub" x="736" y="117">long-form member email</text>
             <text class="d-sub" x="736" y="135">how we say things</text>
           </g>
@@ -521,7 +527,7 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
           <!-- ══ TIER 04 — voice ══ -->
           <g class="g-block" id="b-voice"><rect x="192" y="664" width="766" height="76" class="d-box"/>
             <text class="d-title" x="212" y="692">The hat <tspan class="d-sub">· house voice, fetched at the moment of answering</tspan></text>
-            <text class="d-sub" x="212" y="713">what a blue book is · what CPA means here · what a preemptive accusation is · Mike's lines as examples</text>
+            <text class="d-sub" x="212" y="713">what your own terms mean · what the acronyms stand for · the founder&#39;s lines, as examples</text>
             <text class="d-sub" x="212" y="729">what never to say · text files, in version control, not model weights</text>
           </g>
           <circle class="d-cno" cx="204" cy="664" r="11"/><text class="d-cnot" x="204" y="664" text-anchor="middle" dominant-baseline="central">7</text>
@@ -543,7 +549,7 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
             <text class="d-title" x="474" y="816">Local · main</text>
             <text class="d-sub" x="474" y="842">gpt-oss or Qwen, in house</text>
             <text class="d-sub" x="474" y="860">writes most of the answers</text>
-            <text class="d-sub" x="474" y="878">no politics in the refusals</text>
+            <text class="d-sub" x="474" y="878">nobody else&#39;s refusals</text>
           </g>
           <g class="g-block" id="b-m-front">
             <path class="shape d-box" d="M716 784 H944 L958 798 V896 H716 Z"/>
@@ -562,7 +568,7 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
           <!-- ══ TIER 06 — agents ══ -->
           <g class="g-block" id="b-argus">
             <path class="shape d-box" d="M192 940 H420 L434 954 V1080 H192 Z"/>
-            <text class="d-title" x="212" y="972">Argus · political</text>
+            <text class="d-title" x="212" y="972">Legislative</text>
             <text class="d-sub" x="212" y="998">a bill lands, or is about to</text>
             <text class="d-sub" x="212" y="1016">what we ran last time, where</text>
             <text class="d-sub" x="212" y="1034">how many petitions, by zip</text>
@@ -573,8 +579,8 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
             <text class="d-title" x="474" y="972">Mail &amp; email</text>
             <text class="d-sub" x="474" y="998">what to send, to whom,</text>
             <text class="d-sub" x="474" y="1016">and what it did last time</text>
-            <text class="d-sub" x="474" y="1034">graded against the blue</text>
-            <text class="d-sub" x="474" y="1060">books, not against a vibe</text>
+            <text class="d-sub" x="474" y="1034">graded against the send</text>
+            <text class="d-sub" x="474" y="1060">record, not against a vibe</text>
           </g>
           <g class="g-block" id="b-member">
             <path class="shape d-box" d="M716 940 H944 L958 954 V1080 H716 Z"/>
@@ -628,7 +634,7 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
           <span class="num">1</span>
           <span>
             <h3>Count it before you buy anything</h3>
-            <p>The $3,500 estimate rests on a file listing IT admits was not what you asked for. A week of sorting, by type, by age and by folder, turns that guess into a number that survives a room. It also does the deleting: <em>2.4 terabytes down to about 1.5</em> before a model reads one word. That is a 40% cut of every bill that follows, bought with no tokens at all.</p>
+            <p>The four-thousand-dollar estimate rests on a file listing IT admits was not what was asked for. A week of sorting, by type, by age and by folder, turns that guess into a number that survives a room. It also does the deleting: <em>2.4 terabytes down to about 1.5</em> before a model reads one word. That is a 40% cut of every bill that follows, bought with no tokens at all.</p>
           </span>
         </button>
 
@@ -636,7 +642,7 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
           <span class="num">2</span>
           <span>
             <h3>Search everything on day one, for free</h3>
-            <p>Turning documents into something searchable by meaning runs on your own hardware and costs nothing per page. So the easy half of what Chris wants, <em>find me every document that touches this</em>, covers all twelve years immediately. No slice, no waiting, no invoice. Do this first and there is something to show while the hard half is still being argued about.</p>
+            <p>Turning documents into something searchable by meaning runs on your own hardware and costs nothing per page. So the easy half of what anyone wants, <em>find me every document that touches this</em>, covers all twelve years immediately. No slice, no waiting, no invoice. Do this first and there is something to show while the hard half is still being argued about.</p>
           </span>
         </button>
 
@@ -644,7 +650,7 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
           <span class="num">3</span>
           <span>
             <h3>The graph is assembled, not read</h3>
-            <p>This is where the money goes, and it does not have to. A blue book already says which email went out, when, at what cost, and what came back. Those are the connections, and <em>they are sitting in a spreadsheet, already true</em>. Load them straight in. Pay a model to read prose only where no table exists, and only for the years people ask about. Everything older gets folded in later, in the background.</p>
+            <p>This is where the money goes, and it does not have to. The send record already says which email went out, when, at what cost, and what came back. Those are the connections, and <em>they are sitting in a spreadsheet, already true</em>. Load them straight in. Pay a model to read prose only where no table exists, and only for the years people ask about. Everything older gets folded in later, in the background.</p>
           </span>
         </button>
 
@@ -652,7 +658,7 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
           <span class="num">4</span>
           <span>
             <h3>Never let a model do arithmetic</h3>
-            <p>52,000 spreadsheets and 39,000 CSVs are not documents to be chopped up and half-remembered. They go into a database and get asked with plain SQL. <em>Counts, costs and CPA come back exact, every time, or they come back as an error.</em> This one choice removes the whole category of confidently wrong numbers, the failure that would end the project's credibility fastest.</p>
+            <p>52,000 spreadsheets and 39,000 CSVs are not documents to be chopped up and half-remembered. They go into a database and get asked with plain SQL. <em>Counts, costs and rates come back exact, every time, or they come back as an error.</em> This one choice removes the whole category of confidently wrong numbers, the failure that would end the project's credibility fastest.</p>
           </span>
         </button>
 
@@ -660,7 +666,7 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
           <span class="num">5</span>
           <span>
             <h3>Donor records go around, not through</h3>
-            <p>Chris asked the right question out loud: is it a real graph if the donor data is not in it. The answer is that <em>it is a real graph, and the donor file is a different building</em>. A copy on its own machine with no network. Wealth appends and segment tests happen there. What comes out is counts and rules, never names. Nobody has to trust a permission setting to keep it that way.</p>
+            <p>Somebody always asks the right question out loud: is it a real graph if the donor data is not in it. The answer is that <em>it is a real graph, and the donor file is a different building</em>. A copy on its own machine with no network. Wealth appends and segment tests happen there. What comes out is counts and rules, never names. Nobody has to trust a permission setting to keep it that way.</p>
           </span>
         </button>
 
@@ -668,7 +674,7 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
           <span class="num">6</span>
           <span>
             <h3>Plumbing beats intelligence, and it is cheaper</h3>
-            <p>Deciding which store answers a question is mostly a lookup, not a thought. Rules do it for free and do it the same way twice. That is the exact problem Chris hit when an agent improvised the same job differently each time. <em>A model only gets involved when the rules run out</em>, and the same principle governs transcription, API calls and clipping: use the tool that already works.</p>
+            <p>Deciding which store answers a question is mostly a lookup, not a thought. Rules do it for free and do it the same way twice. That is the exact problem you hit the moment an agent improvises the same job differently each time. <em>A model only gets involved when the rules run out</em>, and the same principle governs transcription, API calls and clipping: use the tool that already works.</p>
           </span>
         </button>
 
@@ -676,7 +682,7 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
           <span class="num">7</span>
           <span>
             <h3>The hat, not new weights</h3>
-            <p>Chris worked this out mid-sentence: the record of what happened is one thing, and how NAGR talks about it is a layer on top. That layer is a folder of text: the glossary, the tone, the lines that land, the things never to say, handed to the model with every question. <em>Change the voice in a minute. See exactly why it said what it said.</em> A fine-tuned model gives you neither, for six figures.</p>
+            <p>The record of what happened is one thing. How the house talks about it is a layer on top. That layer is a folder of text: the glossary, the tone, the lines that land, the things never to say, handed to the model with every question. <em>Change the voice in a minute. See exactly why it said what it said.</em> A fine-tuned model gives you neither, for six figures.</p>
           </span>
         </button>
 
@@ -684,7 +690,7 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
           <span class="num">8</span>
           <span>
             <h3>A ceiling you set, not one you discover</h3>
-            <p>A $10,000 month cannot happen by accident. Most questions never leave the building. The ones that do pass a meter with a hard monthly cap and a kill switch, and the person asking is <em>told, on screen, that this one costs money</em>. That is also the honest answer to the other worry: when a rented model will not touch NAGR's politics, the house model is already doing the work anyway.</p>
+            <p>A $10,000 month cannot happen by accident. Most questions never leave the building. The ones that do pass a meter with a hard monthly cap and a kill switch, and the person asking is <em>told, on screen, that this one costs money</em>. That is also the honest answer to the other worry: when a rented model will not touch your subject matter, the house model is already doing the work anyway.</p>
           </span>
         </button>
 
@@ -692,7 +698,7 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
           <span class="num">9</span>
           <span>
             <h3>Agents stay thin, and stay on a leash</h3>
-            <p>An agent is a job, a short list of tools, a slice of the stores it is allowed to read, and a person who says go. Argus first, because Craig cannot watch ten legislatures and <em>half of it is already built in a basement in Knoxville</em>. The confirm-before-it-acts gate is not new governance. It is the gate that already exists in the one live system, made standard.</p>
+            <p>An agent is a job, a short list of tools, a slice of the stores it is allowed to read, and a person who says go. The legislative one first, because one person cannot watch ten jurisdictions and <em>half of it is usually already built by somebody in-house</em>. The confirm-before-it-acts gate is not new governance. It is the gate that already exists in the one live system, made standard.</p>
           </span>
         </button>
 
@@ -712,16 +718,16 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
   <section class="voids">
     <div class="wrap">
       <h2 class="sec-h">Two things we talked about and are not doing</h2>
-      <p class="sec-p">Both were live on the call. Both are struck from Revision A, for reasons that should be argued with rather than assumed.</p>
+      <p class="sec-p">Both were live options. Both are struck, for reasons that should be argued with rather than assumed.</p>
       <div class="void-grid">
         <div class="void">
-          <span class="mark">Struck · Rev A</span>
-          <h3>Fine-tuning a model on Mike's voice</h3>
+          <span class="mark">Struck</span>
+          <h3>Fine-tuning a model on the house voice</h3>
           <p>It sounds like the serious version and it is the fragile one. Retraining costs real money and weeks, and every edit costs it again. You cannot read the result, cannot ask it why, and cannot lift it onto a better model next year without starting over.</p>
           <p><b>Instead:</b> the same corpus becomes retrieved examples and a written style guide. Cheaper by orders of magnitude, changeable in an afternoon, and it can show its work. If a voice test later proves this is not close enough, fine-tuning comes back on the table with evidence behind it.</p>
         </div>
         <div class="void">
-          <span class="mark">Struck · Rev A</span>
+          <span class="mark">Struck</span>
           <h3>Graphing the whole corpus in one run</h3>
           <p>$3,500 to $4,000 is the price of the first attempt. The first attempt is never the last one. The instructions will be wrong, the naming will collide, and it will want rerunning. Four passes and it is a $16,000 line item nobody approved.</p>
           <p><b>Instead:</b> structure loads for nothing, prose gets read only where it earns it, and the recent years go first. <b>The bill scales with what people actually ask about</b>, and the older years fill in behind, on a machine that is already paid for.</p>
@@ -737,7 +743,7 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
       <p class="sec-p">Order of magnitude, not a quote. The point is the shape: the large one-off is replaced by work that costs almost nothing, and the running bill has a lid on it.</p>
       <div class="tbl-scroll">
         <table>
-          <caption>FIG. 2 · COST SHAPE, REV A · ESTIMATES ONLY</caption>
+          <caption>FIG. 2 · COST SHAPE, THE BACKFILL · ESTIMATES ONLY</caption>
           <thead>
             <tr><th scope="col">Step</th><th scope="col">One-off</th><th scope="col">Per month</th><th scope="col">Why it lands there</th></tr>
           </thead>
@@ -747,7 +753,7 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
             <tr><th scope="row">Graph from existing tables</th><td class="fig">~$0</td><td class="fig">—</td><td class="why">The relationships are already written down.</td></tr>
             <tr><th scope="row">Reading prose, 2025 → now</th><td class="fig">low hundreds</td><td class="fig">—</td><td class="why">A slice, on a rented model, repeatable while it is still cheap to be wrong.</td></tr>
             <tr><th scope="row">Reading the older years</th><td class="fig">time, not money</td><td class="fig">—</td><td class="why">Background work on the house machine, once there is one.</td></tr>
-            <tr><th scope="row">Test box to prove it</th><td class="fig">~$2,000</td><td class="fig">—</td><td class="why">Chris's number, and the right first ask. It buys the evidence for the big one.</td></tr>
+            <tr><th scope="row">Test box to prove it</th><td class="fig">~$2,000</td><td class="fig">—</td><td class="why">The right first ask. It buys the evidence for the big one.</td></tr>
             <tr><th scope="row">House machine</th><td class="fig">~$30,000</td><td class="fig">—</td><td class="why">Month three at the earliest, decided against a working demonstration.</td></tr>
             <tr><th scope="row">Rented model, escalations</th><td class="fig">—</td><td class="fig">capped, you pick the number</td><td class="why">Metered per question, with a monthly ceiling and a switch.</td></tr>
             <tr><th scope="row">Whole corpus in one pass</th><td class="fig cold">$3.5k–4k × every rerun</td><td class="fig cold">—</td><td class="why">The path not taken. Shown here so the comparison is on the record.</td></tr>
@@ -757,11 +763,270 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
     </div>
   </section>
 
+
+  <!-- ═════════ IS A GRAPH EVEN RIGHT ═════════ -->
+  <section class="cost">
+    <div class="wrap">
+      <h2 class="sec-h">Is a graph even the right answer?</h2>
+      <p class="sec-p">Mostly no, and the distinction that matters is the one nobody draws: a knowledge graph and GraphRAG are not the same thing. A knowledge graph is assembled out of tables you already own. GraphRAG is a pipeline that pays a model to <em>infer</em> a graph out of raw text, because you have no tables. You have tables.</p>
+
+      <div class="tbl-scroll">
+        <table>
+          <caption>FIG. 3 · WHAT ACTUALLY ANSWERS EACH KIND OF QUESTION</caption>
+          <thead>
+            <tr><th scope="col">The question people actually ask</th><th scope="col">What answers it</th><th scope="col">Needs a graph</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Find me everything that mentions this</th><td class="why">Prose index, on its own</td><td class="fig">no</td></tr>
+            <tr><th scope="row">How many, how much, what did it cost</th><td class="why">Numbers store, plain SQL</td><td class="fig">no, and a graph answers it worse</td></tr>
+            <tr><th scope="row">Everything about this person, place or campaign</th><td class="why">Numbers store, filtered, with the documents attached</td><td class="fig">no</td></tr>
+            <tr><th scope="row">What did we do last time this happened, over there</th><td class="why">Numbers store joined to the prose index</td><td class="fig">helps, not required</td></tr>
+            <tr><th scope="row">What runs through five years of this, that nobody wrote down</th><td class="why">Graph summaries over a whole corpus</td><td class="fig cold">yes, and only this one</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="void-grid" style="margin-top:clamp(2rem,5vh,3.4rem)">
+        <div class="void" style="border-style:solid;border-color:var(--edge)">
+          <span class="mark" style="color:var(--bone-faint)">The test, before you spend</span>
+          <h3>Twenty questions, labelled</h3>
+          <p>Write down the twenty questions people in the building actually ask each other in a week. Real ones, in their own words. Put each into one of the five rows above.</p>
+          <p><b>If fewer than five land on the last row, build the first two stores and stop.</b> That costs almost nothing and it will answer most of the twenty. Come back to the graph when there is evidence people need it, not because it is the impressive-sounding option.</p>
+        </div>
+        <div class="void" style="border-style:solid;border-color:var(--edge)">
+          <span class="mark" style="color:var(--bone-faint)">The part nobody mentions</span>
+          <h3>Time is the real cost, not money</h3>
+          <p>Reading a whole corpus is measured in days of wall clock, and the first pass is always wrong: the instructions are too vague, the same person appears under four spellings, and half the entities are file paths. You change the prompt and start again.</p>
+          <p><b>That loop is what makes it unaffordable</b>, not the invoice. Slicing to one recent year turns a two-week experiment into a two-hour one, and you can be wrong five times before lunch.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ PLATE 02 — INTAKE ═════════ -->
+  <section class="plate">
+    <div class="wrap">
+      <p class="plate-bar">
+        <span>Plate 02 · Fig. 4 · what happens when a new record arrives</span>
+        <span><b>━</b> data path &nbsp;·&nbsp; cut corner = a model runs here</span>
+      </p>
+
+      <div class="drawing" tabindex="0" role="img"
+           aria-label="Intake diagram. A new file is fingerprinted and written to a ledger, then routed down one of three lanes: tables are upserted into the numbers store in minutes with no tokens, prose is chunked and embedded into the prose index in seconds with no tokens, and prose that names things no table knows has its entities extracted into the graph for a fraction of a cent per document. A separate monthly job rebuilds the summaries that span the whole graph.">
+        <svg viewBox="0 0 1240 660" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 1 L9 5 L0 9 Z" fill="#a8712c"/>
+            </marker>
+          </defs>
+
+          <g class="g-block"><rect x="40" y="228" width="230" height="112" class="d-box"/>
+            <text class="d-title" x="60" y="260">A new record lands</text>
+            <text class="d-sub" x="60" y="286">a send goes out, a memo is</text>
+            <text class="d-sub" x="60" y="304">filed, a hearing is clipped</text>
+            <text class="d-sub" x="60" y="328">watched folder, or a webhook</text>
+          </g>
+          <path class="d-flow" d="M270 284 H306" marker-end="url(#ar2)"/>
+          <path class="d-spark" d="M270 284 H306"/>
+
+          <g class="g-block"><rect x="310" y="228" width="250" height="112" class="d-box"/>
+            <text class="d-title" x="330" y="260">Fingerprint, then log it</text>
+            <text class="d-sub" x="330" y="286">hash it · seen at · where it</text>
+            <text class="d-sub" x="330" y="304">went · which reader saw it</text>
+            <text class="d-sub" x="330" y="328">the ledger is the whole trick</text>
+          </g>
+
+          <path class="d-flow" d="M560 284 H596 V116 H636" marker-end="url(#ar2)"/>
+          <path class="d-flow" d="M560 284 H636" marker-end="url(#ar2)"/>
+          <path class="d-flow" d="M560 284 H596 V452 H636" marker-end="url(#ar2)"/>
+
+          <g class="g-block"><rect x="640" y="60" width="360" height="112" class="d-box"/>
+            <text class="d-title" x="660" y="92">It is a table</text>
+            <text class="d-sub" x="660" y="118">load it, upsert on the key it already carries</text>
+            <text class="d-sub" x="660" y="142">nothing is re-read, nothing is rebuilt</text>
+          </g>
+          <text class="d-note" x="1030" y="106">MINUTES</text>
+          <text class="d-note" x="1030" y="126">NO TOKENS</text>
+
+          <g class="g-block"><rect x="640" y="228" width="360" height="112" class="d-box"/>
+            <text class="d-title" x="660" y="260">It is prose</text>
+            <text class="d-sub" x="660" y="286">split it, embed it at home, insert it</text>
+            <text class="d-sub" x="660" y="310">hash changed, re-embed · file gone, drop it</text>
+          </g>
+          <text class="d-note" x="1030" y="274">SECONDS</text>
+          <text class="d-note" x="1030" y="294">NO TOKENS</text>
+
+          <g class="g-block">
+            <path class="shape d-box" d="M640 396 H986 L1000 410 V508 H640 Z"/>
+            <text class="d-title" x="660" y="428">It names things no table knows</text>
+            <text class="d-sub" x="660" y="454">pull the people, places and links out of</text>
+            <text class="d-sub" x="660" y="478">this one document, and attach them</text>
+          </g>
+          <text class="d-note" x="1030" y="442">A FRACTION OF</text>
+          <text class="d-note" x="1030" y="462">A CENT, PER</text>
+          <text class="d-note" x="1030" y="482">DOCUMENT</text>
+
+          <g class="g-block"><rect x="40" y="556" width="960" height="76" class="d-box"/>
+            <text class="d-title" x="60" y="588">Once a month, not once a night <tspan class="d-sub">· the only job that reads the whole graph</tspan></text>
+            <text class="d-sub" x="60" y="612">rebuild the summaries that span everything · partition them by department or by year, and one new document dirties one partition</text>
+          </g>
+          <text class="d-lane-lab" x="1030" y="600">THE ONLY</text>
+          <text class="d-lane-lab" x="1030" y="620">RECURRING BILL</text>
+        </svg>
+      </div>
+      <p class="scroll-hint">Drag the drawing sideways to read it all.</p>
+
+      <div class="note-grid" style="margin-top:clamp(2.4rem,6vh,4rem)">
+        <div class="note note-static">
+          <span class="num">A</span>
+          <span>
+            <h3>The big number is a backfill, not a bill</h3>
+            <p>Reading twelve years costs thousands once. Reading tomorrow's memo costs a fraction of a cent. <em>Those are different lines in a budget and they get argued as though they are the same one.</em> Once the history is in, the running cost of staying current is rounding error, and that is the sentence to lead with when the hardware question comes up.</p>
+          </span>
+        </div>
+        <div class="note note-static">
+          <span class="num">B</span>
+          <span>
+            <h3>A new send is a row, not a re-read</h3>
+            <p>When the next performance record is finished, it lands in the numbers store as rows. <em>The relationships it creates appear on their own</em>, because the links were the table joins all along. No model is involved, nothing is regenerated, and the answer to "does it know about last week" is a timestamp in the ledger rather than a guess.</p>
+          </span>
+        </div>
+        <div class="note note-static">
+          <span class="num">C</span>
+          <span>
+            <h3>The ledger is the boring part that decides everything</h3>
+            <p>One row per file: where it came from, its hash, when it was seen, which stores hold it, which version of the reader processed it. <em>Without it you cannot answer whether a document is in the system</em>, you re-read things you have already paid for, and you can never safely change the extraction rules. Build it first; it is a week of unglamorous work that makes every later week cheaper.</p>
+          </span>
+        </div>
+        <div class="note note-static">
+          <span class="num">D</span>
+          <span>
+            <h3>Version the reader, not the corpus</h3>
+            <p>When the instructions improve, and they will, stamp the new version into the ledger and re-read only what matters: the recent slice, or the documents somebody actually queries. <em>A prompt change must never mean starting the whole corpus again.</em> If your design cannot do that, it will quietly stop improving after the first pass, because nobody can afford the second.</p>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ PLATE 03 — THE SEQUENCE ═════════ -->
+  <section class="plate">
+    <div class="wrap">
+      <p class="plate-bar">
+        <span>Plate 03 · Fig. 5 · the first ninety days</span>
+        <span><b>◆</b> a gate: nothing after it starts until it is true</span>
+      </p>
+
+      <div class="drawing" tabindex="0" role="img"
+           aria-label="A ninety-day schedule. Counting the corpus runs days zero to fourteen. Interviews and naming run zero to thirty. Search over all years runs twelve to thirty. Loading the numbers runs twenty-eight to forty-five. The graph on a slice runs forty-two to sixty. The voice layer and router run fifty-five to seventy-five. The first agent runs sixty to eighty-eight. The hardware decision is a single gate at day ninety.">
+        <svg viewBox="0 0 1240 620" xmlns="http://www.w3.org/2000/svg">
+          <!-- axis -->
+          <path d="M300 74 H1200" class="d-edge"/>
+          <g>
+            <path d="M300 68 V80 M450 68 V80 M600 68 V80 M750 68 V80 M900 68 V80 M1050 68 V80 M1200 68 V80" stroke="rgba(242,236,226,.22)" stroke-width="1"/>
+            <text class="d-note" x="300" y="56" text-anchor="middle">DAY 0</text>
+            <text class="d-note" x="450" y="56" text-anchor="middle">15</text>
+            <text class="d-note" x="600" y="56" text-anchor="middle">30</text>
+            <text class="d-note" x="750" y="56" text-anchor="middle">45</text>
+            <text class="d-note" x="900" y="56" text-anchor="middle">60</text>
+            <text class="d-note" x="1050" y="56" text-anchor="middle">75</text>
+            <text class="d-note" x="1200" y="56" text-anchor="middle">90</text>
+          </g>
+          <path d="M450 90 V560 M600 90 V560 M750 90 V560 M900 90 V560 M1050 90 V560" stroke="rgba(242,236,226,.055)" stroke-width="1"/>
+
+          <!-- rows: x = 300 + day*10 -->
+          <g>
+            <text class="d-title" x="280" y="118" text-anchor="end">Count what is there</text>
+            <rect x="300" y="102" width="140" height="24" fill="#2a1d0e" stroke="#a8712c" stroke-width="1"/>
+            <path d="M452 114 l10 -10 l10 10 l-10 10 Z" fill="#0b0907" stroke="#dfa04a" stroke-width="1.4"/>
+            <text class="d-note" x="486" y="118">GATE 1</text>
+          </g>
+          <g>
+            <text class="d-title" x="280" y="182" text-anchor="end">Interview, and name things</text>
+            <rect x="300" y="166" width="300" height="24" fill="#2a1d0e" stroke="#a8712c" stroke-width="1"/>
+            <path d="M612 178 l10 -10 l10 10 l-10 10 Z" fill="#0b0907" stroke="#dfa04a" stroke-width="1.4"/>
+            <text class="d-note" x="646" y="182">GATE 2</text>
+          </g>
+          <g>
+            <text class="d-title" x="280" y="246" text-anchor="end">Search, every year</text>
+            <rect x="420" y="230" width="180" height="24" fill="#2a1d0e" stroke="#a8712c" stroke-width="1"/>
+            <path d="M612 242 l10 -10 l10 10 l-10 10 Z" fill="#0b0907" stroke="#dfa04a" stroke-width="1.4"/>
+            <text class="d-note" x="646" y="246">GATE 3 · FIRST VISIBLE WIN</text>
+          </g>
+          <g>
+            <text class="d-title" x="280" y="310" text-anchor="end">Load the numbers</text>
+            <rect x="580" y="294" width="170" height="24" fill="#2a1d0e" stroke="#a8712c" stroke-width="1"/>
+            <path d="M762 306 l10 -10 l10 10 l-10 10 Z" fill="#0b0907" stroke="#dfa04a" stroke-width="1.4"/>
+            <text class="d-note" x="796" y="310">GATE 4</text>
+          </g>
+          <g>
+            <text class="d-title" x="280" y="374" text-anchor="end">The graph, on one slice</text>
+            <path d="M720 358 H890 L900 368 V382 H720 Z" fill="#2a1d0e" stroke="#a8712c" stroke-width="1"/>
+            <path d="M912 370 l10 -10 l10 10 l-10 10 Z" fill="#0b0907" stroke="#dfa04a" stroke-width="1.4"/>
+            <text class="d-note" x="946" y="374">GATE 5</text>
+          </g>
+          <g>
+            <text class="d-title" x="280" y="438" text-anchor="end">The hat, and the router</text>
+            <path d="M850 422 H1040 L1050 432 V446 H850 Z" fill="#2a1d0e" stroke="#a8712c" stroke-width="1"/>
+            <path d="M1062 434 l10 -10 l10 10 l-10 10 Z" fill="#0b0907" stroke="#dfa04a" stroke-width="1.4"/>
+            <text class="d-note" x="1096" y="438">GATE 6</text>
+          </g>
+          <g>
+            <text class="d-title" x="280" y="502" text-anchor="end">One agent, one job</text>
+            <path d="M900 486 H1110 L1120 496 V510 H900 Z" fill="#2a1d0e" stroke="#a8712c" stroke-width="1"/>
+            <path d="M1132 498 l10 -10 l10 10 l-10 10 Z" fill="#0b0907" stroke="#dfa04a" stroke-width="1.4"/>
+            <text class="d-note" x="1166" y="502">GATE 7</text>
+          </g>
+          <g>
+            <text class="d-title" x="280" y="566" text-anchor="end">Buy, or keep renting</text>
+            <path d="M1190 562 l10 -10 l10 10 l-10 10 Z" fill="#dfa04a" stroke="#dfa04a" stroke-width="1.4"/>
+            <text class="d-sub" x="300" y="566">not a day sooner. by now you know the real corpus size, the cost per pass, how many questions a day arrive, and whether anyone uses it</text>
+          </g>
+        </svg>
+      </div>
+      <p class="scroll-hint">Drag the drawing sideways to read it all.</p>
+
+      <div class="tbl-scroll" style="margin-top:clamp(2.4rem,6vh,4rem)">
+        <table>
+          <caption>FIG. 6 · THE GATES · NOTHING AFTER ONE STARTS UNTIL IT IS TRUE</caption>
+          <thead>
+            <tr><th scope="col">Gate</th><th scope="col">What has to be true</th><th scope="col">Why it stops the clock</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row" class="g">1 · DAY 14</th><td class="why">You can say how many gigabytes of actual prose there are, not how many files.</td><td class="why">Every cost estimate downstream is built on this number. Guessing it wrong scales the error through everything.</td></tr>
+            <tr><th scope="row" class="g">2 · DAY 30</th><td class="why">Two people from different departments describe the same process using the same words.</td><td class="why">Until the vocabulary is reconciled, the graph will hold four spellings of the same thing and quietly answer wrong.</td></tr>
+            <tr><th scope="row" class="g">3 · DAY 30</th><td class="why">Someone finds a document they could not find last month, and says so unprompted.</td><td class="why">The first visible win, owed to the sceptics early. It also proves the index before anything expensive is built on it.</td></tr>
+            <tr><th scope="row" class="g">4 · DAY 45</th><td class="why">A question about last year's spend returns the same number the finance file does.</td><td class="why">If the numbers store disagrees with the books, nothing built on top of it will ever be trusted, and it should not be.</td></tr>
+            <tr><th scope="row" class="g">5 · DAY 60</th><td class="why">A question spanning several records returns something a person recognises as right, with its sources named.</td><td class="why">This is the only real test of whether the graph earns its cost. Run it twice, changing the instructions in between, and keep the receipts.</td></tr>
+            <tr><th scope="row" class="g">6 · DAY 75</th><td class="why">The same question asked twice gives the same shape of answer, and both name their sources.</td><td class="why">An assistant that answers differently each time cannot be put in front of staff, however good its best answer is.</td></tr>
+            <tr><th scope="row" class="g">7 · DAY 90</th><td class="why">The named user does the job measurably faster than the baseline captured in week one.</td><td class="why">Capture that baseline on day three. Nobody can prove an improvement they never measured, and this is the number renewal turns on.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="void-grid" style="margin-top:clamp(2.4rem,6vh,3.6rem)">
+        <div class="void">
+          <span class="mark">Stop the clock</span>
+          <h3>Three things that should halt this</h3>
+          <p><b>The vocabulary will not converge.</b> If two departments still cannot agree on what a term means at day 30, stop and fix the organisation. No amount of machinery survives it.</p>
+          <p><b>Nobody uses the search.</b> If the free, complete, working thing goes unused for a fortnight, the expensive thing will not be used either. That is data, not a setback.</p>
+          <p><b>The retention question stays open.</b> Building capture across everyone's inbox before somebody has decided what gets deleted creates a liability faster than it creates value.</p>
+        </div>
+        <div class="void" style="border-style:solid;border-color:var(--edge)">
+          <span class="mark" style="color:var(--bone-faint)">Running in parallel, from day one</span>
+          <h3>The unglamorous half</h3>
+          <p>The ledger, the folder watcher, the deletion list, the baseline measurements, the glossary in version control. None of it demonstrates well and all of it is what makes month four cheaper than month one.</p>
+          <p><b>Budget it explicitly</b>, or it gets skipped in favour of whatever is more impressive that week, and then the second pass costs as much as the first one did.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ═════════ OPEN ═════════ -->
   <section class="open">
     <div class="wrap">
       <h2 class="sec-h">Not decided yet</h2>
-      <p class="sec-p">Revision B needs answers to these. Three of the four are governance, not engineering, which means they are somebody's decision rather than a thing to be discovered.</p>
+      <p class="sec-p">None of these is an engineering unknown. Three of the four are governance, which means they are somebody's decision rather than a thing to be found out, and the sequence on Plate 03 stalls without them.</p>
       <ol>
         <li><div>
           <h3>Where does the donor file actually live?</h3>
@@ -773,11 +1038,11 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
         </div></li>
         <li><div>
           <h3>How long does routine material live?</h3>
-          <p>Chris wants a 30-to-60-day floor for what ends up in a deposition. Ryan does not want to delete anything. Organisation-wide capture cannot be designed until someone above both of them decides.</p>
+          <p>The people closest to the legal risk want a 30-to-60-day floor on what could end up in a deposition. The people closest to the archive do not want to delete anything. Organisation-wide capture cannot be designed until someone above both of them decides.</p>
         </div></li>
         <li><div>
           <h3>Does the graph ever hold donor records?</h3>
-          <p>Revision A says no, permanently, and pays a real price in analytical power for it. That is a choice worth making deliberately rather than by default.</p>
+          <p>This design says no, permanently, and pays a real price in analytical power for it. That is a choice worth making deliberately rather than by default.</p>
         </div></li>
       </ol>
     </div>
@@ -788,7 +1053,7 @@ footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
 <footer>
   <div class="wrap">
     <div class="colophon">
-      <span>PLATE 01 · REV A · 18 AUG 2026 · M. FALDE</span>
+      <span>PLATES 01–03 · REV B · 19 AUG 2026 · M. FALDE</span>
       <span>FOR DISCUSSION · NOT FOR BUILD</span>
     </div>
   </div>
