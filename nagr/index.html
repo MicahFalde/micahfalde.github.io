@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Train Station · NAGR knowledge architecture, Plate 01</title>
+<meta name="robots" content="noindex, nofollow" />
+<meta name="description" content="Plate 01: how NAGR's 2.4 TB becomes something its agents can ask, without a full-corpus graph and without fine-tuning a model." />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0b0907" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230b0907'/><path d='M22 30 L44 50 L22 70' fill='none' stroke='%23dfa04a' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/><path d='M52 70 L78 70' stroke='%23dfa04a' stroke-width='9' stroke-linecap='round'/></svg>" />
+
+<!-- AIDEV-NOTE: Styles are INLINE on purpose. GitHub Pages serves max-age=14400
+     with no filename fingerprinting; a separate stylesheet would let a returning
+     visitor pair fresh HTML with a stale sheet. Tokens match /styles.css so this
+     page belongs to the same site, but it does not depend on that file. -->
+<style>
+@font-face{
+  font-family:'Gambarino';
+  src:url('/fonts/Gambarino-Regular.woff2') format('woff2');
+  font-weight:400; font-style:normal; font-display:swap;
+}
+
+:root{
+  --ink:#0b0907;
+  --ink-2:#13100c;
+  --bone:#f2ece2;
+  --bone-dim:#b5aa99;
+  --bone-faint:#948a7a;
+  --amber:#dfa04a;
+  --amber-deep:#a8712c;
+  --rust:#9c6046;          /* the isolated / voided lane. strokes only */
+  /* AIDEV-NOTE: --rust measures ~3.6:1 on --ink and fails AA for text. Anything
+     READ in the lane colour uses --rust-ink (~7:1). Don't collapse these two. */
+  --rust-ink:#c48d6d;
+  --edge:rgba(242,236,226,.10);
+  --edge-lit:rgba(223,160,74,.42);
+
+  --font-display:'Gambarino',Georgia,'Times New Roman',serif;
+  --font-body:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  --maxw:1240px;
+  --gutter:clamp(1.25rem,4vw,3rem);
+
+  --step--2:clamp(.66rem,.64rem + .08vw,.72rem);
+  --step--1:clamp(.78rem,.76rem + .1vw,.84rem);
+  --step-0:clamp(.97rem,.94rem + .15vw,1.05rem);
+  --step-1:clamp(1.12rem,1.04rem + .36vw,1.34rem);
+  --step-2:clamp(1.5rem,1.2rem + 1.1vw,2.1rem);
+  --step-4:clamp(2.6rem,1.4rem + 5.4vw,6.2rem);
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;background:var(--ink);scroll-behavior:smooth;overflow-x:hidden;}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+
+/* AIDEV-NOTE: grain sits on the substrate, BEHIND every element (z-index:-1,
+   pointer-events:none). It must never be laid over text. */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  opacity:.55;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");
+}
+
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--bone);
+  font-family:var(--font-body);
+  font-size:var(--step-0);
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+main{flex:1 0 auto;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter);}
+
+a{color:var(--amber);text-decoration-thickness:1px;text-underline-offset:.22em;}
+a:hover{color:var(--bone);}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+.skip{position:absolute;left:-999px;top:0;background:var(--amber);color:var(--ink);padding:.6rem 1rem;z-index:20;}
+.skip:focus{left:.6rem;top:.6rem;}
+
+/* ── sheet head ─────────────────────────────────────────────────────────
+   Composed as a drafting sheet header, not a hero stack: crop ticks, the
+   drawing name at plate scale on the left, the stamp block on the right,
+   both hung off one shared baseline. ─────────────────────────────────── */
+.sheet{
+  min-height:100svh;
+  display:flex;
+  padding-block:clamp(1.6rem,4vh,3rem) clamp(1.6rem,4vh,2.6rem);
+}
+.sheet>.wrap{
+  flex:1 1 auto;
+  width:100%;
+  /* AIDEV-NOTE: a flex item defaults to min-width:auto, so this wrap refused
+     to shrink below its widest unbreakable string and dragged the whole page
+     wider than a phone. min-width:0 is what actually lets it fit. */
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.ticks{display:flex;align-items:center;gap:.9rem;}
+.ticks svg{display:block;flex:0 0 auto;}
+.ticks-rule{flex:1 1 auto;height:1px;background:var(--edge);}
+.ticks-id{
+  font-family:var(--font-mono);font-size:var(--step--2);
+  letter-spacing:.14em;color:var(--bone-faint);white-space:nowrap;
+}
+
+.head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:clamp(2rem,5vw,4rem);
+  align-items:end;
+  padding-block:clamp(2rem,6vh,4rem);
+}
+@media (min-width:900px){
+  .head{grid-template-columns:minmax(0,1.55fr) minmax(280px,.95fr);}
+}
+.title{
+  font-family:var(--font-display);
+  font-size:var(--step-4);
+  line-height:.92;
+  letter-spacing:-.012em;
+  margin:0 0 1.1rem;
+  color:var(--bone);
+}
+.brief{margin:0;max-width:46ch;color:var(--bone-dim);font-size:var(--step-1);line-height:1.5;}
+.brief strong{color:var(--bone);font-weight:600;}
+
+.stamp{
+  border-top:1px solid var(--edge-lit);
+  padding-top:1rem;
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:.34rem 1.4rem;
+  font-family:var(--font-mono);
+  font-size:var(--step--2);
+  letter-spacing:.06em;
+}
+.stamp dt{color:var(--bone-faint);text-transform:uppercase;letter-spacing:.16em;}
+.stamp dd{margin:0;color:var(--bone);}
+.stamp dd.hot{color:var(--amber);}
+
+.decis{
+  display:grid;gap:1px;
+  background:var(--edge);
+  border-block:1px solid var(--edge);
+}
+@media (min-width:820px){.decis{grid-template-columns:1fr 1fr;}}
+.dec{background:var(--ink);padding:1.35rem 0;}
+@media (min-width:820px){.dec+.dec{padding-left:clamp(1.4rem,3vw,2.6rem);}}
+.dec h2{
+  margin:0 0 .45rem;font-family:var(--font-body);font-size:var(--step-0);
+  font-weight:600;color:var(--bone);letter-spacing:.005em;
+}
+.dec h2 .no{font-family:var(--font-mono);font-size:.78em;color:var(--rust-ink);letter-spacing:.12em;margin-right:.6em;}
+.dec p{margin:0;color:var(--bone-dim);font-size:var(--step--1);line-height:1.6;max-width:52ch;}
+
+/* ── the plate ──────────────────────────────────────────────────────── */
+.plate{padding-block:clamp(3rem,9vh,6rem) clamp(2rem,5vh,3.5rem);}
+.plate-bar{
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:1.5rem;flex-wrap:wrap;
+  font-family:var(--font-mono);font-size:var(--step--2);
+  letter-spacing:.16em;text-transform:uppercase;color:var(--bone-faint);
+  margin-bottom:1.4rem;
+}
+.plate-bar b{color:var(--amber);font-weight:400;}
+
+.drawing{
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  padding-bottom:.5rem;
+}
+.drawing svg{display:block;width:100%;min-width:980px;height:auto;}
+.scroll-hint{
+  font-family:var(--font-mono);font-size:var(--step--2);color:var(--bone-faint);
+  letter-spacing:.1em;margin:.6rem 0 0;
+}
+@media (min-width:900px){.scroll-hint{display:none;}}
+
+/* AIDEV-NOTE: the two sheet-id strings are nowrap and letterspaced, so together
+   they demanded ~470px. On a phone that widened the whole page and pushed every
+   line off the right edge. Let them wrap and drop the connecting rule. */
+@media (max-width:700px){
+  .ticks{flex-wrap:wrap;gap:.45rem .9rem;}
+  .ticks-id{white-space:normal;letter-spacing:.1em;}
+  .ticks-rule{display:none;}
+}
+
+/* diagram vocabulary */
+.d-fill{fill:var(--ink-2);}
+.d-edge{stroke:var(--edge);stroke-width:1;fill:none;}
+.d-box{fill:var(--ink-2);stroke:rgba(242,236,226,.16);stroke-width:1;}
+.d-box-lane{fill:#140f0c;stroke:rgba(156,96,70,.5);stroke-width:1;}
+.d-title{fill:var(--bone);font-family:system-ui,-apple-system,sans-serif;font-size:15px;font-weight:600;}
+.d-sub{fill:var(--bone-faint);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10.5px;letter-spacing:.02em;}
+.d-tier-no{fill:var(--amber);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.18em;}
+.d-tier-nm{fill:var(--bone-dim);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.14em;}
+.d-note{fill:var(--bone-faint);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:.14em;}
+.d-lane-lab{fill:var(--rust-ink);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:.24em;}
+.d-flow{stroke:var(--amber-deep);stroke-width:1.4;fill:none;}
+.d-flow-lane{stroke:var(--rust);stroke-width:1.4;fill:none;stroke-dasharray:5 4;}
+.d-bound{stroke:rgba(156,96,70,.55);stroke-width:1;fill:none;stroke-dasharray:2 6;}
+.d-feed{stroke:rgba(242,236,226,.22);stroke-width:1.2;fill:none;stroke-dasharray:4 5;}
+.d-cno{fill:var(--ink);stroke:var(--amber);stroke-width:1.2;}
+.d-cnot{fill:var(--amber);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;font-weight:700;}
+
+/* travelling ticks along the flow: motion on already-drawn strokes only */
+.d-spark{stroke:var(--amber);stroke-width:1.4;fill:none;stroke-dasharray:14 190;stroke-linecap:round;animation:run 7s linear infinite;}
+@keyframes run{from{stroke-dashoffset:204;}to{stroke-dashoffset:0;}}
+@media (prefers-reduced-motion:reduce){.d-spark{animation:none;opacity:0;}}
+
+/* highlight state driven by the notes below. no transform, no glow. */
+.g-block rect,.g-block path.shape{transition:stroke .18s ease,fill .18s ease;}
+.g-block.lit rect,.g-block.lit path.shape{stroke:var(--amber);fill:#1c150d;}
+.g-block.lit .d-title{fill:var(--amber);}
+
+/* ── notes ──────────────────────────────────────────────────────────── */
+.notes{padding-block:clamp(2.5rem,7vh,5rem);}
+.sec-h{
+  font-family:var(--font-display);font-size:var(--step-2);line-height:1.05;
+  margin:0 0 .5rem;color:var(--bone);
+}
+.sec-p{margin:0 0 2.6rem;color:var(--bone-dim);max-width:58ch;font-size:var(--step--1);}
+.note-grid{display:grid;gap:2.2rem 3.4rem;}
+@media (min-width:760px){.note-grid{grid-template-columns:1fr 1fr;}}
+.note{
+  display:grid;grid-template-columns:auto 1fr;gap:0 1.15rem;
+  text-align:left;background:none;border:0;padding:0;margin:0;
+  color:inherit;font:inherit;cursor:pointer;
+  align-items:start;
+}
+.note:disabled{cursor:default;}
+.note .num{
+  font-family:var(--font-display);font-size:1.9rem;line-height:.9;
+  color:var(--amber);padding-top:.05em;
+  /* fixed, not min-width: 10 is wider than 1-9 and would indent its own title
+     further than the other nine, breaking the shared left edge across the grid */
+  width:2.4ch;
+  transition:color .18s ease;
+}
+.note h3{margin:0 0 .35rem;font-size:var(--step-0);font-weight:600;color:var(--bone);line-height:1.35;}
+.note p{margin:0;color:var(--bone-dim);font-size:var(--step--1);line-height:1.62;}
+.note p em{color:var(--bone);font-style:normal;font-weight:600;}
+.note:hover h3,.note[aria-pressed="true"] h3{color:var(--amber);}
+.note:hover .num,.note[aria-pressed="true"] .num{color:var(--bone);}
+.note:focus-visible{outline:2px solid var(--amber);outline-offset:6px;}
+
+/* ── void panel ─────────────────────────────────────────────────────── */
+.voids{padding-block:clamp(2.5rem,7vh,5rem);}
+.void-grid{display:grid;gap:1.6rem;}
+@media (min-width:820px){.void-grid{grid-template-columns:1fr 1fr;gap:2rem;}}
+.void{
+  position:relative;
+  border:1px dashed rgba(156,96,70,.55);
+  padding:clamp(1.5rem,3vw,2.2rem);
+  padding-top:2.9rem;
+  background:linear-gradient(180deg,rgba(156,96,70,.05),rgba(156,96,70,0) 60%);
+}
+.void .mark{
+  position:absolute;top:1rem;left:clamp(1.5rem,3vw,2.2rem);
+  font-family:var(--font-mono);font-size:var(--step--2);letter-spacing:.28em;
+  color:var(--rust-ink);text-transform:uppercase;
+}
+.void h3{margin:0 0 .6rem;font-family:var(--font-display);font-size:var(--step-1);color:var(--bone-dim);}
+.void p{margin:0 0 .8rem;color:var(--bone-dim);font-size:var(--step--1);line-height:1.62;}
+.void p:last-child{margin-bottom:0;}
+.void b{color:var(--bone);font-weight:600;}
+
+/* ── figures table ──────────────────────────────────────────────────── */
+.cost{padding-block:clamp(2.5rem,7vh,5rem);}
+.tbl-scroll{overflow-x:auto;}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:var(--step--1);}
+caption{text-align:left;color:var(--bone-faint);font-size:var(--step--2);font-family:var(--font-mono);letter-spacing:.1em;padding-bottom:.9rem;}
+th,td{text-align:left;padding:.85rem 1.2rem .85rem 0;border-bottom:1px solid var(--edge);vertical-align:top;}
+thead th{color:var(--bone-faint);font-family:var(--font-mono);font-size:var(--step--2);letter-spacing:.16em;text-transform:uppercase;font-weight:400;}
+tbody th{font-weight:600;color:var(--bone);}
+td.fig{font-family:var(--font-mono);color:var(--amber);white-space:nowrap;}
+td.fig.cold{color:var(--rust-ink);}
+td.why{color:var(--bone-dim);}
+
+/* ── open decisions ─────────────────────────────────────────────────── */
+.open{padding-block:clamp(2.5rem,7vh,5rem);}
+.open ol{margin:0;padding:0;list-style:none;counter-reset:q;}
+.open li{
+  counter-increment:q;
+  display:grid;grid-template-columns:auto 1fr;gap:0 1.15rem;
+  padding:1.15rem 0;border-bottom:1px solid var(--edge);
+}
+.open li:first-child{border-top:1px solid var(--edge);}
+.open li::before{
+  content:"Q" counter(q,decimal-leading-zero);
+  font-family:var(--font-mono);font-size:var(--step--2);letter-spacing:.12em;
+  color:var(--rust-ink);padding-top:.35em;
+}
+.open h3{margin:0 0 .25rem;font-size:var(--step-0);font-weight:600;color:var(--bone);}
+.open p{margin:0;color:var(--bone-dim);font-size:var(--step--1);max-width:80ch;}
+
+/* ── footer ─────────────────────────────────────────────────────────── */
+footer{margin-top:clamp(3rem,8vh,6rem);overflow:hidden;}
+.colophon{
+  /* AIDEV-NOTE: deliberately NOT space-between. Two strings pinned to opposite
+     rims with a dead gulf between them reads as unplaced; keep them on the same
+     left margin as every other line on the sheet. */
+  display:flex;flex-wrap:wrap;gap:.5rem 2.4rem;justify-content:flex-start;
+  padding-bottom:clamp(1.6rem,4vh,2.6rem);
+  font-family:var(--font-mono);font-size:var(--step--2);letter-spacing:.1em;
+  color:var(--bone-faint);
+}
+.mark-wrap{line-height:0;}
+.mark-wrap svg{display:block;width:100%;height:auto;}
+</style>
+</head>
+<body>
+<a class="skip" href="#plate">Skip to the drawing</a>
+
+<main>
+
+  <!-- ═════════ SHEET HEAD ═════════ -->
+  <section class="sheet">
+    <div class="wrap">
+      <div class="ticks">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M0 .5H10M.5 0V10" stroke="#dfa04a" stroke-width="1"/></svg>
+        <span class="ticks-id">MICAH FALDE · DRAWING SET · NAGR</span>
+        <span class="ticks-rule"></span>
+        <span class="ticks-id">PLATE 01 / 01</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M16 .5H6M15.5 0V10" stroke="#dfa04a" stroke-width="1"/></svg>
+      </div>
+
+      <div class="head">
+        <div>
+          <h1 class="title">The Train<br />Station</h1>
+          <p class="brief">Chris's word for it, and it is the right one. One place the records land, that every agent asks and no agent owns. Built to give a <strong>useful answer in weeks</strong>, not after a four-thousand-dollar read of the whole server, and built so <strong>no month's bill can surprise anyone</strong>.</p>
+        </div>
+        <dl class="stamp">
+          <dt>Project</dt><dd>NAGR knowledge architecture</dd>
+          <dt>Sheet</dt><dd>Plate 01 · system overview</dd>
+          <dt>Drawn</dt><dd>M. Falde</dd>
+          <dt>Date</dt><dd>18 Aug 2026</dd>
+          <dt>Revision</dt><dd class="hot">A · first pass</dd>
+          <dt>Status</dt><dd class="hot">For discussion</dd>
+          <dt>Basis</dt><dd>1:1 with C. Kuper, 18 Aug</dd>
+        </dl>
+      </div>
+
+      <div class="decis">
+        <div class="dec">
+          <h2><span class="no">CONSTRAINT 01</span>No fine-tuning.</h2>
+          <p>The house voice lives in a folder of text, fetched at the moment of answering. Edit it in a minute, read it in plain English, and keep it when the model underneath changes. Baked-in weights give you none of that, and they cannot tell you why they said a thing.</p>
+        </div>
+        <div class="dec">
+          <h2><span class="no">CONSTRAINT 02</span>No full-corpus graph.</h2>
+          <p>2.4 terabytes is not 2.4 terabytes of writing. It is mostly artwork and spreadsheets. Catalogue the art, load the spreadsheets, and let a model read only the part that is actually prose, and only the years anyone asks about.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ THE PLATE ═════════ -->
+  <section class="plate" id="plate">
+    <div class="wrap">
+      <p class="plate-bar">
+        <span>Fig. 1 · system overview</span>
+        <span><b>━</b> data path &nbsp;·&nbsp; <b>┄</b> metered or isolated &nbsp;·&nbsp; cut corner = a model runs here &nbsp;·&nbsp; square = it does not</span>
+      </p>
+
+      <div class="drawing" tabindex="0" role="img"
+           aria-label="System diagram in eight tiers. Sources feed a deterministic triage layer, which splits into three stores: a prose index, a relationship graph and a numbers store. A query router reads the stores, an instruction layer supplies house voice, a three-step model tier answers, and department agents sit on top. Donor records and live feeds run down a separate right-hand lane that never enters the shared stores.">
+        <svg viewBox="0 0 1240 1250" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 1 L9 5 L0 9 Z" fill="#a8712c"/>
+            </marker>
+            <marker id="ar-l" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 1 L9 5 L0 9 Z" fill="#9c6046"/>
+            </marker>
+            <marker id="ar-f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 1 L9 5 L0 9 Z" fill="rgba(242,236,226,.35)"/>
+            </marker>
+          </defs>
+
+          <!-- isolation boundary for the right-hand lane -->
+          <path class="d-bound" d="M968 30 V1200"/>
+          <text class="d-lane-lab" transform="translate(1099 722) rotate(-90)" text-anchor="middle">NO NETWORK · AGGREGATES OUT ONLY</text>
+
+          <!-- ── tier labels ── -->
+          <g>
+            <text class="d-tier-no" x="178" y="66" text-anchor="end">00</text><text class="d-tier-nm" x="178" y="82" text-anchor="end">SOURCES</text>
+            <text class="d-tier-no" x="178" y="222" text-anchor="end">01</text><text class="d-tier-nm" x="178" y="238" text-anchor="end">TRIAGE</text>
+            <text class="d-tier-no" x="178" y="342" text-anchor="end">02</text><text class="d-tier-nm" x="178" y="358" text-anchor="end">STORES</text>
+            <text class="d-tier-no" x="178" y="570" text-anchor="end">03</text><text class="d-tier-nm" x="178" y="586" text-anchor="end">ROUTER</text>
+            <text class="d-tier-no" x="178" y="686" text-anchor="end">04</text><text class="d-tier-nm" x="178" y="702" text-anchor="end">VOICE</text>
+            <text class="d-tier-no" x="178" y="806" text-anchor="end">05</text><text class="d-tier-nm" x="178" y="822" text-anchor="end">MODELS</text>
+            <text class="d-tier-no" x="178" y="962" text-anchor="end">06</text><text class="d-tier-nm" x="178" y="978" text-anchor="end">AGENTS</text>
+            <text class="d-tier-no" x="178" y="1146" text-anchor="end">07</text><text class="d-tier-nm" x="178" y="1162" text-anchor="end">PEOPLE</text>
+          </g>
+
+          <!-- ══ TIER 00 — sources ══ -->
+          <g class="g-block" id="b-files"><rect x="192" y="44" width="242" height="112" class="d-box"/>
+            <text class="d-title" x="212" y="76">File server</text>
+            <text class="d-sub" x="212" y="99">822,000 files · 2.4 TB</text>
+            <text class="d-sub" x="212" y="117">PDF · DOCX · HTML · art</text>
+            <text class="d-sub" x="212" y="135">twelve years of it</text>
+          </g>
+          <g class="g-block" id="b-perf"><rect x="454" y="44" width="242" height="112" class="d-box"/>
+            <text class="d-title" x="474" y="76">Performance record</text>
+            <text class="d-sub" x="474" y="99">blue books · mail history</text>
+            <text class="d-sub" x="474" y="117">sent, cost, replied, CPA</text>
+            <text class="d-sub" x="474" y="135">already a table, not prose</text>
+          </g>
+          <g class="g-block" id="b-voice-src"><rect x="716" y="44" width="242" height="112" class="d-box"/>
+            <text class="d-title" x="736" y="76">Voice &amp; doctrine</text>
+            <text class="d-sub" x="736" y="99">FACL lectures, a decade</text>
+            <text class="d-sub" x="736" y="117">long-form member email</text>
+            <text class="d-sub" x="736" y="135">how we say things</text>
+          </g>
+          <g class="g-block" id="b-donor-src"><rect x="978" y="44" width="242" height="112" class="d-box-lane"/>
+            <text class="d-title" x="998" y="76">Donor file</text>
+            <text class="d-sub" x="998" y="99">members · cards · giving</text>
+            <text class="d-sub" x="998" y="117">petitions, sortable by zip</text>
+            <text class="d-sub" x="998" y="135">never enters the stores</text>
+          </g>
+
+          <!-- flows 00 → 01 -->
+          <path class="d-flow" d="M313 156 V196" marker-end="url(#ar)"/>
+          <path class="d-flow" d="M575 156 V196" marker-end="url(#ar)"/>
+          <path class="d-flow" d="M837 156 V196" marker-end="url(#ar)"/>
+          <path class="d-spark" d="M313 156 V196"/>
+          <!-- donor bypass -->
+          <path class="d-flow-lane" d="M1099 156 V316" marker-end="url(#ar-l)"/>
+          <text class="d-lane-lab" x="1085" y="243" text-anchor="end">COPY IN</text>
+
+          <!-- ══ TIER 01 — triage ══ -->
+          <g class="g-block" id="b-triage"><rect x="192" y="200" width="766" height="76" class="d-box"/>
+            <text class="d-title" x="212" y="228">Inventory and triage <tspan class="d-sub">· nothing is read by a model here</tspan></text>
+            <text class="d-sub" x="212" y="249">classify by type, age and folder · drop artwork to a catalogue · send spreadsheets to SQL</text>
+            <text class="d-sub" x="212" y="265">delete what nobody needs · 2.4 TB down to about 1.5 before a model reads one word</text>
+          </g>
+          <circle class="d-cno" cx="204" cy="200" r="11"/><text class="d-cnot" x="204" y="200" text-anchor="middle" dominant-baseline="central">1</text>
+
+          <!-- flows 01 → 02 -->
+          <path class="d-flow" d="M313 276 V316" marker-end="url(#ar)"/>
+          <path class="d-flow" d="M575 276 V316" marker-end="url(#ar)"/>
+          <path class="d-flow" d="M837 276 V316" marker-end="url(#ar)"/>
+          <path class="d-spark" d="M837 276 V316"/>
+
+          <!-- ══ TIER 02 — stores ══ -->
+          <g class="g-block" id="b-prose"><rect x="192" y="320" width="242" height="184" class="d-box"/>
+            <text class="d-title" x="212" y="352">Prose index</text>
+            <text class="d-sub" x="212" y="378">every document, all twelve</text>
+            <text class="d-sub" x="212" y="396">years, from day one</text>
+            <text class="d-sub" x="212" y="422">embeddings run at home,</text>
+            <text class="d-sub" x="212" y="440">so the tokens are free</text>
+            <text class="d-sub" x="212" y="472">answers: find what says X</text>
+          </g>
+          <g class="g-block" id="b-graph">
+            <path class="shape d-box" d="M454 320 H682 L696 334 V504 H454 Z"/>
+            <text class="d-title" x="474" y="352">Relationship graph</text>
+            <text class="d-sub" x="474" y="378">built from keys you already</text>
+            <text class="d-sub" x="474" y="396">have, not from reading</text>
+            <text class="d-sub" x="474" y="422">a model reads prose only</text>
+            <text class="d-sub" x="474" y="440">for 2025 → now</text>
+            <text class="d-sub" x="474" y="472">answers: what worked, where</text>
+          </g>
+          <g class="g-block" id="b-numbers"><rect x="716" y="320" width="242" height="184" class="d-box"/>
+            <text class="d-title" x="736" y="352">Numbers store</text>
+            <text class="d-sub" x="736" y="378">52,000 spreadsheets and</text>
+            <text class="d-sub" x="736" y="396">39,000 CSVs, loaded whole</text>
+            <text class="d-sub" x="736" y="422">plain SQL. exact. nothing</text>
+            <text class="d-sub" x="736" y="440">here can be made up</text>
+            <text class="d-sub" x="736" y="472">answers: how many, how much</text>
+          </g>
+          <g class="g-block" id="b-sandbox">
+            <path class="shape d-box-lane" d="M978 320 H1206 L1220 334 V504 H978 Z"/>
+            <rect x="986" y="328" width="226" height="168" fill="none" stroke="rgba(156,96,70,.3)" stroke-width="1"/>
+            <text class="d-title" x="1000" y="356" fill="#c98f6f">Donor sandbox</text>
+            <text class="d-sub" x="1000" y="382">a copy, on its own box,</text>
+            <text class="d-sub" x="1000" y="400">with the cable unplugged</text>
+            <text class="d-sub" x="1000" y="426">wealth append, list rental,</text>
+            <text class="d-sub" x="1000" y="444">segment tests live here</text>
+            <text class="d-sub" x="1000" y="476">counts come out, never names</text>
+          </g>
+          <circle class="d-cno" cx="204" cy="320" r="11"/><text class="d-cnot" x="204" y="320" text-anchor="middle" dominant-baseline="central">2</text>
+          <circle class="d-cno" cx="466" cy="320" r="11"/><text class="d-cnot" x="466" y="320" text-anchor="middle" dominant-baseline="central">3</text>
+          <circle class="d-cno" cx="728" cy="320" r="11"/><text class="d-cnot" x="728" y="320" text-anchor="middle" dominant-baseline="central">4</text>
+          <circle class="d-cno" cx="990" cy="320" r="11" stroke="#9c6046"/><text class="d-cnot" x="990" y="320" text-anchor="middle" dominant-baseline="central" fill="#9c6046">5</text>
+
+          <!-- aggregates out of the sandbox, back into the numbers store -->
+          <path class="d-flow-lane" d="M978 470 H962" marker-end="url(#ar-l)"/>
+
+          <!-- flows 02 → 03 -->
+          <path class="d-flow" d="M313 504 V548" marker-end="url(#ar)"/>
+          <path class="d-flow" d="M575 504 V548" marker-end="url(#ar)"/>
+          <path class="d-flow" d="M837 504 V548" marker-end="url(#ar)"/>
+          <path class="d-spark" d="M575 504 V548"/>
+
+          <!-- ══ TIER 03 — router ══ -->
+          <g class="g-block" id="b-router">
+            <path class="shape d-box" d="M192 548 H944 L958 562 V620 H192 Z"/>
+            <text class="d-title" x="212" y="578">Query router <tspan class="d-sub">· rules decide first, a small model only when they run out</tspan></text>
+            <text class="d-sub" x="212" y="601">picks the store, or two of them, and hands back what it covered as well as what it missed</text>
+          </g>
+          <circle class="d-cno" cx="204" cy="548" r="11"/><text class="d-cnot" x="204" y="548" text-anchor="middle" dominant-baseline="central">6</text>
+
+          <path class="d-flow" d="M575 620 V664" marker-end="url(#ar)"/>
+
+          <!-- ══ TIER 04 — voice ══ -->
+          <g class="g-block" id="b-voice"><rect x="192" y="664" width="766" height="76" class="d-box"/>
+            <text class="d-title" x="212" y="692">The hat <tspan class="d-sub">· house voice, fetched at the moment of answering</tspan></text>
+            <text class="d-sub" x="212" y="713">what a blue book is · what CPA means here · what a preemptive accusation is · Mike's lines as examples</text>
+            <text class="d-sub" x="212" y="729">what never to say · text files, in version control, not model weights</text>
+          </g>
+          <circle class="d-cno" cx="204" cy="664" r="11"/><text class="d-cnot" x="204" y="664" text-anchor="middle" dominant-baseline="central">7</text>
+
+          <path class="d-flow" d="M313 740 V784" marker-end="url(#ar)"/>
+          <path class="d-flow" d="M575 740 V784" marker-end="url(#ar)"/>
+          <path class="d-flow" d="M837 740 V784" marker-end="url(#ar)"/>
+
+          <!-- ══ TIER 05 — models ══ -->
+          <g class="g-block" id="b-m-small">
+            <path class="shape d-box" d="M192 784 H420 L434 798 V896 H192 Z"/>
+            <text class="d-title" x="212" y="816">Local · small</text>
+            <text class="d-sub" x="212" y="842">sorting, labelling, routing</text>
+            <text class="d-sub" x="212" y="860">runs on the cheap box</text>
+            <text class="d-sub" x="212" y="878">costs nothing per question</text>
+          </g>
+          <g class="g-block" id="b-m-main">
+            <path class="shape d-box" d="M454 784 H682 L696 798 V896 H454 Z"/>
+            <text class="d-title" x="474" y="816">Local · main</text>
+            <text class="d-sub" x="474" y="842">gpt-oss or Qwen, in house</text>
+            <text class="d-sub" x="474" y="860">writes most of the answers</text>
+            <text class="d-sub" x="474" y="878">no politics in the refusals</text>
+          </g>
+          <g class="g-block" id="b-m-front">
+            <path class="shape d-box" d="M716 784 H944 L958 798 V896 H716 Z"/>
+            <text class="d-title" x="736" y="816">Frontier · rented</text>
+            <text class="d-sub" x="736" y="842">only when it is genuinely</text>
+            <text class="d-sub" x="736" y="860">too hard for the house</text>
+            <text class="d-sub" x="736" y="878">metered · capped · announced</text>
+          </g>
+          <circle class="d-cno" cx="728" cy="784" r="11"/><text class="d-cnot" x="728" y="784" text-anchor="middle" dominant-baseline="central">8</text>
+
+          <path class="d-flow" d="M313 896 V940" marker-end="url(#ar)"/>
+          <path class="d-flow" d="M575 896 V940" marker-end="url(#ar)"/>
+          <path class="d-flow" d="M837 896 V940" marker-end="url(#ar)"/>
+          <path class="d-spark" d="M313 896 V940"/>
+
+          <!-- ══ TIER 06 — agents ══ -->
+          <g class="g-block" id="b-argus">
+            <path class="shape d-box" d="M192 940 H420 L434 954 V1080 H192 Z"/>
+            <text class="d-title" x="212" y="972">Argus · political</text>
+            <text class="d-sub" x="212" y="998">a bill lands, or is about to</text>
+            <text class="d-sub" x="212" y="1016">what we ran last time, where</text>
+            <text class="d-sub" x="212" y="1034">how many petitions, by zip</text>
+            <text class="d-sub" x="212" y="1060">a person says go, every time</text>
+          </g>
+          <g class="g-block" id="b-mail">
+            <path class="shape d-box" d="M454 940 H682 L696 954 V1080 H454 Z"/>
+            <text class="d-title" x="474" y="972">Mail &amp; email</text>
+            <text class="d-sub" x="474" y="998">what to send, to whom,</text>
+            <text class="d-sub" x="474" y="1016">and what it did last time</text>
+            <text class="d-sub" x="474" y="1034">graded against the blue</text>
+            <text class="d-sub" x="474" y="1060">books, not against a vibe</text>
+          </g>
+          <g class="g-block" id="b-member">
+            <path class="shape d-box" d="M716 940 H944 L958 954 V1080 H716 Z"/>
+            <text class="d-title" x="736" y="972">Membership</text>
+            <text class="d-sub" x="736" y="998">one record per person</text>
+            <text class="d-sub" x="736" y="1016">call, letter, email, text:</text>
+            <text class="d-sub" x="736" y="1034">every touch in one place</text>
+            <text class="d-sub" x="736" y="1060">reads counts, not the file</text>
+          </g>
+          <g class="g-block" id="b-feeds"><rect x="978" y="940" width="242" height="140" class="d-box-lane"/>
+            <text class="d-title" x="998" y="972" fill="#c98f6f">Live feeds</text>
+            <text class="d-sub" x="998" y="998">legislature APIs</text>
+            <text class="d-sub" x="998" y="1016">hearing streams, Whisper</text>
+            <text class="d-sub" x="998" y="1034">news, press releases</text>
+            <text class="d-sub" x="998" y="1060">straight to the agent</text>
+          </g>
+          <path class="d-flow-lane" d="M978 1010 H962" marker-end="url(#ar-l)"/>
+          <circle class="d-cno" cx="204" cy="940" r="11"/><text class="d-cnot" x="204" y="940" text-anchor="middle" dominant-baseline="central">9</text>
+
+          <path class="d-flow" d="M313 1080 V1124" marker-end="url(#ar)"/>
+          <path class="d-flow" d="M575 1080 V1124" marker-end="url(#ar)"/>
+          <path class="d-flow" d="M837 1080 V1124" marker-end="url(#ar)"/>
+
+          <!-- ══ TIER 07 — people ══ -->
+          <g class="g-block" id="b-people">
+            <path class="shape d-box" d="M192 1124 H944 L958 1138 V1196 H192 Z"/>
+            <text class="d-title" x="212" y="1154">One door. Ask it anything.</text>
+            <text class="d-sub" x="212" y="1176">every answer names its sources and says what it could not see</text>
+            <text class="d-sub" x="212" y="1192">thumbs up, thumbs down, and that verdict becomes a test, never training data</text>
+          </g>
+          <circle class="d-cno" cx="204" cy="1124" r="11"/><text class="d-cnot" x="204" y="1124" text-anchor="middle" dominant-baseline="central">10</text>
+
+          <!-- feedback loop, left margin -->
+          <path class="d-feed" d="M240 1196 V1226 H30 V720 H188" marker-end="url(#ar-f)"/>
+          <text class="d-note" transform="translate(22 950) rotate(-90)" text-anchor="middle">WHAT WAS WRONG GOES BACK INTO THE INSTRUCTIONS</text>
+        </svg>
+      </div>
+      <p class="scroll-hint">Drag the drawing sideways to read it all.</p>
+    </div>
+  </section>
+
+  <!-- ═════════ NOTES ═════════ -->
+  <section class="notes">
+    <div class="wrap">
+      <h2 class="sec-h">The ten decisions behind it</h2>
+      <p class="sec-p">Tap a number to light up the piece it belongs to in the drawing above.</p>
+
+      <div class="note-grid">
+
+        <button class="note" data-target="b-triage" aria-pressed="false">
+          <span class="num">1</span>
+          <span>
+            <h3>Count it before you buy anything</h3>
+            <p>The $3,500 estimate rests on a file listing IT admits was not what you asked for. A week of sorting, by type, by age and by folder, turns that guess into a number that survives a room. It also does the deleting: <em>2.4 terabytes down to about 1.5</em> before a model reads one word. That is a 40% cut of every bill that follows, bought with no tokens at all.</p>
+          </span>
+        </button>
+
+        <button class="note" data-target="b-prose" aria-pressed="false">
+          <span class="num">2</span>
+          <span>
+            <h3>Search everything on day one, for free</h3>
+            <p>Turning documents into something searchable by meaning runs on your own hardware and costs nothing per page. So the easy half of what Chris wants, <em>find me every document that touches this</em>, covers all twelve years immediately. No slice, no waiting, no invoice. Do this first and there is something to show while the hard half is still being argued about.</p>
+          </span>
+        </button>
+
+        <button class="note" data-target="b-graph" aria-pressed="false">
+          <span class="num">3</span>
+          <span>
+            <h3>The graph is assembled, not read</h3>
+            <p>This is where the money goes, and it does not have to. A blue book already says which email went out, when, at what cost, and what came back. Those are the connections, and <em>they are sitting in a spreadsheet, already true</em>. Load them straight in. Pay a model to read prose only where no table exists, and only for the years people ask about. Everything older gets folded in later, in the background.</p>
+          </span>
+        </button>
+
+        <button class="note" data-target="b-numbers" aria-pressed="false">
+          <span class="num">4</span>
+          <span>
+            <h3>Never let a model do arithmetic</h3>
+            <p>52,000 spreadsheets and 39,000 CSVs are not documents to be chopped up and half-remembered. They go into a database and get asked with plain SQL. <em>Counts, costs and CPA come back exact, every time, or they come back as an error.</em> This one choice removes the whole category of confidently wrong numbers, the failure that would end the project's credibility fastest.</p>
+          </span>
+        </button>
+
+        <button class="note" data-target="b-sandbox" aria-pressed="false">
+          <span class="num">5</span>
+          <span>
+            <h3>Donor records go around, not through</h3>
+            <p>Chris asked the right question out loud: is it a real graph if the donor data is not in it. The answer is that <em>it is a real graph, and the donor file is a different building</em>. A copy on its own machine with no network. Wealth appends and segment tests happen there. What comes out is counts and rules, never names. Nobody has to trust a permission setting to keep it that way.</p>
+          </span>
+        </button>
+
+        <button class="note" data-target="b-router" aria-pressed="false">
+          <span class="num">6</span>
+          <span>
+            <h3>Plumbing beats intelligence, and it is cheaper</h3>
+            <p>Deciding which store answers a question is mostly a lookup, not a thought. Rules do it for free and do it the same way twice. That is the exact problem Chris hit when an agent improvised the same job differently each time. <em>A model only gets involved when the rules run out</em>, and the same principle governs transcription, API calls and clipping: use the tool that already works.</p>
+          </span>
+        </button>
+
+        <button class="note" data-target="b-voice" aria-pressed="false">
+          <span class="num">7</span>
+          <span>
+            <h3>The hat, not new weights</h3>
+            <p>Chris worked this out mid-sentence: the record of what happened is one thing, and how NAGR talks about it is a layer on top. That layer is a folder of text: the glossary, the tone, the lines that land, the things never to say, handed to the model with every question. <em>Change the voice in a minute. See exactly why it said what it said.</em> A fine-tuned model gives you neither, for six figures.</p>
+          </span>
+        </button>
+
+        <button class="note" data-target="b-m-front" aria-pressed="false">
+          <span class="num">8</span>
+          <span>
+            <h3>A ceiling you set, not one you discover</h3>
+            <p>A $10,000 month cannot happen by accident. Most questions never leave the building. The ones that do pass a meter with a hard monthly cap and a kill switch, and the person asking is <em>told, on screen, that this one costs money</em>. That is also the honest answer to the other worry: when a rented model will not touch NAGR's politics, the house model is already doing the work anyway.</p>
+          </span>
+        </button>
+
+        <button class="note" data-target="b-argus" aria-pressed="false">
+          <span class="num">9</span>
+          <span>
+            <h3>Agents stay thin, and stay on a leash</h3>
+            <p>An agent is a job, a short list of tools, a slice of the stores it is allowed to read, and a person who says go. Argus first, because Craig cannot watch ten legislatures and <em>half of it is already built in a basement in Knoxville</em>. The confirm-before-it-acts gate is not new governance. It is the gate that already exists in the one live system, made standard.</p>
+          </span>
+        </button>
+
+        <button class="note" data-target="b-people" aria-pressed="false">
+          <span class="num">10</span>
+          <span>
+            <h3>Every answer says what it did not see</h3>
+            <p>If the graph holds 2025 to now, an answer about 2019 must say so out loud rather than sound confident and be thin. Sources named, coverage stated, staleness flagged. <em>It is the only thing that makes a wrong answer safe</em>, and the thumbs-down becomes a test case the system has to keep passing, not a lump of retraining data nobody can inspect.</p>
+          </span>
+        </button>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ VOIDED ═════════ -->
+  <section class="voids">
+    <div class="wrap">
+      <h2 class="sec-h">Two things we talked about and are not doing</h2>
+      <p class="sec-p">Both were live on the call. Both are struck from Revision A, for reasons that should be argued with rather than assumed.</p>
+      <div class="void-grid">
+        <div class="void">
+          <span class="mark">Struck · Rev A</span>
+          <h3>Fine-tuning a model on Mike's voice</h3>
+          <p>It sounds like the serious version and it is the fragile one. Retraining costs real money and weeks, and every edit costs it again. You cannot read the result, cannot ask it why, and cannot lift it onto a better model next year without starting over.</p>
+          <p><b>Instead:</b> the same corpus becomes retrieved examples and a written style guide. Cheaper by orders of magnitude, changeable in an afternoon, and it can show its work. If a voice test later proves this is not close enough, fine-tuning comes back on the table with evidence behind it.</p>
+        </div>
+        <div class="void">
+          <span class="mark">Struck · Rev A</span>
+          <h3>Graphing the whole corpus in one run</h3>
+          <p>$3,500 to $4,000 is the price of the first attempt. The first attempt is never the last one. The instructions will be wrong, the naming will collide, and it will want rerunning. Four passes and it is a $16,000 line item nobody approved.</p>
+          <p><b>Instead:</b> structure loads for nothing, prose gets read only where it earns it, and the recent years go first. <b>The bill scales with what people actually ask about</b>, and the older years fill in behind, on a machine that is already paid for.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ COST ═════════ -->
+  <section class="cost">
+    <div class="wrap">
+      <h2 class="sec-h">Where the money goes</h2>
+      <p class="sec-p">Order of magnitude, not a quote. The point is the shape: the large one-off is replaced by work that costs almost nothing, and the running bill has a lid on it.</p>
+      <div class="tbl-scroll">
+        <table>
+          <caption>FIG. 2 · COST SHAPE, REV A · ESTIMATES ONLY</caption>
+          <thead>
+            <tr><th scope="col">Step</th><th scope="col">One-off</th><th scope="col">Per month</th><th scope="col">Why it lands there</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Inventory and triage</th><td class="fig">~$0</td><td class="fig">—</td><td class="why">Scripts and judgement. No model reads anything.</td></tr>
+            <tr><th scope="row">Search index, all years</th><td class="fig">~$0</td><td class="fig">~$0</td><td class="why">Runs on hardware you own. Electricity, not tokens.</td></tr>
+            <tr><th scope="row">Graph from existing tables</th><td class="fig">~$0</td><td class="fig">—</td><td class="why">The relationships are already written down.</td></tr>
+            <tr><th scope="row">Reading prose, 2025 → now</th><td class="fig">low hundreds</td><td class="fig">—</td><td class="why">A slice, on a rented model, repeatable while it is still cheap to be wrong.</td></tr>
+            <tr><th scope="row">Reading the older years</th><td class="fig">time, not money</td><td class="fig">—</td><td class="why">Background work on the house machine, once there is one.</td></tr>
+            <tr><th scope="row">Test box to prove it</th><td class="fig">~$2,000</td><td class="fig">—</td><td class="why">Chris's number, and the right first ask. It buys the evidence for the big one.</td></tr>
+            <tr><th scope="row">House machine</th><td class="fig">~$30,000</td><td class="fig">—</td><td class="why">Month three at the earliest, decided against a working demonstration.</td></tr>
+            <tr><th scope="row">Rented model, escalations</th><td class="fig">—</td><td class="fig">capped, you pick the number</td><td class="why">Metered per question, with a monthly ceiling and a switch.</td></tr>
+            <tr><th scope="row">Whole corpus in one pass</th><td class="fig cold">$3.5k–4k × every rerun</td><td class="fig cold">—</td><td class="why">The path not taken. Shown here so the comparison is on the record.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ OPEN ═════════ -->
+  <section class="open">
+    <div class="wrap">
+      <h2 class="sec-h">Not decided yet</h2>
+      <p class="sec-p">Revision B needs answers to these. Three of the four are governance, not engineering, which means they are somebody's decision rather than a thing to be discovered.</p>
+      <ol>
+        <li><div>
+          <h3>Where does the donor file actually live?</h3>
+          <p>Nobody has named the platform. If it holds card tokens, that changes what the sandbox has to be, and it is the one thing here that is not recoverable if it goes wrong.</p>
+        </div></li>
+        <li><div>
+          <h3>What did the petition signers and donors agree to?</h3>
+          <p>Appending bought wealth data to a donor record, and reusing petition signatures for analysis, are both secondary uses of personal data. What the sign-up language and privacy policy actually permit has to be read before the pipeline is built.</p>
+        </div></li>
+        <li><div>
+          <h3>How long does routine material live?</h3>
+          <p>Chris wants a 30-to-60-day floor for what ends up in a deposition. Ryan does not want to delete anything. Organisation-wide capture cannot be designed until someone above both of them decides.</p>
+        </div></li>
+        <li><div>
+          <h3>Does the graph ever hold donor records?</h3>
+          <p>Revision A says no, permanently, and pays a real price in analytical power for it. That is a choice worth making deliberately rather than by default.</p>
+        </div></li>
+      </ol>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="colophon">
+      <span>PLATE 01 · REV A · 18 AUG 2026 · M. FALDE</span>
+      <span>FOR DISCUSSION · NOT FOR BUILD</span>
+    </div>
+  </div>
+  <!-- Anchored flush to the bottom edge, on top of everything, cleared above the
+       cap height so no glyph is shaved by the viewport. -->
+  <div class="mark-wrap" aria-hidden="true">
+    <svg viewBox="0 0 1000 128" preserveAspectRatio="xMidYMax meet">
+      <text x="500" y="120" text-anchor="middle"
+            font-family="Gambarino, Georgia, serif" font-size="132"
+            letter-spacing="14" fill="#13100c">FALDE</text>
+    </svg>
+  </div>
+</footer>
+
+<script>
+/* The notes highlight their block in the drawing. Content is fully readable
+   with this script absent; nothing here reveals anything. */
+(function () {
+  var notes = Array.prototype.slice.call(document.querySelectorAll('.note[data-target]'));
+  if (!notes.length) return;
+
+  function clearAll() {
+    notes.forEach(function (n) {
+      n.setAttribute('aria-pressed', 'false');
+      var el = document.getElementById(n.getAttribute('data-target'));
+      if (el) el.classList.remove('lit');
+    });
+  }
+
+  notes.forEach(function (note) {
+    var target = document.getElementById(note.getAttribute('data-target'));
+    if (!target) { note.disabled = true; return; }
+
+    note.addEventListener('click', function () {
+      var wasOn = note.getAttribute('aria-pressed') === 'true';
+      clearAll();
+      if (!wasOn) {
+        note.setAttribute('aria-pressed', 'true');
+        target.classList.add('lit');
+        var box = target.getBoundingClientRect();
+        if (box.bottom < 0 || box.top > window.innerHeight) {
+          target.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        }
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
