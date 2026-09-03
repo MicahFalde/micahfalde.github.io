@@ -41,6 +41,7 @@
     '>hype',
     'mornings, on a video call.',
     'a signal over noise thing.',
+    'apply with a résumé.',
     'the window only holds so much. that\'s why we meet.',
     'drag the bar below to make it bigger.'
   ];
